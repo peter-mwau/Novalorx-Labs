@@ -167,6 +167,35 @@ const Services = ({ onNavigate }) => {
     pausedRef.current = false;
   };
 
+  // Load Tally form script
+  useEffect(() => {
+    const ensureTally = () => {
+      if (window.Tally) {
+        window.Tally.loadEmbeds();
+        return;
+      }
+
+      const existingScript = document.querySelector(
+        'script[src="https://tally.so/widgets/embed.js"]',
+      );
+
+      if (existingScript) {
+        existingScript.addEventListener("load", () => {
+          window.Tally?.loadEmbeds();
+        });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://tally.so/widgets/embed.js";
+      script.async = true;
+      script.onload = () => window.Tally?.loadEmbeds();
+      document.head.appendChild(script);
+    };
+
+    ensureTally();
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen overflow-hidden bg-black text-white">
       <style>{`
@@ -318,8 +347,7 @@ const Services = ({ onNavigate }) => {
           </h2>
 
           {/* Foreground text */}
-          <h3
-            className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
+          <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
             Our Features Services
           </h3>
         </div>
@@ -378,6 +406,66 @@ const Services = ({ onNavigate }) => {
               </article>
             );
           })}
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-20 max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative bg-gradient-to-br from-blue-300/10 to-cyan-400/10 border border-blue-300/30 rounded-2xl p-8 md:p-12 backdrop-blur-sm overflow-hidden"
+          >
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-300/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-32 h-32 bg-cyan-400/10 rounded-full blur-3xl" />
+
+            <div className="relative z-10 text-center">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                Ready to Transform Your Ideas Into Reality?
+              </h3>
+              <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                Whether you need Web Development, Mobile Apps, AI/ML Solutions,
+                or Cloud Infrastructure - we're here to help. Let's discuss your
+                project.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button
+                  data-tally-open="wLDjAq"
+                  data-tally-width="600"
+                  data-tally-emoji-text="👋"
+                  data-tally-emoji-animation="wave"
+                  data-tally-auto-close="3000"
+                  className="group px-8 py-4 bg-blue-300 hover:bg-blue-400 text-black font-semibold rounded-full 
+                           transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-300/50
+                           flex items-center gap-2"
+                >
+                  <span>Get Started</span>
+                  <ArrowRightFromLineIcon className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (typeof onNavigate === "function") {
+                      onNavigate("contacts");
+                    }
+                  }}
+                  className="px-8 py-4 bg-transparent border-2 border-blue-300/50 hover:border-blue-300 
+                           text-blue-300 font-semibold rounded-full transition-all duration-300
+                           hover:bg-blue-300/10"
+                >
+                  View Contact Info
+                </button>
+              </div>
+
+              <p className="text-sm text-gray-400 mt-6">
+                ⚡ Quick response within 24 hours • 🔒 Free consultation • 💼
+                Flexible engagement models
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
 

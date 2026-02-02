@@ -21,6 +21,34 @@ function Contacts() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const ensureTally = () => {
+      if (window.Tally) {
+        window.Tally.loadEmbeds();
+        return;
+      }
+
+      const existingScript = document.querySelector(
+        'script[src="https://tally.so/widgets/embed.js"]',
+      );
+
+      if (existingScript) {
+        existingScript.addEventListener("load", () => {
+          window.Tally?.loadEmbeds();
+        });
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://tally.so/widgets/embed.js";
+      script.async = true;
+      script.onload = () => window.Tally?.loadEmbeds();
+      document.head.appendChild(script);
+    };
+
+    ensureTally();
+  }, []);
+
   const getRotation = (value, max) => (value / max) * 360;
 
   const rings = [
@@ -94,8 +122,7 @@ function Contacts() {
           </h2>
 
           {/* Foreground text */}
-          <h3
-            className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
+          <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
             Get in Touch
           </h3>
         </div>
@@ -277,6 +304,49 @@ function Contacts() {
                     </div>
                   </div>
                 </form>
+              </div>
+
+              {/* Professional CTA for Quotation */}
+              <div className="mt-6 pt-6 border-t border-gray-700/50">
+                <div className="bg-gradient-to-r from-blue-300/10 to-cyan-400/10 rounded-xl p-4 md:p-6 border border-blue-300/20">
+                  <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold text-blue-300 mb-2">
+                        Need a Custom Project Quote?
+                      </h4>
+                      <p className="text-sm text-gray-300">
+                        Get a detailed quotation tailored to your project
+                        requirements. Fill out our quick form and we'll get back
+                        to you within 24 hours.
+                      </p>
+                    </div>
+                    <button
+                      data-tally-open="gDGZ5K"
+                      data-tally-layout="modal"
+                      data-tally-overlay="1"
+                      data-tally-emoji-text="👋"
+                      data-tally-emoji-animation="tada"
+                      className="group flex-shrink-0 bg-blue-300 hover:bg-blue-400 text-black font-semibold 
+                               px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105
+                               shadow-lg hover:shadow-blue-300/50 flex items-center gap-2"
+                    >
+                      <span>Request Quote</span>
+                      <svg
+                        className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* small footer row (visible on small screens) */}
