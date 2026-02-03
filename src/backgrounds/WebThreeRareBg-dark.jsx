@@ -1,16 +1,11 @@
 // src/components/WebThreeRareBG.jsx
 import React, { useRef, useEffect } from "react";
-import planetAssets from "../assets/solarData"; // expected to export array or objects with urls
-
-// WebThreeRareBG.jsx — regenerated to expose crystalSpeed and slow wobble
-// - crystalSpeed prop accepts number or { spin, wobble, wobbleAmp }
-// - vertex & fragment shader time multipliers reduced to slow deformation & pulse
-// - default wobble is slower and subtler
+// planetAssets removed (planets & supernovas stripped)
 
 const THREE_CDN = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
 
 const DEFAULT_PRIMARY = 0x6fb3ff;
-const DEFAULT_SECONDARY = 0x95a9ff; 
+const DEFAULT_SECONDARY = 0x95a9ff;
 const DEFAULT_BG = 0x090c13;
 
 function loadScriptOnce(src) {
@@ -98,10 +93,9 @@ export default function WebThreeRareBG(props) {
     particleCount = 700,
     crystalSize = 1.5,
     pixelRatio = 1.5,
-    planetCount = 8,
+    // planetCount removed
     shootingStarRate = 0.006,
-    supernovaRate = 0.0008,
-    supernovaEnabled = true,
+    // supernovaRate and supernovaEnabled removed
     starCount = 2800,
     textureUrl = "src/assets/planets/azure-pigment-diffusing-water.jp",
     overlayDarkness = 0.35,
@@ -593,175 +587,7 @@ export default function WebThreeRareBG(props) {
       sprite.position.set(0, -1.2, -2.6);
       scene.add(sprite);
 
-      // Planets (use imported planetAssets)
-      const planets = [];
-      const loader2 = new THREE.TextureLoader();
-
-      // planetAssets expected to be an array of objects with keys: name, url, radius, ringUrl (if present)
-      // fallback: if planetAssets is an object mapping names to urls, convert it to array
-      let planetList = [];
-      if (Array.isArray(planetAssets)) {
-        planetList = planetAssets;
-      } else if (planetAssets && typeof planetAssets === "object") {
-        // try to convert object map -> array if it matches previous structure
-        planetList = Object.keys(planetAssets).map((k) => {
-          const val = planetAssets[k];
-          // if val is a string, treat as url-only
-          if (typeof val === "string") return { name: k, url: val, radius: 1.0 };
-          return { name: k, ...val };
-        });
-      }
-
-      const PLANET_SCALE = 0.38;
-      const BASE_DISTANCE = 10.0;
-
-      const planetPromises = planetList.slice(0, planetCount).map((p, idx) => {
-        return new Promise((resolve) => {
-          loader2.load(
-            p.url,
-            (tex) => {
-              tex.encoding = THREE.sRGBEncoding;
-              resolve({ data: p, tex });
-            },
-            undefined,
-            () => {
-              console.warn("Failed to load planet texture:", p.url);
-              resolve({ data: p, tex: null });
-            }
-          );
-        });
-      });
-
-      const loadedPlanets = await Promise.all(planetPromises);
-
-      loadedPlanets.forEach((entry, i) => {
-        const p = entry.data;
-        const tex = entry.tex;
-        const size = Math.max(0.3, (p.radius || 1.0) * PLANET_SCALE);
-        const distance = BASE_DISTANCE + i * 6.0 + i * 2;
-        const theta = Math.random() * Math.PI * 2;
-        const y = (Math.random() - 0.5) * 4.0;
-
-        const matOpts = { metalness: 0.0, roughness: 0.7 };
-        if (tex) matOpts.map = tex;
-        const mat = new THREE.MeshStandardMaterial(matOpts);
-        const geo = new THREE.SphereBufferGeometry(size, 64, 48);
-        const mesh = new THREE.Mesh(geo, mat);
-        mesh.userData = { distance, theta, y, speed: 0.005 + i * 0.002 + Math.random() * 0.005, name: p.name };
-        mesh.position.set(Math.cos(theta) * distance, y, Math.sin(theta) * distance);
-        mesh.rotation.y = Math.random() * Math.PI;
-        scene.add(mesh);
-
-        // rings
-        if (p.ringUrl) {
-          loader2.load(
-            p.ringUrl,
-            (rtex) => {
-              rtex.encoding = THREE.sRGBEncoding;
-              const ringGeo = new THREE.RingBufferGeometry(size * 1.25, size * 2.25, 64);
-              const ringMat = new THREE.MeshBasicMaterial({
-                map: rtex,
-                side: THREE.DoubleSide,
-                transparent: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-              });
-              const ring = new THREE.Mesh(ringGeo, ringMat);
-              ring.rotation.x = Math.PI / 2.0;
-              mesh.add(ring);
-            },
-            undefined,
-            () => {}
-          );
-        }
-
-        const glowMat = new THREE.SpriteMaterial({
-          map: _glowTexture,
-          color: 0xffffff,
-          opacity: 0.06,
-          transparent: true,
-          depthWrite: false,
-          blending: THREE.AdditiveBlending,
-        });
-        const glow = new THREE.Sprite(glowMat);
-        glow.scale.setScalar(size * 6.0);
-        mesh.add(glow);
-
-        planets.push(mesh);
-      });
-
-      // Supernova machinery
-      const supernovas = [];
-      function spawnSupernovaAt(position, options = {}) {
-        const now = performance.now() / 1000;
-        const color = options.color ? options.color.clone() : pal.accent.clone();
-        const coreGeo = new THREE.SphereBufferGeometry(0.6 + Math.random() * 1.2, 16, 12);
-        const coreMat = new THREE.MeshBasicMaterial({ color: color, blending: THREE.AdditiveBlending, transparent: true, depthWrite: false });
-        const core = new THREE.Mesh(coreGeo, coreMat);
-        core.position.copy(position);
-        scene.add(core);
-
-        const ringGeo = new THREE.RingBufferGeometry(0.8, 1.2, 64);
-        const ringMat = new THREE.MeshBasicMaterial({
-          color: color.clone().multiplyScalar(1.2),
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 0.9,
-          blending: THREE.AdditiveBlending,
-          depthWrite: false,
-        });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.position.copy(position);
-        ring.rotation.x = -Math.PI / 2;
-        ring.scale.setScalar(1.0);
-        scene.add(ring);
-
-        const burstCount = 120 + Math.floor(Math.random() * 180);
-        const burstPos = new Float32Array(burstCount * 3);
-        const burstVel = new Float32Array(burstCount * 3);
-        for (let i = 0; i < burstCount; i++) {
-          const dir = new THREE.Vector3((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5)).normalize();
-          const speed = 1.8 + Math.random() * 3.6;
-          burstPos[i * 3 + 0] = position.x;
-          burstPos[i * 3 + 1] = position.y;
-          burstPos[i * 3 + 2] = position.z;
-          burstVel[i * 3 + 0] = dir.x * speed;
-          burstVel[i * 3 + 1] = dir.y * speed;
-          burstVel[i * 3 + 2] = dir.z * speed;
-        }
-        const burstGeo = new THREE.BufferGeometry();
-        burstGeo.setAttribute("position", new THREE.BufferAttribute(burstPos, 3));
-        burstGeo.setAttribute("vel", new THREE.BufferAttribute(burstVel, 3));
-        const burstMat = new THREE.PointsMaterial({ size: 0.06, map: _glowTexture, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
-        const burst = new THREE.Points(burstGeo, burstMat);
-        scene.add(burst);
-
-        const flash = new THREE.PointLight(color.getHex(), 4.0, 60, 2);
-        flash.position.copy(position);
-        scene.add(flash);
-
-        supernovas.push({ core, ring, burst, burstGeo, burstMat, flash, start: now, maxAge: 3.2 + Math.random() * 1.8 });
-      }
-
-      const onDblClick = (ev) => {
-        if (!supernovaEnabled) return;
-        const dir = new THREE.Vector3();
-        camera.getWorldDirection(dir);
-        const distance = 12 + Math.random() * 18;
-        const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-        spawnSupernovaAt(pos, {});
-      };
-      if (interactive) window.addEventListener("dblclick", onDblClick);
-
-      function maybeSpawnSupernovaRandom() {
-        if (!supernovaEnabled) return;
-        if (planets && planets.length && Math.random() < supernovaRate) {
-          const p = planets[Math.floor(Math.random() * planets.length)];
-          const jitter = new THREE.Vector3((Math.random() - 0.5) * 1.6, (Math.random() - 0.5) * 1.6, (Math.random() - 0.5) * 1.6);
-          const pos = p.position.clone().add(jitter);
-          spawnSupernovaAt(pos, { color: p.material && p.material.color ? p.material.color : pal.accent });
-        }
-      }
+      // (Planets & Supernova removed)
 
       // Shooting stars
       const shootingStars = [];
@@ -830,16 +656,10 @@ export default function WebThreeRareBG(props) {
         crystal.rotation.x = Math.sin(t * speedCfg.wobble) * (speedCfg.wobbleAmp);
         wire.rotation.copy(crystal.rotation);
 
-        for (let i = 0; i < planets.length; i++) {
-          const p = planets[i];
-          p.userData.theta += p.userData.speed * 0.10;
-          p.position.x = Math.cos(p.userData.theta) * p.userData.distance;
-          p.position.z = Math.sin(p.userData.theta) * p.userData.distance;
-          p.rotation.y += 0.002 + (i % 2 === 0 ? 0.001 : -0.001);
-        }
+        // (planets loop removed)
 
         if (Math.random() < shootingStarRate) spawnStar();
-        maybeSpawnSupernovaRandom();
+        // maybeSpawnSupernovaRandom removed
 
         for (let i = shootingStars.length - 1; i >= 0; i--) {
           const s = shootingStars[i];
@@ -871,49 +691,9 @@ export default function WebThreeRareBG(props) {
           }
         }
 
-        const now = performance.now() / 1000;
-        const dt = Math.max(0.0001, now - lastFrame);
-        for (let j = supernovas.length - 1; j >= 0; j--) {
-          const sv = supernovas[j];
-          const age = now - sv.start;
-          const lifeRatio = age / sv.maxAge;
-          const coreScale = 1.0 + age * 2.8;
-          sv.core.scale.setScalar(coreScale);
-          sv.core.material.opacity = Math.max(0, 1.0 - lifeRatio * 1.2);
-          const ringScale = 1.0 + age * 6.0;
-          sv.ring.scale.setScalar(ringScale);
-          sv.ring.material.opacity = Math.max(0, 0.9 - lifeRatio * 1.5);
+        // (supernovas update removed)
 
-          const posAttr = sv.burst.geometry.attributes.position;
-          const velAttr = sv.burst.geometry.attributes.vel;
-          for (let k = 0; k < posAttr.count; k++) {
-            posAttr.array[k * 3 + 0] += velAttr.array[k * 3 + 0] * dt;
-            posAttr.array[k * 3 + 1] += velAttr.array[k * 3 + 1] * dt;
-            posAttr.array[k * 3 + 2] += velAttr.array[k * 3 + 2] * dt;
-            velAttr.array[k * 3 + 0] *= 0.98;
-            velAttr.array[k * 3 + 1] *= 0.98;
-            velAttr.array[k * 3 + 2] *= 0.98;
-          }
-          posAttr.needsUpdate = true;
-          velAttr.needsUpdate = true;
-          sv.burst.material.opacity = Math.max(0, 1.0 - lifeRatio * 1.2);
-          sv.flash.intensity = Math.max(0, 4.0 * (1.0 - lifeRatio));
-          if (age > sv.maxAge) {
-            try { sv.core.geometry.dispose(); } catch (e) {}
-            try { sv.core.material.dispose(); } catch (e) {}
-            try { sv.ring.geometry.dispose(); } catch (e) {}
-            try { sv.ring.material.dispose(); } catch (e) {}
-            try { sv.burst.geometry.dispose(); } catch (e) {}
-            try { sv.burst.material.dispose(); } catch (e) {}
-            if (sv.flash && sv.flash.parent) sv.flash.parent.remove(sv.flash);
-            if (sv.core && sv.core.parent) sv.core.parent.remove(sv.core);
-            if (sv.ring && sv.ring.parent) sv.ring.parent.remove(sv.ring);
-            if (sv.burst && sv.burst.parent) sv.burst.parent.remove(sv.burst);
-            supernovas.splice(j, 1);
-          }
-        }
-
-        lastFrame = now;
+        lastFrame = performance.now() / 1000;
         renderer.render(scene, camera);
         stateRef.current.raf = requestAnimationFrame(animate);
       };
@@ -937,12 +717,12 @@ export default function WebThreeRareBG(props) {
         camera,
         onResize,
         onMove,
-        onDblClick,
+        // onDblClick removed
         raf: stateRef.current.raf,
         shootingStars,
         nebulaPlanes,
-        planets,
-        supernovas,
+        // planets removed
+        // supernovas removed
         overlayDiv,
       };
     };
@@ -955,7 +735,7 @@ export default function WebThreeRareBG(props) {
       if (s) {
         if (s.raf) cancelAnimationFrame(s.raf);
         if (s.overlayDiv && s.overlayDiv.parentNode) s.overlayDiv.parentNode.removeChild(s.overlayDiv);
-        if (s.onDblClick) window.removeEventListener("dblclick", s.onDblClick);
+        // onDblClick was removed; only remove mouse/resize if present
         if (s.onMove) window.removeEventListener("mousemove", s.onMove);
         if (s.onResize) window.removeEventListener("resize", s.onResize);
         try {
@@ -987,10 +767,10 @@ export default function WebThreeRareBG(props) {
     particleCount,
     crystalSize,
     pixelRatio,
-    planetCount,
+    // planetCount removed
     shootingStarRate,
-    supernovaRate,
-    supernovaEnabled,
+    // supernovaRate removed
+    // supernovaEnabled removed
     starCount,
     textureUrl,
     crystalSpeed,
