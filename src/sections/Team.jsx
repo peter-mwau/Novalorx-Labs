@@ -106,7 +106,7 @@ function Team() {
     AdoyoClifford: {
       position: "DevOps Engineer",
       email: "adoyoclifford@example.com",
-      linkedin: "https://linkedin.com/in/adoyoclifford",
+      linkedin: "https://linkedin.com/in/adoyo-clifford",
       expertise: ["Docker", "Kubernetes", "AWS"],
       yearsAtCompany: 1,
       skills: [
