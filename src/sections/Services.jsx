@@ -284,11 +284,11 @@ const Services = ({ onNavigate }) => {
       {/* Content */}
       <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto">
         <div className="relative mt-2 mb-16 h-28 sm:h-32 flex items-center justify-center">
-          <h2 className="absolute inset-0 flex items-center justify-center text-center text-7xl sm:text-8xl md:text-9xl font-extrabold text-white/10 uppercase tracking-widest pointer-events-none select-none">
+          <h2 className="absolute inset-0 flex items-center justify-center text-center text-7xl sm:text-8xl md:text-9xl font-extrabold text-white/70 uppercase tracking-widest pointer-events-none select-none">
             Expertise
           </h2>
 
-          <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest rounded-3xl">
+          <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-lg rounded-3xl">
             Our Features Services
           </h3>
         </div>

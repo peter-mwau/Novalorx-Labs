@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function Navbar({ activeSection, setActiveSection }) {
   const menuItems = [
     { label: "Home", section: "hero" },
+    { label: "About", section: "about" },
     { label: "Services", section: "services" },
     { label: "Projects", section: "projects" },
     { label: "Team", section: "team" },
