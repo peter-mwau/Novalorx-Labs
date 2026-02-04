@@ -11,7 +11,6 @@ import {
   Users,
 } from "lucide-react";
 import { useInView } from "../hooks/useInView";
-import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
 
 const sampleProjects = [
   // Peter
@@ -478,15 +477,8 @@ function Projects() {
         isInView ? "opacity-100" : "opacity-0"
       }`}
     >
-      <VantaGlobeBG />
-      <div className="absolute inset-0"></div>
+    
 
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent via-black/30 to-black/80 pointer-events-none blur-xl"></div>
-
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-gradient-to-l from-pink-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
 
       <div className="relative z-10 max-w-6xl w-full px-4 md:px-6">
         {/* Header */}

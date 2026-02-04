@@ -69,7 +69,7 @@ function MobileMenu({ menuItems, activeSection, onNavigate }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-56 bg-black/70 border border-white/10 rounded-lg">
+        <div className="absolute right-0 mt-2 w-56 bg-black/10 border border-white/10 rounded-lg">
           {menuItems.map((item) => (
             <button
               key={item.section}

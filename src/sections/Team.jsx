@@ -4,11 +4,6 @@ import {
   Linkedin,
   Mail,
   Award,
-  MapPin,
-  Code,
-  Star,
-  GitBranch,
-  ExternalLink,
   ChevronRight,
   Calendar1,
   Code2,
@@ -16,7 +11,6 @@ import {
   X,
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import VantaNetBG from "../backgrounds/VantaNetBg";
 
 function Team() {
   const [profiles, setProfiles] = useState([]);
@@ -270,11 +264,8 @@ function Team() {
     );
 
   return (
-    <div className="h-screen relative bg-black text-white overflow-hidden">
+    <div className="h-screen relative text-white overflow-hidden">
       {/* ensure background is underneath */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <VantaNetBG />
-      </div>
 
       <style>{`
         .line-clamp-6 { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }

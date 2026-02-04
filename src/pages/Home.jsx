@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../sections/Hero";
 import Services from "../sections/Services";
@@ -7,71 +7,128 @@ import Projects from "../sections/Projects";
 import Team from "../sections/Team";
 import Contacts from "../sections/Contacts";
 
-import WebThreeRareBG from "../backgrounds/WebThreeRareBg-dark";
-import VantaNetBG from "../backgrounds/VantaNetBg";
-import VantaGlobeBG from "../backgrounds/VantaGlobeBG";
-import VantaDotsBG from "../backgrounds/VantaDotsBg";
-import VantaBirdsBG from "../backgrounds/VantaBirdsBg";
-
 function Home() {
   const [activeSection, setActiveSection] = useState("hero");
+  const [prevSection, setPrevSection] = useState(null);
+  const transitionMs = 700;
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mq =
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!mq) return;
+    setPrefersReducedMotion(Boolean(mq.matches));
+    const handler = (e) => setPrefersReducedMotion(Boolean(e.matches));
+    if (mq.addEventListener) mq.addEventListener("change", handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", handler);
+      else mq.removeListener(handler);
+    };
+  }, []);
+
+  const handleNavigate = (to) => {
+    if (to === activeSection) return;
+    setPrevSection(activeSection);
+    setActiveSection(to);
+
+    // we'll clear prevSection on transitionend (see effect below)
+    if (prefersReducedMotion || transitionMs === 0) {
+      // fallback: clear after transitionMs
+      window.setTimeout(() => setPrevSection(null), transitionMs + 50);
+    }
+  };
 
   const sections = {
-    hero: { Component: Hero, Background: WebThreeRareBG },
-    services: { Component: Services, Background: VantaDotsBG },
-    projects: { Component: Projects, Background: VantaGlobeBG },
-    team: { Component: Team, Background: VantaNetBG },
-    contacts: { Component: Contacts, Background: VantaBirdsBG },
+    hero: { Component: Hero },
+    services: { Component: Services },
+    projects: { Component: Projects },
+    team: { Component: Team },
+    contacts: { Component: Contacts },
   };
+
+  // When activeSection changes, wait for the **new** section to finish its opacity transition.
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      // immediate fallback
+      setPrevSection(null);
+      return;
+    }
+
+    // find the new active DOM node
+    // we mark each section wrapper with data-section="{key}"
+    const el = document.querySelector(`[data-section="${activeSection}"]`);
+    if (!el) {
+      // safety fallback
+      window.setTimeout(() => setPrevSection(null), transitionMs + 150);
+      return;
+    }
+
+    let cleared = false;
+    const onTransitionEnd = (ev) => {
+      // only respond to opacity finishing
+      if (ev.propertyName !== "opacity") return;
+      if (cleared) return;
+      cleared = true;
+      setPrevSection(null);
+      el.removeEventListener("transitionend", onTransitionEnd);
+    };
+
+    // in case transitionend doesn't fire (some browser edge-cases), fallback
+    const fallback = setTimeout(() => {
+      if (cleared) return;
+      cleared = true;
+      setPrevSection(null);
+      el.removeEventListener("transitionend", onTransitionEnd);
+    }, transitionMs + 200);
+
+    el.addEventListener("transitionend", onTransitionEnd);
+
+    return () => {
+      clearTimeout(fallback);
+      try { el.removeEventListener("transitionend", onTransitionEnd); } catch {}
+    };
+  }, [activeSection, prefersReducedMotion, transitionMs]);
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Backgrounds (always pointer-events-none to avoid capturing clicks) */}
-      <div className="fixed inset-0 z-0">
-        {Object.entries(sections).map(([key, { Background }]) => (
-          <div
-            key={key}
-            // ensure background is never on top and never captures pointer events
-            className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none ${
-              activeSection === key ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ zIndex: 0 }}
-          >
-            {/* force no pointer events on the background wrapper */}
-            <div className="no-pointer-events">
-              <Background />
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* No background here — background is provided by BackgroundLayer (portal) */}
 
       {/* Navbar */}
       {activeSection !== "hero" && (
         <div className="relative z-50">
-          <Navbar
-            activeSection={activeSection}
-            setActiveSection={setActiveSection}
-          />
+          <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
         </div>
       )}
 
-      {/* Sections: active section has pointer-events enabled and higher z-index */}
+      {/* Sections: opacity-only transitions */}
       <div className="relative z-10 h-screen w-full">
         {Object.entries(sections).map(([key, { Component }]) => {
           const isActive = activeSection === key;
+          const isPrev = prevSection === key;
+          const visible = isActive || isPrev;
+
+          const transitionClass = prefersReducedMotion
+            ? "transition-none"
+            : "transition-opacity duration-700 ease-out";
+
           return (
             <div
               key={key}
-              // when active: ensure pointer events and top stacking so clicks register
-              className={`absolute inset-0 transition-all duration-700 ease-in-out ${
-                isActive
-                  ? "opacity-100 translate-x-0 scale-100 pointer-events-auto"
-                  : "opacity-0 translate-x-8 scale-95 pointer-events-none"
-              }`}
-              style={{ zIndex: isActive ? 40 : 10 }}
+              data-section={key} /* used by effect above */
+              className={`absolute inset-0 ${transitionClass}`}
+              style={{
+                zIndex: isActive ? 40 : isPrev ? 30 : 10,
+                opacity: isActive ? 1 : 0,
+                pointerEvents: isActive ? "auto" : "none",
+                transform: "translateZ(0)", // GPU layer
+                willChange: "opacity",
+                visibility: visible ? "visible" : "hidden",
+              }}
+              aria-hidden={!visible}
             >
-              {/* pass onNavigate always; sections that don't use it just ignore it */}
-              <Component onNavigate={setActiveSection} />
+              <Component onNavigate={handleNavigate} />
             </div>
           );
         })}

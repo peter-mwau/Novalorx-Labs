@@ -9,7 +9,6 @@ import {
   Twitter,
   Clock2Icon,
 } from "lucide-react";
-import VantaBirdsBG from "../backgrounds/VantaBirdsBg";
 import { FaWhatsapp } from "react-icons/fa";
 
 function Contacts() {
@@ -70,11 +69,7 @@ function Contacts() {
   };
 
   return (
-    <section className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
-        <VantaBirdsBG />
-      </div>
+    <section className="relative min-h-screen text-white overflow-hidden">
 
       {/* Floating Social Icons (hidden on small screens) */}
       <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-20 flex-col gap-4">

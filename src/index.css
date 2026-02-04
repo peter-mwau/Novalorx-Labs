@@ -6,6 +6,9 @@
 
 body {
   /* font-family: "Space Grotesk", sans-serif; */
+  /* background-color: #090c13; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1 {

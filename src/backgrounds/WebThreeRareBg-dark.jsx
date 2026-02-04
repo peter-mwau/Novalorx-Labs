@@ -125,7 +125,17 @@ export default function WebThreeRareBG(props) {
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.outputEncoding = THREE.sRGBEncoding;
       renderer.setClearColor(bg, 1.0);
+
+      // Strong CSS safeguards to avoid flashing during DOM/paint updates
       renderer.domElement.style.display = "block";
+      renderer.domElement.style.position = "absolute";
+      renderer.domElement.style.left = "0";
+      renderer.domElement.style.top = "0";
+      renderer.domElement.style.width = "100%";
+      renderer.domElement.style.height = "100%";
+      renderer.domElement.style.backgroundColor = bgColor;
+      renderer.domElement.style.pointerEvents = "none";
+      renderer.domElement.style.willChange = "transform, opacity";
       container.appendChild(renderer.domElement);
 
       // dark overlay div for UI readability
@@ -776,6 +786,8 @@ export default function WebThreeRareBG(props) {
     crystalSpeed,
   ]);
 
+  const bgColor = typeof bg === "number" ? `#${(bg >>> 0).toString(16).padStart(6, "0")}` : String(bg);
+
   const containerStyle = {
     position: "fixed",
     zIndex: 0,
@@ -785,6 +797,11 @@ export default function WebThreeRareBG(props) {
     height: "100vh",
     pointerEvents: interactive ? "auto" : "none",
     overflow: "hidden",
+    backgroundColor: bgColor, // fallback while canvas is painting
+    // hint to the compositor to avoid hairline gaps during transforms
+    WebkitTransformStyle: "preserve-3d",
+    transformStyle: "preserve-3d",
+    willChange: "opacity, transform",
     ...style,
   };
 
