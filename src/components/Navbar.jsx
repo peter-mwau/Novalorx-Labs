@@ -15,7 +15,7 @@ function Navbar({ activeSection, setActiveSection }) {
   };
 
   return (
-    <nav className="relative z-50 px-8 py-2 backdrop-blur-sm border-white/10">
+    <nav className="relative z-50 px-8 backdrop-blur-sm border-white/10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
         <button
@@ -36,7 +36,7 @@ function Navbar({ activeSection, setActiveSection }) {
                 className={`text-lg font-normal uppercase tracking-widest transition ${
                   activeSection === item.section
                     ? "text-white"
-                    : "text-gray-500 hover:text-white"
+                    : "text-gray-400 hover:text-white"
                 }`}
               >
                 {item.label}
