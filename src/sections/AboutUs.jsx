@@ -119,7 +119,7 @@ export default function AboutUs({ onNavigate }) {
 
   return (
     <section
-      className="relative w-full h-screen overflow-auto text-white hide-scrollbar bg-gradient-to-b from-gray-900/50 to-black/60"
+      className="relative w-full h-screen overflow-auto text-white hide-scrollbar bg-gradient-to-b from-gray-900/10 to-black/20"
       style={{ transform: "translateZ(0)" }}
       aria-labelledby="about-title"
     >
@@ -449,7 +449,7 @@ export default function AboutUs({ onNavigate }) {
           {/* Header */}
           <motion.div variants={fadeIn} className="space-y-4">
             <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                     bg-blue-500/10 text-blue-300 border border-blue-400/20">
+                     bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
               Engagement Models
             </span>
 
@@ -474,9 +474,9 @@ export default function AboutUs({ onNavigate }) {
               whileHover={{ y: -8 }}
               transition={{ duration: 0.25 }}
               className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6
-                 hover:border-blue-400/30 hover:bg-white/10 shadow-lg shadow-black/30"
+                 hover:border-cyan-400/30 hover:bg-white/10 shadow-lg shadow-black/30"
             >
-              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl opacity-50" />
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl opacity-50" />
 
               <div className="relative z-10 space-y-4">
                 <h4 className="text-xl font-semibold text-white">Fixed Scope</h4>
@@ -497,17 +497,16 @@ export default function AboutUs({ onNavigate }) {
               variants={fadeIn}
               whileHover={{ y: -10 }}
               transition={{ duration: 0.25 }}
-              className="relative overflow-hidden rounded-2xl border border-blue-500/40 bg-gradient-to-b 
-                 from-blue-500/15 to-white/5 p-6 shadow-xl shadow-blue-500/10"
+              className="relative overflow-hidden rounded-2xl border border-cyan-500/40 bg-gradient-to-b 
+                 from-cyan-500/15 to-white/5 p-6 shadow-xl shadow-cyan-500/10"
             >
               {/* Popular badge */}
               <div className="absolute top-5 right-5 px-3 py-1 rounded-full text-xs font-semibold 
-                      bg-blue-500 text-black">
+                      bg-cyan-500 text-black">
                 Most Popular
               </div>
 
-              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-500/20 blur-3xl opacity-60" />
-
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-cyan-500/20 blur-3xl opacity-60" />
               <div className="relative z-10 space-y-4">
                 <h4 className="text-xl font-semibold text-white">Time & Material</h4>
                 <p className="text-gray-300 text-sm leading-relaxed">
@@ -528,9 +527,9 @@ export default function AboutUs({ onNavigate }) {
               whileHover={{ y: -8 }}
               transition={{ duration: 0.25 }}
               className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6
-                 hover:border-blue-400/30 hover:bg-white/10 shadow-lg shadow-black/30"
+                 hover:border-cyan-400/30 hover:bg-white/10 shadow-lg shadow-black/30"
             >
-              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-500/10 blur-3xl opacity-50" />
+              <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl opacity-50" />
 
               <div className="relative z-10 space-y-4">
                 <h4 className="text-xl font-semibold text-white">Dedicated Team</h4>
@@ -600,7 +599,7 @@ export default function AboutUs({ onNavigate }) {
           {/* CTA */}
           <motion.div
             variants={fadeIn}
-            className="rounded-2xl border border-white/10 bg-gradient-to-r from-blue-500/10 to-purple-500/10 
+            className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
                p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           >
             <div>
@@ -614,7 +613,7 @@ export default function AboutUs({ onNavigate }) {
 
             <button
               onClick={() => onNavigate?.("contacts")}
-              className="px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-black font-semibold transition"
+              className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 text-black font-semibold transition"
             >
               Book a free call
             </button>
@@ -633,7 +632,7 @@ export default function AboutUs({ onNavigate }) {
           {/* Header */}
           <motion.div variants={fadeIn} className="space-y-4">
             <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                     bg-indigo-500/10 text-indigo-300 border border-indigo-400/20">
+                     bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
               Case Studies
             </span>
 
@@ -659,15 +658,15 @@ export default function AboutUs({ onNavigate }) {
                 whileHover={{ y: -10 }}
                 transition={{ duration: 0.25 }}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 
-                   bg-white/5 hover:bg-white/10 hover:border-indigo-400/30 
+                   bg-white/5 hover:bg-white/10 hover:border-cyan-400/30 
                    shadow-lg shadow-black/30 p-6"
               >
                 {/* Glow */}
                 <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full 
-                        bg-indigo-500/15 blur-3xl opacity-60 group-hover:opacity-90 transition" />
+                        bg-cyan-500/15 blur-3xl opacity-60 group-hover:opacity-90 transition" />
 
                 <div className="relative z-10 space-y-4">
-                  <h4 className="text-xl font-bold text-white group-hover:text-indigo-200 transition">
+                  <h4 className="text-xl font-bold text-white group-hover:text-cyan-200 transition">
                     {c.title}
                   </h4>
 
@@ -692,7 +691,7 @@ export default function AboutUs({ onNavigate }) {
                   <div className="pt-4 flex items-center justify-between">
                     <a
                       href={c.link}
-                      className="text-sm text-indigo-300 hover:text-indigo-200 hover:underline transition"
+                      className="text-sm text-cyan-300 hover:text-cyan-200 hover:underline transition"
                     >
                       Read case study →
                     </a>
@@ -713,7 +712,7 @@ export default function AboutUs({ onNavigate }) {
           {/* Bottom CTA */}
           <motion.div
             variants={fadeIn}
-            className="rounded-2xl border border-white/10 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 
+            className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
                p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           >
             <div>
@@ -727,7 +726,7 @@ export default function AboutUs({ onNavigate }) {
 
             <button
               onClick={() => onNavigate?.("contacts")}
-              className="px-6 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 
+              className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 
                  text-black font-semibold transition"
             >
               Get a proposal
@@ -746,7 +745,7 @@ export default function AboutUs({ onNavigate }) {
         >
           <motion.div variants={fadeIn} className="space-y-4 text-center max-w-3xl mx-auto">
             <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                     bg-pink-500/10 text-pink-300 border border-pink-400/20">
+                     bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
               Testimonials
             </span>
 
@@ -846,7 +845,7 @@ export default function AboutUs({ onNavigate }) {
           {/* Header */}
           <motion.div variants={fadeIn} className="space-y-4">
             <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                     bg-emerald-500/10 text-emerald-300 border border-emerald-400/20">
+                     bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
               Leadership
             </span>
 
@@ -872,12 +871,12 @@ export default function AboutUs({ onNavigate }) {
                 whileHover={{ y: -10 }}
                 transition={{ duration: 0.25 }}
                 className="group relative overflow-hidden rounded-2xl border border-white/10 
-                   bg-white/5 hover:bg-white/10 hover:border-emerald-400/30 
+                   bg-white/5 hover:bg-white/10 hover:border-cyan-400/30 
                    shadow-lg shadow-black/30 p-6"
               >
                 {/* Glow */}
                 <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full 
-                        bg-emerald-500/15 blur-3xl opacity-50 group-hover:opacity-90 transition" />
+                        bg-cyan-500/15 blur-3xl opacity-50 group-hover:opacity-90 transition" />
 
                 <div className="relative z-10 space-y-4">
                   {/* Avatar */}
@@ -909,7 +908,7 @@ export default function AboutUs({ onNavigate }) {
                   {/* Role Badge */}
                   <div className="pt-2">
                     <span className="inline-flex px-3 py-1 rounded-full text-xs font-semibold 
-                             bg-emerald-500/10 text-emerald-300 border border-emerald-400/20">
+                             bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
                       Core Leadership
                     </span>
                   </div>
@@ -918,8 +917,8 @@ export default function AboutUs({ onNavigate }) {
                   <div className="pt-4">
                     <button
                       onClick={() => onNavigate?.("contacts")}
-                      className="w-full px-4 py-2 rounded-xl bg-white/5 border border-white/10 
-                         hover:bg-emerald-500 hover:text-black hover:border-emerald-400 
+                      className="w-full px-4 py-2 rounded-xl bg-white/5 shadow border border-white/10 
+                         hover:bg-cyan-500 hover:text-black hover:border-cyan-400 
                          transition font-semibold text-sm"
                     >
                       Connect with team
@@ -933,7 +932,7 @@ export default function AboutUs({ onNavigate }) {
           {/* Bottom CTA */}
           <motion.div
             variants={fadeIn}
-            className="rounded-2xl border border-white/10 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 
+            className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 
                p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           >
             <div>
@@ -947,7 +946,7 @@ export default function AboutUs({ onNavigate }) {
 
             <button
               onClick={() => onNavigate?.("contacts")}
-              className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 
+              className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 
                  text-black font-semibold transition"
             >
               Talk to leadership
@@ -975,7 +974,7 @@ export default function AboutUs({ onNavigate }) {
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-4">
               <button
                 onClick={() => onNavigate?.("contacts")}
-                className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 
+                className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 
                    rounded-xl text-black font-semibold shadow-lg transition-transform transform hover:scale-105"
               >
                 Schedule scoping call
@@ -1029,7 +1028,6 @@ export default function AboutUs({ onNavigate }) {
             </motion.div>
           </motion.div>
         </motion.section>
-
       </div>
     </section>
   );

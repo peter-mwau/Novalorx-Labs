@@ -125,45 +125,45 @@ const sampleProjects = [
   },
   // Mike
   {
-      "id": 3,
-      "title": "Voice-to-Order AI System",
-      "category": "Conversational AI & Automation",
-      "short": "AI-powered voice system that automates restaurant orders and payments.",
-      "description":
-        "A real-time voice-to-order pipeline that handles customer calls, processes food orders, and manages payments without human intervention.",
-      "longDescription":
-        "Developed for AmigosGrill UK, this system replaces manual phone ordering with a conversational AI agent. The solution handles the entire customer journey—from answering calls to checking inventory and authorizing payments via Square POS. It includes a custom-built React dashboard that allows restaurant staff to track call analytics, conversion rates, and live order status in real-time.",
-      "screenshots": [
-        "/screenshot_dashboard_overview.png",
-        "/screenshot_call_analytics.png",
-        "/screenshot_pending_orders.png",
-        "/screenshot_menu_management.png"
-      ],
-      "details": [
-        "Real-time voice-to-order pipeline using Vapi and Twilio",
-        "Custom Flask webhooks for order logic and inventory lookups",
-        "Secure payment processing via Square POS API integration",
-        "Live analytics dashboard tracking call duration and conversion rates",
-        "Automated menu management and item blacklisting system",
-        "Reduced manual employee handling time for phone orders",
-        "Persistent data storage for order history using MongoDB"
-      ],
-      "tech": ["Python", "Flask", "React", "MongoDB", "Twilio", "Vapi", "Square API"],
-      "timeline": "4 months",
-      "team": "Solo Developer (Contract)",
-      "status": "Completed",
-      "link": "https://amigosgrill-demo.example.com",
-      "github": "https://github.com/Mickmacha/voice-order-system",
-      "challenges": [
-        "Managing real-time voice latency and response accuracy",
-        "Building logic for complex, customized food orders",
-        "Ensuring secure and reliable POS payment synchronization"
-      ],
-      "solutions": [
-        "Optimized Flask webhooks for low-latency voice interactions",
-        "Created a custom API layer to handle menu variations and pricing",
-        "Implemented robust error handling for transaction authorizations"
-      ]
+    "id": 3,
+    "title": "Voice-to-Order AI System",
+    "category": "Conversational AI & Automation",
+    "short": "AI-powered voice system that automates restaurant orders and payments.",
+    "description":
+      "A real-time voice-to-order pipeline that handles customer calls, processes food orders, and manages payments without human intervention.",
+    "longDescription":
+      "Developed for AmigosGrill UK, this system replaces manual phone ordering with a conversational AI agent. The solution handles the entire customer journey—from answering calls to checking inventory and authorizing payments via Square POS. It includes a custom-built React dashboard that allows restaurant staff to track call analytics, conversion rates, and live order status in real-time.",
+    "screenshots": [
+      "/screenshot_dashboard_overview.png",
+      "/screenshot_call_analytics.png",
+      "/screenshot_pending_orders.png",
+      "/screenshot_menu_management.png"
+    ],
+    "details": [
+      "Real-time voice-to-order pipeline using Vapi and Twilio",
+      "Custom Flask webhooks for order logic and inventory lookups",
+      "Secure payment processing via Square POS API integration",
+      "Live analytics dashboard tracking call duration and conversion rates",
+      "Automated menu management and item blacklisting system",
+      "Reduced manual employee handling time for phone orders",
+      "Persistent data storage for order history using MongoDB"
+    ],
+    "tech": ["Python", "Flask", "React", "MongoDB", "Twilio", "Vapi", "Square API"],
+    "timeline": "4 months",
+    "team": "Solo Developer (Contract)",
+    "status": "Completed",
+    "link": "https://amigosgrill-demo.example.com",
+    "github": "https://github.com/Mickmacha/voice-order-system",
+    "challenges": [
+      "Managing real-time voice latency and response accuracy",
+      "Building logic for complex, customized food orders",
+      "Ensuring secure and reliable POS payment synchronization"
+    ],
+    "solutions": [
+      "Optimized Flask webhooks for low-latency voice interactions",
+      "Created a custom API layer to handle menu variations and pricing",
+      "Implemented robust error handling for transaction authorizations"
+    ]
   },
   // Cliff
   {
@@ -473,11 +473,10 @@ function Projects() {
   return (
     <div
       ref={sectionRef}
-      className={`w-full min-h-screen flex flex-col items-center justify-start py-20 relative overflow-hidden transition-opacity duration-1000 ${
-        isInView ? "opacity-100" : "opacity-0"
-      }`}
+      className={`w-full min-h-screen flex flex-col items-center justify-start py-20 relative overflow-hidden transition-opacity duration-1000 ${isInView ? "opacity-100" : "opacity-0"
+        }`}
     >
-    
+
 
 
       <div className="relative z-10 max-w-6xl w-full px-4 md:px-6">
@@ -490,6 +489,50 @@ function Projects() {
           >
             Projects
           </h2>
+
+          <h2
+            className="
+    relative
+    text-3xl sm:text-4xl font-extrabold tracking-widest rotate-[270deg]
+    text-cyan-300
+    drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]
+    drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]
+  "
+            style={{
+              animation: "neonBlink 2.2s infinite",
+            }}
+          >
+            {/* Glow aura behind text */}
+            <span
+              className="
+      absolute inset-0
+      text-cyan-400 opacity-40 blur-lg
+    "
+              style={{
+                animation: "neonBlink 2.2s infinite",
+              }}
+              aria-hidden="true"
+            >
+              NORVALOX
+            </span>
+
+            NORVALOX
+
+            {/* Cyberpunk underglow line */}
+            <span
+              className="
+      absolute left-1/2 -bottom-4 -translate-x-1/2
+      w-24 sm:w-32 h-[3px]
+      bg-gradient-to-r from-transparent via-cyan-400 to-transparent
+      blur-md opacity-90
+      shadow-[0_0_25px_rgba(34,211,238,1)]
+    "
+              style={{
+                animation: "glowPulse 1.5s infinite",
+              }}
+            />
+          </h2>
+
 
           {/* Foreground text */}
           <h3
@@ -570,13 +613,12 @@ function Projects() {
                           {p.title}
                         </h3>
                         <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            p.status === "Live"
+                          className={`text-xs px-2 py-1 rounded-full ${p.status === "Live"
                               ? "bg-green-500/20 text-green-300"
                               : p.status === "Completed"
                                 ? "bg-blue-500/20 text-blue-300"
                                 : "bg-yellow-500/20 text-yellow-300"
-                          }`}
+                            }`}
                         >
                           {p.status}
                         </span>
@@ -632,9 +674,8 @@ function Projects() {
               <button
                 key={i}
                 onClick={() => centerIndex(i)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  currentIndex === i ? "bg-blue-400 scale-125" : "bg-white/30"
-                }`}
+                className={`w-2 h-2 rounded-full transition-all ${currentIndex === i ? "bg-blue-400 scale-125" : "bg-white/30"
+                  }`}
                 aria-label={`Go to project ${i + 1}`}
               />
             ))}
@@ -644,9 +685,8 @@ function Projects() {
         {/* Project Detail Modal */}
         {active && (
           <div
-            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
-              isAnimating ? "animate-fadeIn" : ""
-            }`}
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isAnimating ? "animate-fadeIn" : ""
+              }`}
           >
             <div
               className="absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-300"
@@ -697,11 +737,10 @@ function Projects() {
                       <button
                         key={index}
                         onClick={() => setShotIdx(index)}
-                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${
-                          shotIdx === index
+                        className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${shotIdx === index
                             ? "ring-2 ring-blue-400 scale-105"
                             : "opacity-70 hover:opacity-100 hover:scale-105"
-                        }`}
+                          }`}
                       >
                         <img
                           src={img}
@@ -747,13 +786,12 @@ function Projects() {
                         {active.category}
                       </span>
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          active.status === "Live"
+                        className={`px-2 py-1 rounded-full text-xs font-medium ${active.status === "Live"
                             ? "bg-green-500/20 text-green-300"
                             : active.status === "Completed"
                               ? "bg-blue-500/20 text-blue-300"
                               : "bg-yellow-500/20 text-yellow-300"
-                        }`}
+                          }`}
                       >
                         {active.status}
                       </span>
