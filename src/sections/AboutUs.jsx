@@ -201,7 +201,7 @@ export default function AboutUs({ onNavigate }) {
             {/* Section Header */}
             <motion.div variants={fadeIn} className="space-y-4">
               <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                       bg-emerald-500/10 text-emerald-300 border border-emerald-400/20">
+                       bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
                 Our Expertise
               </span>
 
@@ -223,32 +223,32 @@ export default function AboutUs({ onNavigate }) {
             >
               {[
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 1024 1024"><path fill="#00ca73" fill-rule="evenodd" d="M464 144c8.837 0 16 7.163 16 16v304c0 8.836-7.163 16-16 16H160c-8.837 0-16-7.164-16-16V160c0-8.837 7.163-16 16-16zm-52 68H212v200h200zm493.333 87.686c6.248 6.248 6.248 16.379 0 22.627l-181.02 181.02c-6.248 6.248-16.378 6.248-22.627 0l-181.019-181.02c-6.248-6.248-6.248-16.379 0-22.627l181.02-181.02c6.248-6.248 16.378-6.248 22.627 0zm-84.853 11.313L713 203.52L605.52 311L713 418.48zM464 544c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H160c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H212v200h200zm452-68c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H560c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H612v200h200z"/></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 1024 1024"><path fill="#ffffff" fill-rule="evenodd" d="M464 144c8.837 0 16 7.163 16 16v304c0 8.836-7.163 16-16 16H160c-8.837 0-16-7.164-16-16V160c0-8.837 7.163-16 16-16zm-52 68H212v200h200zm493.333 87.686c6.248 6.248 6.248 16.379 0 22.627l-181.02 181.02c-6.248 6.248-16.378 6.248-22.627 0l-181.019-181.02c-6.248-6.248-6.248-16.379 0-22.627l181.02-181.02c6.248-6.248 16.378-6.248 22.627 0zm-84.853 11.313L713 203.52L605.52 311L713 418.48zM464 544c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H160c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H212v200h200zm452-68c8.837 0 16 7.164 16 16v304c0 8.837-7.163 16-16 16H560c-8.837 0-16-7.163-16-16V560c0-8.836 7.163-16 16-16zm-52 68H612v200h200z" /></svg>,
                   title: "Product Development",
                   body: "We build modern web and mobile applications with scalable architecture and clean UI/UX.",
                 },
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="#00ca73" fill-rule="evenodd" clip-rule="evenodd"><path d="M23.983 21.154c-.14-.999-1.418-2.077-2.047-2.516l-.67-.47c-.678-.509-.428-.738-.828-.738c0-.999.13-1.927.13-2.796v-1.198c0-.39-.08-.799-.14-1.198a40 40 0 0 0-.569-2.766a.39.39 0 0 0-.58-.279a.38.38 0 0 0-.179.39c.07 1.057.07 1.996.11 2.845c0 .639 0 1.258.11 1.887c.11.998.3 1.996.48 3.135h-1.928c-1.198-.05-2.406-.18-3.604-.26c-.819-.05-1.628-.08-2.436-.1c-.999 0-1.947 0-2.916.11c-1.447.11-2.875.3-4.323.48a.34.34 0 1 0 0 .678H7.47c1.427 0 2.845 0 4.283.08c.859 0 1.717.05 2.586.07s1.737 0 2.606 0c.998 0 2.057-.08 3.065-.18l.749.59l.669.518q.544.394.998.89l-4.123-.36h-4.074c-1.997 0-4.064.12-6.09.12c-1.678.06-3.375.289-5.062.349H1.278a5 5 0 0 1 .74-1.268l.678-.61l.999-.658a.34.34 0 0 0 .14-.46a.34.34 0 0 0-.36-.15l.14-1.836c.07-.909.18-1.807.25-2.726c.07-.918.15-1.817.15-2.746c-.11-2.336-.2-1.238.998-1.437l2.366-.43a.39.39 0 0 0-.16-.758l-2.306.2c-.18 0-.999-.07-1.398 0a.78.78 0 0 0-.53.299a1.5 1.5 0 0 0-.199.609c-.07.48 0 1.228 0 1.497c0 .919-.1 1.838-.11 2.746c-.01.909 0 1.837.07 2.756l.09 2.226l-.49.3l-.808.659A5.6 5.6 0 0 0 .1 20.964a1.74 1.74 0 0 0 .63 1.997c.334.22.712.367 1.108.43q.765.105 1.537.08l3.275.139c2.855 0 5.711.17 8.557.18c1.237 0 2.476 0 3.714-.13l2.066-.32l1.278-.33l.849-.359a1.37 1.37 0 0 0 .869-1.497m-1.318.609l-.7.26l-1.167.259l-1.917.18h-2.426c-3.265 0-6.53-.2-9.795-.17H3.365q-.689.06-1.378 0a2 2 0 0 1-.709-.23a.85.85 0 0 1-.299-.998v-.07q1.033.15 2.077.18c1.677.06 3.384 0 5.052 0H12.2c1.997-.05 4.064-.19 6.09-.26h4.623a.528.528 0 0 1-.27.849z"/><path d="M9.416 6.986q.522.484 1.128.859a.389.389 0 1 0 .509-.59q-.405-.36-.749-.778a.87.87 0 0 1-.18-.42l.17-.259c.18-.276.424-.505.71-.669a3.6 3.6 0 0 1 1.067-.42l.43-.07s-.08.1-.11.16a9 9 0 0 0-.998 2.477a2 2 0 0 0 .499 1.917l.769.788a2 2 0 0 0 1.996.52a9.2 9.2 0 0 0 2.486-1.079c.08 0 .15-.11.23-.15l-.09.51a3.6 3.6 0 0 1-.42 1.068c-.167.3-.403.557-.688.749l-.26.17a.87.87 0 0 1-.419-.18a8 8 0 0 1-.779-.749a.39.39 0 0 0-.589.51q.375.604.859 1.128c.196.189.436.326.699.399c.184.04.375.04.559 0a2 2 0 0 0 .639-.25c.468-.278.85-.678 1.108-1.158a4 4 0 0 0 .24-1.488l-.08-.998a1 1 0 0 1 0-.18a9.4 9.4 0 0 0 1.777-1.617a7.6 7.6 0 0 0 1.588-3.415a6 6 0 0 0 0-1.657c-.016-.5-.202-.98-.53-1.358a2.2 2.2 0 0 0-1.258-.53a6.5 6.5 0 0 0-1.637.09a7.7 7.7 0 0 0-3.355 1.678a9.7 9.7 0 0 0-1.627 1.817H13l-.998-.12a4.1 4.1 0 0 0-1.558.3c-.502.254-.918.65-1.198 1.138q-.172.289-.24.62c-.04.18-.04.367 0 .548c.081.259.221.495.41.69m5.99-4.153a6.66 6.66 0 0 1 2.896-1.278q.525-.09 1.058-.07c.245-.02.49.039.699.17c.14.216.203.472.18.728q.035.547-.05 1.089a6.34 6.34 0 0 1-1.199 2.915a8.9 8.9 0 0 1-2.416 2.197c-.67.46-1.403.82-2.176 1.068a1.22 1.22 0 0 1-1.198-.21l-.81-.768a1.28 1.28 0 0 1-.219-1.258A8 8 0 0 1 13.26 5.25a9.1 9.1 0 0 1 2.176-2.396zM8.168 10.86q.141.104.31.16l-.08.11a7.8 7.8 0 0 0-1 1.547c-.138.353-.166.74-.079 1.108a.65.65 0 0 0 .17.27a.7.7 0 0 0 .27.17c.408.13.848.116 1.247-.04a7.7 7.7 0 0 0 1.538-.999l.11-.08q.058.17.16.32a.91.91 0 0 0 1.178.43c.423-.222.744-.597.898-1.049c.109-.32.15-.66.12-.998q-.054-.65-.19-1.288a.37.37 0 0 0-.439-.32a.38.38 0 0 0-.33.43q.084.59.09 1.187c.002.223-.039.443-.12.65c0 .09-.22.17-.319.26l-.05-.66a.64.64 0 0 0-.789-.44l-.28.1l-.728.42c-.24.15-.59.4-.998.6h-.05q.274-.518.609-1L9.825 11q.06-.13.1-.27a.3.3 0 0 0 0-.09a.56.56 0 0 0-.47-.698l-.718.04s0-.05-.06 0s0 .1 0 .09s.27-.33.42-.39c.208-.088.432-.135.658-.14q.597.001 1.188.08a.34.34 0 0 0 .39-.29a.35.35 0 0 0-.33-.429q-.634-.134-1.278-.2a2.7 2.7 0 0 0-.998.11a1.9 1.9 0 0 0-.999.879a.91.91 0 0 0 .44 1.168"/></g></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="#ffffff" fill-rule="evenodd" clip-rule="evenodd"><path d="M23.983 21.154c-.14-.999-1.418-2.077-2.047-2.516l-.67-.47c-.678-.509-.428-.738-.828-.738c0-.999.13-1.927.13-2.796v-1.198c0-.39-.08-.799-.14-1.198a40 40 0 0 0-.569-2.766a.39.39 0 0 0-.58-.279a.38.38 0 0 0-.179.39c.07 1.057.07 1.996.11 2.845c0 .639 0 1.258.11 1.887c.11.998.3 1.996.48 3.135h-1.928c-1.198-.05-2.406-.18-3.604-.26c-.819-.05-1.628-.08-2.436-.1c-.999 0-1.947 0-2.916.11c-1.447.11-2.875.3-4.323.48a.34.34 0 1 0 0 .678H7.47c1.427 0 2.845 0 4.283.08c.859 0 1.717.05 2.586.07s1.737 0 2.606 0c.998 0 2.057-.08 3.065-.18l.749.59l.669.518q.544.394.998.89l-4.123-.36h-4.074c-1.997 0-4.064.12-6.09.12c-1.678.06-3.375.289-5.062.349H1.278a5 5 0 0 1 .74-1.268l.678-.61l.999-.658a.34.34 0 0 0 .14-.46a.34.34 0 0 0-.36-.15l.14-1.836c.07-.909.18-1.807.25-2.726c.07-.918.15-1.817.15-2.746c-.11-2.336-.2-1.238.998-1.437l2.366-.43a.39.39 0 0 0-.16-.758l-2.306.2c-.18 0-.999-.07-1.398 0a.78.78 0 0 0-.53.299a1.5 1.5 0 0 0-.199.609c-.07.48 0 1.228 0 1.497c0 .919-.1 1.838-.11 2.746c-.01.909 0 1.837.07 2.756l.09 2.226l-.49.3l-.808.659A5.6 5.6 0 0 0 .1 20.964a1.74 1.74 0 0 0 .63 1.997c.334.22.712.367 1.108.43q.765.105 1.537.08l3.275.139c2.855 0 5.711.17 8.557.18c1.237 0 2.476 0 3.714-.13l2.066-.32l1.278-.33l.849-.359a1.37 1.37 0 0 0 .869-1.497m-1.318.609l-.7.26l-1.167.259l-1.917.18h-2.426c-3.265 0-6.53-.2-9.795-.17H3.365q-.689.06-1.378 0a2 2 0 0 1-.709-.23a.85.85 0 0 1-.299-.998v-.07q1.033.15 2.077.18c1.677.06 3.384 0 5.052 0H12.2c1.997-.05 4.064-.19 6.09-.26h4.623a.528.528 0 0 1-.27.849z" /><path d="M9.416 6.986q.522.484 1.128.859a.389.389 0 1 0 .509-.59q-.405-.36-.749-.778a.87.87 0 0 1-.18-.42l.17-.259c.18-.276.424-.505.71-.669a3.6 3.6 0 0 1 1.067-.42l.43-.07s-.08.1-.11.16a9 9 0 0 0-.998 2.477a2 2 0 0 0 .499 1.917l.769.788a2 2 0 0 0 1.996.52a9.2 9.2 0 0 0 2.486-1.079c.08 0 .15-.11.23-.15l-.09.51a3.6 3.6 0 0 1-.42 1.068c-.167.3-.403.557-.688.749l-.26.17a.87.87 0 0 1-.419-.18a8 8 0 0 1-.779-.749a.39.39 0 0 0-.589.51q.375.604.859 1.128c.196.189.436.326.699.399c.184.04.375.04.559 0a2 2 0 0 0 .639-.25c.468-.278.85-.678 1.108-1.158a4 4 0 0 0 .24-1.488l-.08-.998a1 1 0 0 1 0-.18a9.4 9.4 0 0 0 1.777-1.617a7.6 7.6 0 0 0 1.588-3.415a6 6 0 0 0 0-1.657c-.016-.5-.202-.98-.53-1.358a2.2 2.2 0 0 0-1.258-.53a6.5 6.5 0 0 0-1.637.09a7.7 7.7 0 0 0-3.355 1.678a9.7 9.7 0 0 0-1.627 1.817H13l-.998-.12a4.1 4.1 0 0 0-1.558.3c-.502.254-.918.65-1.198 1.138q-.172.289-.24.62c-.04.18-.04.367 0 .548c.081.259.221.495.41.69m5.99-4.153a6.66 6.66 0 0 1 2.896-1.278q.525-.09 1.058-.07c.245-.02.49.039.699.17c.14.216.203.472.18.728q.035.547-.05 1.089a6.34 6.34 0 0 1-1.199 2.915a8.9 8.9 0 0 1-2.416 2.197c-.67.46-1.403.82-2.176 1.068a1.22 1.22 0 0 1-1.198-.21l-.81-.768a1.28 1.28 0 0 1-.219-1.258A8 8 0 0 1 13.26 5.25a9.1 9.1 0 0 1 2.176-2.396zM8.168 10.86q.141.104.31.16l-.08.11a7.8 7.8 0 0 0-1 1.547c-.138.353-.166.74-.079 1.108a.65.65 0 0 0 .17.27a.7.7 0 0 0 .27.17c.408.13.848.116 1.247-.04a7.7 7.7 0 0 0 1.538-.999l.11-.08q.058.17.16.32a.91.91 0 0 0 1.178.43c.423-.222.744-.597.898-1.049c.109-.32.15-.66.12-.998q-.054-.65-.19-1.288a.37.37 0 0 0-.439-.32a.38.38 0 0 0-.33.43q.084.59.09 1.187c.002.223-.039.443-.12.65c0 .09-.22.17-.319.26l-.05-.66a.64.64 0 0 0-.789-.44l-.28.1l-.728.42c-.24.15-.59.4-.998.6h-.05q.274-.518.609-1L9.825 11q.06-.13.1-.27a.3.3 0 0 0 0-.09a.56.56 0 0 0-.47-.698l-.718.04s0-.05-.06 0s0 .1 0 .09s.27-.33.42-.39c.208-.088.432-.135.658-.14q.597.001 1.188.08a.34.34 0 0 0 .39-.29a.35.35 0 0 0-.33-.429q-.634-.134-1.278-.2a2.7 2.7 0 0 0-.998.11a1.9 1.9 0 0 0-.999.879a.91.91 0 0 0 .44 1.168" /></g></svg>,
                   title: "Rapid Prototyping",
                   body: "Validate ideas quickly with clickable prototypes and MVPs in weeks — not months.",
                 },
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#00ca73" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M1.874 17.625a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0"/><path d="M8.249 23.25a4.25 4.25 0 0 0-7.5 0m16.125-5.625a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0"/><path d="M23.249 23.25a4.25 4.25 0 0 0-7.5 0M9.374 3.375a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0m5.874 4.875a4.27 4.27 0 0 0-6.5 0m.302 11.457a8.28 8.28 0 0 0 5.944-.018M6.348 6a8.22 8.22 0 0 0-2.6 6c0 .253.015.5.038.75m16.425 0c.022-.248.038-.5.038-.75a8.22 8.22 0 0 0-2.6-6"/></g></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M1.874 17.625a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0" /><path d="M8.249 23.25a4.25 4.25 0 0 0-7.5 0m16.125-5.625a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0" /><path d="M23.249 23.25a4.25 4.25 0 0 0-7.5 0M9.374 3.375a2.625 2.625 0 1 0 5.25 0a2.625 2.625 0 0 0-5.25 0m5.874 4.875a4.27 4.27 0 0 0-6.5 0m.302 11.457a8.28 8.28 0 0 0 5.944-.018M6.348 6a8.22 8.22 0 0 0-2.6 6c0 .253.015.5.038.75m16.425 0c.022-.248.038-.5.038-.75a8.22 8.22 0 0 0-2.6-6" /></g></svg>,
                   title: "Dedicated Teams",
                   body: "Small cross-functional squads that operate like an extension of your in-house team.",
                 },
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#00ca73" d="M12 19.9q2.425-.75 4.05-2.962T17.95 12H12V4.144L6.404 6.221q-.193.077-.298.231Q6 6.606 6 6.798v4.733q0 .194.05.469H12zm0 .942q-.136 0-.287-.025t-.28-.075Q8.48 19.617 6.74 16.926T5 11.1V6.817q0-.51.295-.923t.755-.6l5.385-2q.292-.106.565-.106t.566.106l5.384 2q.46.187.755.6t.295.923V11.1q0 3.135-1.74 5.826t-4.693 3.816q-.13.05-.28.075t-.287.025"/></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ffffff" d="M12 19.9q2.425-.75 4.05-2.962T17.95 12H12V4.144L6.404 6.221q-.193.077-.298.231Q6 6.606 6 6.798v4.733q0 .194.05.469H12zm0 .942q-.136 0-.287-.025t-.28-.075Q8.48 19.617 6.74 16.926T5 11.1V6.817q0-.51.295-.923t.755-.6l5.385-2q.292-.106.565-.106t.566.106l5.384 2q.46.187.755.6t.295.923V11.1q0 3.135-1.74 5.826t-4.693 3.816q-.13.05-.28.075t-.287.025" /></svg>,
                   title: "Security & Compliance",
                   body: "Secure-by-design development practices with NDA support, access controls, and best practices.",
                 },
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="#00ca73" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4.5a3 3 0 0 0-2.567 4.554a3.001 3.001 0 0 0 0 5.893M7 4.5a2.5 2.5 0 0 1 5 0v15a2.5 2.5 0 0 1-5 0a3 3 0 0 1-2.567-4.553M7 4.5c0 .818.393 1.544 1 2m-3.567 8.447A3 3 0 0 1 6 13.67m13.25-8.92L17 7h-2m3.5-2.25a.75.75 0 1 0 1.5 0a.75.75 0 0 0-1.5 0m.75 14.5L17 17h-2m3.5 2.25a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m.75-7.25H15m3.5 0a.75.75 0 1 0 1.5 0a.75.75 0 0 0-1.5 0"/></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4.5a3 3 0 0 0-2.567 4.554a3.001 3.001 0 0 0 0 5.893M7 4.5a2.5 2.5 0 0 1 5 0v15a2.5 2.5 0 0 1-5 0a3 3 0 0 1-2.567-4.553M7 4.5c0 .818.393 1.544 1 2m-3.567 8.447A3 3 0 0 1 6 13.67m13.25-8.92L17 7h-2m3.5-2.25a.75.75 0 1 0 1.5 0a.75.75 0 0 0-1.5 0m.75 14.5L17 17h-2m3.5 2.25a.75.75 0 1 1 1.5 0a.75.75 0 0 1-1.5 0m.75-7.25H15m3.5 0a.75.75 0 1 0 1.5 0a.75.75 0 0 0-1.5 0" /></svg>,
                   title: "AI & Data Solutions",
                   body: "Machine learning pipelines, dashboards, predictive insights, and AI-powered automation.",
                 },
                 {
-                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#00ca73" d="M.889.775S0 1.29 0 2.315V7.44s0 3.079 2.666 4.618c.817.472 1.384.508 1.777.334c.394.628.96 1.246 1.778 1.718c2.666 1.54 2.668-1.539 2.668-1.539V7.447c0-1.027.888-1.539.888-1.539l3.557-2.054s.89-.514 1.777 0c.89.513 0 1.027 0 1.027L11.56 6.934l1.775 1.025l3.559-2.055c.052-.03.912-.495 1.773.002c.89.514 0 1.026 0 1.026l-3.555 2.054s-.888.514-.888 1.54v5.124s0 1.028-.889.514c-.89-.513-.89-1.539-.89-1.539l-1.778-1.027s.001 3.08 2.668 4.619s2.666-1.54 2.666-1.54v-5.126c0-1.026.889-1.537.889-1.537l4.445-2.569s1.776-1.025-.889-2.564c-.819-.474-1.552-.704-2.177-.797c-.164-.357-.565-.776-1.377-1.24c-2.667-1.523-5.332-.016-5.332-.016L8.004 4.881s-.89.514-.89 1.539v5.125s0 1.027-.89.514c-.889-.514-.89-1.54-.89-1.54V5.396q0-.096.01-.188c.097-.902.879-1.353.879-1.353L4.445 2.828l-.004.002c-.052.03-.884.544-.884 1.537v5.125s-.002 1.027-.891.514c-.89-.514-.889-1.54-.889-1.54V3.343c0-1.026.889-1.54.889-1.54L.889.776zm9.78 8.735v2.053l1.778 1.025v-2.053zm8.442 2.183c-.666.005-1.332.389-1.332 1.909c0 3.039 2.666 4.619 2.666 4.619l.889.513s.89.514.89 1.54s-.89.513-.89.513l-3.555-2.053v2.053l3.555 2.053S24 24.379 24 21.3c0-3.077-1.777-4.105-1.777-4.105l-1.778-1.025s-.888-.514-.888-1.54c0-1.028.888-.515.888-.515L24 16.168v-2.053l-3.555-2.05s-.667-.376-1.334-.372"/></svg>,
+                  icon: <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="#ffffff" d="M.889.775S0 1.29 0 2.315V7.44s0 3.079 2.666 4.618c.817.472 1.384.508 1.777.334c.394.628.96 1.246 1.778 1.718c2.666 1.54 2.668-1.539 2.668-1.539V7.447c0-1.027.888-1.539.888-1.539l3.557-2.054s.89-.514 1.777 0c.89.513 0 1.027 0 1.027L11.56 6.934l1.775 1.025l3.559-2.055c.052-.03.912-.495 1.773.002c.89.514 0 1.026 0 1.026l-3.555 2.054s-.888.514-.888 1.54v5.124s0 1.028-.889.514c-.89-.513-.89-1.539-.89-1.539l-1.778-1.027s.001 3.08 2.668 4.619s2.666-1.54 2.666-1.54v-5.126c0-1.026.889-1.537.889-1.537l4.445-2.569s1.776-1.025-.889-2.564c-.819-.474-1.552-.704-2.177-.797c-.164-.357-.565-.776-1.377-1.24c-2.667-1.523-5.332-.016-5.332-.016L8.004 4.881s-.89.514-.89 1.539v5.125s0 1.027-.89.514c-.889-.514-.89-1.54-.89-1.54V5.396q0-.096.01-.188c.097-.902.879-1.353.879-1.353L4.445 2.828l-.004.002c-.052.03-.884.544-.884 1.537v5.125s-.002 1.027-.891.514c-.89-.514-.889-1.54-.889-1.54V3.343c0-1.026.889-1.54.889-1.54L.889.776zm9.78 8.735v2.053l1.778 1.025v-2.053zm8.442 2.183c-.666.005-1.332.389-1.332 1.909c0 3.039 2.666 4.619 2.666 4.619l.889.513s.89.514.89 1.54s-.89.513-.89.513l-3.555-2.053v2.053l3.555 2.053S24 24.379 24 21.3c0-3.077-1.777-4.105-1.777-4.105l-1.778-1.025s-.888-.514-.888-1.54c0-1.028.888-.515.888-.515L24 16.168v-2.053l-3.555-2.05s-.667-.376-1.334-.372" /></svg>,
                   title: "Web3 Engineering",
                   body: "Smart contracts, tokenization, and blockchain-based systems with real-world product usability.",
                 },
@@ -259,15 +259,15 @@ export default function AboutUs({ onNavigate }) {
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.25 }}
                   className="group relative bg-white/5 border border-white/10 rounded-2xl p-6
-                     hover:border-emerald-400/40 hover:bg-white/10
+                     hover:border-cyan-400/40 hover:bg-white/10
                      shadow-lg shadow-black/30"
                 >
                   {/* Glow effect */}
                   <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 
-                          transition duration-300 blur-xl bg-emerald-500/10" />
+                          transition duration-300 blur-xl bg-cyan-500/10" />
 
                   <div className="relative z-10 flex items-start gap-4">
-                    <div className="p-3 rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-400/20">
+                    <div className="p-3 rounded-xl bg-cyan-500/10 text-cyan-300 border border-cyan-400/20">
                       {service.icon}
                     </div>
 
@@ -301,7 +301,7 @@ export default function AboutUs({ onNavigate }) {
 
               <button
                 onClick={() => onNavigate?.("contacts")}
-                className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 
+                className="px-6 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-600 
                    text-black font-semibold transition"
               >
                 Talk to our team
@@ -317,30 +317,35 @@ export default function AboutUs({ onNavigate }) {
           whileInView="animate"
           viewport={{ once: true, amount: 0.25 }}
           variants={containerStagger}
-          className="space-y-12 min-h-screen flex flex-col justify-center"
+          className="space-y-14 min-h-screen flex flex-col justify-center"
         >
           {/* Header */}
-          <motion.div variants={fadeIn} className="space-y-4">
-            <span className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
-                            bg-purple-500/10 text-purple-300 border border-purple-400/20">
+          <motion.div variants={fadeIn} className="space-y-5 text-center md:text-left">
+            <span
+              className="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold 
+                 bg-cyan-500/10 text-cyan-300 border border-cyan-400/20"
+            >
               Our Workflow
             </span>
 
-            <h3 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
               Our process — predictable, transparent, iterative
             </h3>
 
-            <p className="text-gray-300 max-w-3xl text-lg leading-relaxed">
+            <p className="text-gray-300 max-w-3xl text-lg leading-relaxed mx-auto md:mx-0">
               We work in structured sprints with clear milestones, rapid feedback loops,
               and measurable delivery. Every step is designed to reduce risk and move fast.
             </p>
           </motion.div>
 
-          {/* Timeline Steps */}
+          {/* Timeline Wrapper */}
           <motion.div
             variants={containerStagger}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="relative grid grid-cols-1 md:grid-cols-2 gap-6"
           >
+            {/* Vertical Timeline Line (Desktop only) */}
+            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-500/30 via-white/10 to-transparent" />
+
             {[
               {
                 step: "01",
@@ -366,27 +371,39 @@ export default function AboutUs({ onNavigate }) {
               <motion.div
                 key={i}
                 variants={fadeIn}
-                whileHover={{ y: -6 }}
+                whileHover={{ y: -8, scale: 1.01 }}
                 transition={{ duration: 0.25 }}
-                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6
-                          hover:border-purple-400/30 hover:bg-white/10 shadow-lg shadow-black/30"
+                className={`relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-7
+                   hover:border-cyan-400/30 hover:bg-white/10 shadow-lg shadow-black/30
+                   ${i % 2 === 0 ? "md:pr-12" : "md:pl-12"}`}
               >
-                {/* Background Glow */}
-                <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-purple-500/10 blur-3xl opacity-60" />
+                {/* Glow Effect */}
+                <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl opacity-70" />
+                <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-cyan-500/10 blur-3xl opacity-40" />
+
+                {/* Timeline Dot (Desktop only) */}
+                <div
+                  className={`hidden md:block absolute top-10 w-4 h-4 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/30
+                      ${i % 2 === 0 ? "-right-2" : "-left-2"}`}
+                >
+                  <div className="absolute inset-0 rounded-full bg-cyan-500/30 blur-md animate-pulse" />
+                </div>
 
                 <div className="relative z-10 flex items-start gap-5">
                   {/* Step Number */}
-                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-purple-500/10 
-                                  border border-purple-400/20 flex items-center justify-center">
-                    <span className="text-purple-300 font-bold text-lg">{s.step}</span>
+                  <div
+                    className="flex-shrink-0 w-16 h-16 rounded-2xl bg-cyan-500/10 
+                       border border-cyan-400/20 flex items-center justify-center"
+                  >
+                    <span className="text-cyan-300 font-bold text-lg">{s.step}</span>
                   </div>
 
                   {/* Content */}
                   <div>
-                    <h4 className="text-white font-semibold text-xl">
+                    <h4 className="text-white font-semibold text-xl sm:text-2xl">
                       {s.title}
                     </h4>
-                    <p className="text-gray-300 text-sm mt-2 leading-relaxed">
+                    <p className="text-gray-300 text-sm sm:text-base mt-2 leading-relaxed">
                       {s.desc}
                     </p>
                   </div>
@@ -398,27 +415,32 @@ export default function AboutUs({ onNavigate }) {
           {/* Bottom Mini CTA */}
           <motion.div
             variants={fadeIn}
-            className="rounded-2xl border border-white/10 bg-white/5 p-6 flex flex-col sm:flex-row 
-                      items-start sm:items-center justify-between gap-6"
+            className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-7 
+               flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
           >
-            <div>
-              <h4 className="text-lg font-semibold text-white">
+            {/* CTA Glow */}
+            <div className="absolute -top-20 right-0 w-96 h-96 bg-cyan-500/10 blur-3xl opacity-70" />
+
+            <div className="relative z-10">
+              <h4 className="text-lg sm:text-xl font-semibold text-white">
                 Weekly demos. Clear milestones. Zero ambiguity.
               </h4>
-              <p className="text-gray-300 text-sm mt-1">
-                We deliver progress you can see, track, and measure every sprint.
+              <p className="text-gray-300 text-sm sm:text-base mt-2 max-w-xl">
+                We deliver progress you can see, track, and measure every sprint — so your team always stays aligned.
               </p>
             </div>
 
             <button
               onClick={() => onNavigate?.("contacts")}
-              className="px-6 py-3 rounded-xl bg-purple-500 hover:bg-purple-600 
-                        text-black font-semibold transition"
+              className="relative z-10 px-7 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-600
+                 hover:from-cyan-600 hover:to-cyan-700 text-black font-semibold transition
+                 shadow-lg shadow-cyan-500/20 hover:scale-[1.03]"
             >
               Start a project
             </button>
           </motion.div>
         </motion.section>
+
 
         {/* Engagement Models */}
         <motion.section initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.25 }} variants={containerStagger}

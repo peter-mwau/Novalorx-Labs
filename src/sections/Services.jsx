@@ -1,6 +1,6 @@
 // src/sections/Services.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import servicesData from "../constants/services";
 import { coder, cloud, ml, web3, mobile } from "../assets/images";
 import {
@@ -12,6 +12,8 @@ import {
   X,
   ArrowRightFromLineIcon,
   BlocksIcon,
+  Check,
+  CheckCircle2Icon,
 } from "lucide-react";
 
 // icon / image maps
@@ -29,12 +31,14 @@ const imageMap = {
   ai_ml: ml,
   cloud: cloud,
 };
-const services = servicesData.services.map((s) => {
+
+// Normalize services: pick up new optional fields if present; use sensible defaults
+const services = (servicesData.services || []).map((s) => {
   const techStack = s.tech_stack ? Object.values(s.tech_stack).flat() : [];
   return {
     id: s.id,
     title: s.name,
-    description: s.description,
+    description: s.description || "",
     image: imageMap[s.id] || "",
     imageKeyword: s.offerings?.[0] || s.tags?.[0] || s.name,
     techStack,
@@ -43,8 +47,23 @@ const services = servicesData.services.map((s) => {
     useCases: s.use_cases || [],
     deliveryModel: s.delivery_model || [],
     icon: iconMap[s.id] || Code2,
+
+    // NEW fields (optional in your data)
+    businessOutcomes: s.business_outcomes || s.outcomes || [], // what business impact to expect
+    deliverables: s.deliverables || s.what_you_get || [],
+    timeline: s.timeline || s.estimated_delivery || "", // e.g., "2–4 weeks"
+    startingFrom: s.starting_from || s.pricing_start || "", // e.g., "$2,500"
+    bestFor: s.best_for || s.ideal_clients || [],
+    proofPoints: s.proof_points || s.case_studies || [], // small case study summaries
+    processSteps: s.process_steps || [], // step-by-step workflow specific to service
+    support: s.post_launch_support || s.maintenance_options || "", // post-launch options
+    platforms: s.platforms || s.integrations || [], // AWS, Stripe, OpenAI...
+    riskControls: s.risk_controls || s.quality_assurance || [], // QA, SLAs, audits
+    packages: s.packages || [], // optional tiered packages (starter/growth/enterprise)
   };
 });
+
+// Duplicate for continuous carousel loop
 const loopedServices = [...services, ...services];
 
 const Services = ({ onNavigate }) => {
@@ -139,7 +158,7 @@ const Services = ({ onNavigate }) => {
     pausedRef.current = false;
   };
 
-  // Tally embed script loader
+  // Tally embed script loader (kept)
   useEffect(() => {
     const ensureTally = () => {
       if (window.Tally) {
@@ -179,19 +198,20 @@ const Services = ({ onNavigate }) => {
         <Terminal className="w-5 h-5" />
       </button>
 
-      {/* Sidebar Panel — replaced heavy backdrop-filter with translucent BG */}
+      {/* Sidebar Panel */}
       <motion.div
         initial={{ x: "100%" }}
         animate={{ x: showSidebar ? 0 : "100%" }}
         transition={{ duration: 0.35 }}
-        className="fixed top-0 right-0 h-full w-80 z-60 p-6 overflow-y-auto"
+        className="fixed top-0 right-0 max-h-[90vh] w-90 z-60 p-6 overflow-y-auto no-scrollbar mb-20 bg-gray-900 rounded-lg shadow-2xl"
         style={{
-          backgroundColor: "rgba(17,24,39,0.86)", // dark translucent
+          backgroundColor: "rgba(17,24,39,0.86)",
           borderLeft: "1px solid rgba(255,255,255,0.04)",
           transform: "translateZ(0)",
           willChange: "transform, opacity",
-          contain: "paint", // isolate painting in supporting browsers
+          contain: "paint",
         }}
+        aria-hidden={!showSidebar}
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-gray-100 text-2xl font-bold text-center">Service Details</h3>
@@ -202,7 +222,7 @@ const Services = ({ onNavigate }) => {
 
         {!selectedService && (
           <div className="text-sm text-gray-400 mb-4">
-            Open any service card to view its offerings, tags, use cases and delivery model.
+            Open any service card to view its offerings, deliverables, outcomes, timeline, and more.
           </div>
         )}
 
@@ -213,69 +233,195 @@ const Services = ({ onNavigate }) => {
               <p className="text-sm text-gray-300 mt-2">{selectedService.description}</p>
             </div>
 
+            {/* quick meta row */}
+            <div className="mb-4 flex flex-col gap-2">
+              {selectedService.startingFrom && (
+                <div className="text-sm text-gray-300">
+                  <strong>Starts from:</strong> {selectedService.startingFrom}
+                </div>
+              )}
+              {selectedService.timeline && (
+                <div className="text-sm text-gray-300">
+                  <strong>Typical timeline:</strong> {selectedService.timeline}
+                </div>
+              )}
+              {selectedService.bestFor && selectedService.bestFor.length > 0 && (
+                <div className="text-sm text-gray-300">
+                  <strong>Best for:</strong> {selectedService.bestFor.join(", ")}
+                </div>
+              )}
+            </div>
+
+            {/* Deliverables */}
             <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Offerings</h5>
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Deliverables</h5>
               <ul className="list-inside space-y-2 text-sm text-gray-200">
-                {selectedService.offerings.length > 0 ? (
-                  selectedService.offerings.map((o, i) => (
+                {selectedService.deliverables.length > 0 ? (
+                  selectedService.deliverables.map((d, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <span className="mt-1 text-cyan-300">•</span>
-                      <span>{o}</span>
+                      <span>{d}</span>
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-400">No offerings listed.</li>
+                  <li className="text-gray-400">Deliverables will be defined during scoping.</li>
                 )}
               </ul>
             </div>
 
-            {/* Tags */}
+            {/* Business outcomes */}
             <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Tags</h5>
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Business outcomes</h5>
+              <ul className="list-inside space-y-2 text-sm text-gray-200">
+                {selectedService.businessOutcomes.length > 0 ? (
+                  selectedService.businessOutcomes.map((b, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="mt-1 text-emerald-300"><CheckCircle2Icon className="w-4 h-4" /></span>
+                      <span>{b}</span>
+                    </li>
+                  ))
+                ) : (
+                  <li className="text-gray-400">We’ll define measurable outcomes in the discovery phase.</li>
+                )}
+              </ul>
+            </div>
+
+            {/* Proof / case points */}
+            <div className="mb-4">
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Proof points</h5>
+              <div className="text-sm text-gray-200 space-y-2">
+                {selectedService.proofPoints.length > 0 ? (
+                  selectedService.proofPoints.map((p, i) => (
+                    <div key={i} className="bg-gray-800/40 p-3 rounded-md">
+                      <div className="text-xs text-gray-300 font-semibold">{p.title || `Case study ${i + 1}`}</div>
+                      {p.summary && <div className="text-sm text-gray-200 mt-1">{p.summary}</div>}
+                      {p.metric && <div className="text-xs text-gray-400 mt-1">Result: {p.metric}</div>}
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-gray-400">No public case studies listed for this offering.</div>
+                )}
+              </div>
+            </div>
+
+            {/* Process steps */}
+            <div className="mb-4">
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Our approach</h5>
+              <ol className="list-decimal list-inside space-y-2 text-sm text-gray-200">
+                {selectedService.processSteps.length > 0 ? (
+                  selectedService.processSteps.map((ps, i) => <li key={i}>{ps}</li>)
+                ) : (
+                  <>
+                    <li>Discovery call to align on goals and constraints</li>
+                    <li>Design & architecture</li>
+                    <li>Iterative sprints with weekly demos</li>
+                    <li>QA, security review & launch</li>
+                  </>
+                )}
+              </ol>
+            </div>
+
+            {/* Tech stack & platforms */}
+            <div className="mb-4">
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Tech & platforms</h5>
               <div className="flex flex-wrap gap-2">
-                {selectedService.tags.length > 0 ? (
-                  selectedService.tags.map((tag, i) => (
+                {selectedService.techStack.length > 0 ? (
+                  selectedService.techStack.map((t, i) => (
                     <span key={i} className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
-                      {tag}
+                      {t}
                     </span>
                   ))
                 ) : (
-                  <div className="text-gray-400">No tags.</div>
+                  <div className="text-gray-400">Tech stack discussed in scoping.</div>
                 )}
               </div>
+
+              {selectedService.platforms && selectedService.platforms.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {selectedService.platforms.map((p, i) => (
+                    <span key={i} className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-gray-200">
+                      {p}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {/* Use Cases */}
-            <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Use Cases</h5>
-              <ul className="list-inside space-y-2 text-sm text-gray-200">
-                {selectedService.useCases.length > 0 ? (
-                  selectedService.useCases.map((uc, i) => (
+            {/* Risk controls */}
+            <div className="mb-6">
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Risk reduction</h5>
+              <ul className="text-sm text-gray-200 space-y-2">
+                {selectedService.riskControls.length > 0 ? (
+                  selectedService.riskControls.map((r, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1 text-cyan-300">•</span>
-                      <span>{uc}</span>
+                      <span className="text-emerald-300">•</span>
+                      <span>{r}</span>
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-400">No use cases specified.</li>
+                  <li className="text-gray-400">We include testing, code reviews, and deployment safeguards as standard.</li>
                 )}
               </ul>
             </div>
 
-            {/* Delivery Model */}
-            <div className="mb-4">
-              <h5 className="text-sm font-semibold text-blue-300 mb-2">Delivery Model</h5>
-              <div className="flex flex-col gap-2">
-                {selectedService.deliveryModel.length > 0 ? (
-                  selectedService.deliveryModel.map((dm, i) => (
-                    <span key={i} className="text-sm px-3 py-2 rounded-md bg-gray-800/60 border border-gray-700 text-gray-200">
-                      {dm}
-                    </span>
-                  ))
-                ) : (
-                  <div className="text-gray-400">No delivery model listed.</div>
-                )}
+            {/* Packages (optional) */}
+            {selectedService.packages && selectedService.packages.length > 0 && (
+              <div className="mb-6">
+                <h5 className="text-sm font-semibold text-blue-300 mb-2">Packages</h5>
+                <div className="space-y-3">
+                  {selectedService.packages.map((pkg, i) => (
+                    <div key={i} className="p-3 rounded-md bg-gray-800/40 border border-gray-700">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-sm text-gray-200 font-semibold">{pkg.name}</div>
+                          {pkg.summary && <div className="text-xs text-gray-400">{pkg.summary}</div>}
+                        </div>
+                        {pkg.price && <div className="text-sm text-gray-100 font-bold">{pkg.price}</div>}
+                      </div>
+                      {pkg.features && (
+                        <ul className="text-sm text-gray-200 mt-2 list-inside">
+                          {pkg.features.map((f, k) => (
+                            <li key={k}>• {f}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
+            )}
+
+            {/* Post-launch support */}
+            <div className="mb-8">
+              <h5 className="text-sm font-semibold text-blue-300 mb-2">Support & Maintenance</h5>
+              <div className="text-sm text-gray-200">
+                {selectedService.support ? selectedService.support : "We offer 30 days post-launch support and customizable maintenance plans."}
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col gap-3 mt-2 mb-16">
+              <button
+                onClick={() => {
+                  closeModal();
+                  setShowSidebar(false);
+                  if (onNavigate) onNavigate("contacts");
+                }}
+                className="px-4 py-2 rounded-full bg-blue-300 text-black font-medium"
+              >
+                Request a quote
+              </button>
+
+              <button
+                onClick={() => {
+                  closeModal();
+                  setShowSidebar(false);
+                  if (onNavigate) onNavigate("contacts");
+                }}
+                className="px-4 py-2 rounded-full bg-transparent border border-blue-300 text-blue-300"
+              >
+                Book a scoping call
+              </button>
             </div>
           </>
         )}
@@ -289,7 +435,7 @@ const Services = ({ onNavigate }) => {
           </h2>
 
           <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-lg rounded-3xl">
-            Our Features Services
+            Our Featured Services
           </h3>
         </div>
 
@@ -309,13 +455,14 @@ const Services = ({ onNavigate }) => {
               <article
                 key={`${service.id}-${i}`}
                 onClick={() => openModalFor(i)}
-                className="cursor-pointer flex-shrink-0 w-[320px] md:w-[360px] bg-[rgba(17,24,39,0.6)] border border-gray-700 rounded-xl overflow-hidden shadow-lg"
+                className="cursor-pointer flex-shrink-0 w-[520px] md:w-[560px] h-auto bg-[rgba(17,24,39,0.6)] border border-gray-700 rounded-xl overflow-hidden shadow-lg"
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") openModalFor(i);
                 }}
                 style={{ transform: "translateZ(0)" }}
+                aria-label={`Open details for ${service.title}`}
               >
                 <div className="h-40 md:h-44 bg-gray-800">
                   <img
@@ -336,8 +483,15 @@ const Services = ({ onNavigate }) => {
                     <Icon className="w-7 h-7 text-blue-300" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                  <p className="text-gray-300 text-sm">{service.description}</p>
-                  <p className="text-sm text-blue-300 mt-4 hover:text-blue-300">
+                  <p className="text-gray-300 text-sm line-clamp-3">{service.description}</p>
+
+                  {/* quick metadata row */}
+                  <div className="mt-4 flex items-center justify-between text-xs">
+                    <div className="text-gray-400">{service.timeline || "Timeline: TBD"}</div>
+                    <div className="text-blue-300">{service.startingFrom || "From enquiry"}</div>
+                  </div>
+
+                  <p className="text-sm text-blue-300 mt-8 hover:text-blue-300 flex items-center gap-2">
                     Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" />
                   </p>
                 </div>
@@ -399,79 +553,150 @@ const Services = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Modal — still in DOM, uses overlay + transform */}
-      {showModal && selectedService && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => {
-              closeModal();
-              setShowSidebar(false);
-            }}
-            aria-hidden
-          />
+      {/* Modal */}
+      <AnimatePresence>
+        {showModal && selectedService && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center max-h-[90vh]" role="dialog" aria-modal="true">
+            <div
+              className="absolute inset-0 bg-black/60"
+              onClick={() => {
+                closeModal();
+                setShowSidebar(false);
+              }}
+              aria-hidden
+            />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.98 }}
-            transition={{ duration: 0.25 }}
-            className="relative z-50 max-w-3xl w-full mx-4 md:mx-0 bg-gray-900 rounded-2xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-            style={{ transform: "translateZ(0)", contain: "paint" }}
-          >
-            <div className="h-56 bg-gray-800">
-              <img
-                src={getImageUrl(selectedService)}
-                alt={selectedService.title}
-                className="w-full h-full object-cover"
-                decoding="async"
-                loading="lazy"
-                width="1200"
-                height="600"
-              />
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.98 }}
+              transition={{ duration: 0.25 }}
+              className="relative z-50 max-w-4xl w-full mx-4 md:mx-0 bg-gray-900 rounded-2xl overflow-hidden shadow-2xl max-h-[80vh] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+              style={{ transform: "translateZ(0)", contain: "paint" }}
+            >
+              <div className="h-56 bg-gray-800">
+                <img
+                  src={getImageUrl(selectedService)}
+                  alt={selectedService.title}
+                  className="w-full h-full object-cover"
+                  decoding="async"
+                  loading="lazy"
+                  width="1200"
+                  height="600"
+                />
+              </div>
 
-            <div className="p-6 md:p-8">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold mb-2">{selectedService.title}</h3>
-                  <p className="text-gray-300 mb-4">{selectedService.description}</p>
+              <div className="p-6 md:p-8 relative flex-1 overflow-y-auto no-scrollbar">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{selectedService.title}</h3>
+                    <p className="text-gray-300 mb-4">{selectedService.description}</p>
+                  </div>
+                  <button onClick={() => { closeModal(); setShowSidebar(false); }} aria-label="Close modal" className="ml-4">
+                    <X className="w-6 h-6 text-gray-300" />
+                  </button>
                 </div>
-                <button onClick={() => { closeModal(); setShowSidebar(false); }} aria-label="Close modal" className="ml-4">
-                  <X className="w-6 h-6 text-gray-300" />
-                </button>
-              </div>
 
-              <div className="mt-4">
-                <h4 className="text-sm text-gray-400 mb-2">Relevant Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedService.techStack.map((t, i) => (
-                    <span key={i} className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
-                      {t}
-                    </span>
-                  ))}
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-sm text-gray-400 mb-2">Relevant Tech Stack</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedService.techStack.length > 0 ? (
+                        selectedService.techStack.map((t, i) => (
+                          <span key={i} className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
+                            {t}
+                          </span>
+                        ))
+                      ) : (
+                        <div className="text-gray-400">Tech stack will be scoped with you.</div>
+                      )}
+                    </div>
+
+                    <div className="mt-4">
+                      <h4 className="text-sm text-gray-400 mb-2">Deliverables</h4>
+                      <ul className="list-inside space-y-2 text-sm text-gray-200">
+                        {selectedService.deliverables.length > 0 ? (
+                          selectedService.deliverables.map((d, i) => <li key={i}>• {d}</li>)
+                        ) : (
+                          <li className="text-gray-400">Deliverables defined after scoping.</li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm text-gray-400 mb-2">Outcomes & Timeline</h4>
+                    <div className="text-sm text-gray-200">
+                      {selectedService.businessOutcomes.length > 0 ? (
+                        <ul className="list-inside space-y-2 mb-3">
+                          {selectedService.businessOutcomes.map((b, i) => (
+                            <li key={i}>• {b}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <div className="text-gray-400 mb-2">Outcomes defined in discovery.</div>
+                      )}
+
+                      <div className="text-gray-300">
+                        <strong>Typical timeline:</strong> {selectedService.timeline || "TBD"}
+                      </div>
+                      {selectedService.startingFrom && <div className="text-gray-300"><strong>Starting from:</strong> {selectedService.startingFrom}</div>}
+                    </div>
+
+                    <div className="mt-4">
+                      <h4 className="text-sm text-gray-400 mb-2">Support</h4>
+                      <div className="text-sm text-gray-200">{selectedService.support || "30 days bug-fix warranty + optional maintenance plans."}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* modal CTAs */}
+                <div className="mt-6 mb-6 flex gap-3">
+                  {/* <button
+                    type="button"
+                    onClick={() => {
+                      closeModal();
+                      setShowSidebar(false);
+                      if (onNavigate) onNavigate("contacts");
+                    }}
+                    aria-label="Get in touch"
+                    className="px-4 py-2 rounded-full bg-blue-300 text-black font-medium"
+                  >
+                    Request quote
+                  </button> */}
+
+                  {/* 
+                  <button
+                    type="button"
+                    onClick={() => {
+                      closeModal();
+                      setShowSidebar(false);
+                      if (onNavigate) onNavigate("contacts");
+                    }}
+                    className="px-4 py-2 rounded-full bg-transparent border border-blue-300 text-blue-300"
+                  >
+                    Book scoping call
+                  </button> */}
+
+                  {selectedService.proofPoints && selectedService.proofPoints.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        // optional: navigate to a case study page if you have one
+                        if (onNavigate) onNavigate("case-studies");
+                      }}
+                      className="px-4 py-2 rounded-full bg-indigo-500 text-black font-medium"
+                    >
+                      View case study
+                    </button>
+                  )}
                 </div>
               </div>
-
-              <div className="mt-6 flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    closeModal();
-                    setShowSidebar(false);
-                    if (typeof onNavigate === "function") onNavigate("contacts");
-                  }}
-                  aria-label="Get in touch"
-                  className="px-4 py-2 rounded-full bg-blue-300 text-black font-medium"
-                >
-                  Get in touch
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
