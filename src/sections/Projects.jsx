@@ -388,12 +388,7 @@ resource "aws_s3_bucket" "public_assets" {
         }`}
     >
       <div className="relative flex flex-col items-center justify-center w-full">
-        <div className="w-full h-screen max-w-7xl px-4 pt-20 pb-10 flex flex-col gap-16 flex justify-center">
-          <div className="relative flex justify-center pb-35">
-            <h3 className="absolute inset-0 flex justify-center text-5xl sm:text-6xl md:text-7xl font-extrabold text-white/70 uppercase tracking-widest pointer-events-none select-none">
-              Our Projects
-            </h3>
-          </div>
+        <div className="w-full h-auto max-w-7xl py-45 flex flex-col gap-16 flex justify-center">
 
           {/* Header: left text + right mini IDE (responsive) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
@@ -441,8 +436,8 @@ resource "aws_s3_bucket" "public_assets" {
           </div>
         </div>
 
-        <div className="w-full h-screen flex flex-col items-center justify-center px-4 md:px-8">
-          <div className="mb-8 text-center text-white/80">
+        <div className="w-full h-auto flex flex-col items-center justify-center px-4 md:px-8">
+          <div className="mt-12 mb-12 text-center text-white/80">
             <h3 id="extras-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
               Case Studies & Demos — Deep dives into our work
             </h3>
@@ -594,7 +589,7 @@ resource "aws_s3_bucket" "public_assets" {
           </div>
 
           {/* — Reach Out CTA */}
-          <section className="w-full max-w-4xl">
+          <section className="w-full max-w-4xl mt-20 mb-10">
             <div className="w-full h-auto py-16 px-6 md:px-10 flex items-center justify-center">
               <div className="relative rounded-2xl p-8 md:p-10 bg-gradient-to-br from-white/4 to-black/30 border border-white/6 shadow-lg">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">

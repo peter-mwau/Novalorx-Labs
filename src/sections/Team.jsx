@@ -1,4 +1,5 @@
 // src/sections/Team.jsx
+import React, { useEffect, useState, useRef } from "react";
 import {
   Github,
   Linkedin,
@@ -9,226 +10,139 @@ import {
   Code2,
   MapPinCheck,
   X,
+  Play,
+  Pause,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useInView } from "../hooks/useInView";
+import { teamMembers } from "../constants/teams";
+import liveChatAnimation from "../lottie/developer.json";
 
-function Team() {
-  const [profiles, setProfiles] = useState([]);
+
+function calculateYearsAndDaysSince(dateString) {
+  if (!dateString) return { years: 0, days: 0, label: "0 days" };
+  const start = new Date(dateString);
+  const now = new Date();
+
+  let years = now.getFullYear() - start.getFullYear();
+  const anniversaryThisYear = new Date(now.getFullYear(), start.getMonth(), start.getDate());
+  if (now < anniversaryThisYear) years -= 1;
+
+  const lastAnniversaryYear = now < anniversaryThisYear ? now.getFullYear() - 1 : now.getFullYear();
+  const lastAnniversary = new Date(lastAnniversaryYear, start.getMonth(), start.getDate());
+
+  const msInDay = 1000 * 60 * 60 * 24;
+  const days = Math.max(0, Math.floor((now - lastAnniversary) / msInDay));
+
+  const labelParts = [];
+  if (years > 0) labelParts.push(`${years} yr${years === 1 ? "" : "s"}`);
+  labelParts.push(`${days} day${days === 1 ? "" : "s"}`);
+
+  return { years, days, label: labelParts.join(" ") };
+}
+
+export default function Team() {
+  const [profiles, setProfiles] = useState([]); // merged local + github data
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeMember, setActiveMember] = useState(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
-  const githubUsernames = [
-    "peter-mwau",
-    "NORMTOSH",
-    "Mickmacha",
-    "AdoyoClifford",
-  ];
+  const playerRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
-  const memberDetails = {
-    "peter-mwau": {
-      position: "Full Stack Developer",
-      email: "pierremwau4050@gmail.com",
-      linkedin: "https://www.linkedin.com/in/peter-kyale-6b11a4233/",
-      website: "https://petermwauportfolio.netlify.app/",
-      expertise: ["Solidity", "React", "Node.js", "MongoDB", "TypeScript", "Web3", "DApp"],
-      yearsAtCompany: 1,
-      skills: [
-        { name: "Solidity", level: 85 },
-        { name: "React", level: 95 },
-        { name: "MongoDB", level: 90 },
-        { name: "Web3", level: 80 },
-        { name: "JavaScript", level: 92 },
-        { name: "Node.js", level: 90 },
-        { name: "TypeScript", level: 88 },
-      ],
-      contributions: [
-        "Led the development of Nyota's core platform",
-        "Optimized smart contract performance, reducing gas costs by 30%",
-        "Integrated third-party APIs for enhanced functionality",
-        "Collaborated with cross-functional teams to deliver projects on time",
-        "Developed and maintained comprehensive documentation for internal use",
-        "Conducted code reviews to ensure adherence to best practices",
-        "Implemented CI/CD pipeline for faster deployments",
-        "Mentored junior developers in modern web practices",
-      ],
-    },
-    NORMTOSH: {
-      position: "Frontend Developer",
-      email: "normangitonga388@gmail.com",
-      linkedin: "https://www.linkedin.com/in/normangitonga",
-      expertise: ["React", "UI/UX", "Tailwind"],
-      yearsAtCompany: 2,
-      skills: [
-        { name: "React", level: 92 },
-        { name: "CSS/Tailwind", level: 95 },
-        { name: "JavaScript", level: 90 },
-        { name: "HTML5", level: 88 },
-        { name: "TypeScript", level: 80 },
-        { name: "UI/UX Design", level: 85 },
-      ],
-      contributions: [
-        "Designed and implemented responsive UI components",
-        "Collaborated with designers to enhance user experience",
-        "Spearheaded the adoption of Tailwind CSS across projects",
-        "Organized frontend knowledge-sharing sessions for the team",
-        "Developed a design system to ensure UI consistency across applications",
-        "Integrated third-party APIs to enhance application functionality",
-        "Conducted user testing sessions to gather feedback for UI improvements",
-        "Created interactive prototypes to streamline the design process",
-      ],
-    },
-    Mickmacha: {
-      position: "Backend Developer",
-      email: "mickmacha@example.com",
-      linkedin: "https://linkedin.com/in/mickmacha",
-      expertise: ["Python", "Django", "PostgreSQL"],
-      yearsAtCompany: 2,
-      skills: [
-        { name: "Python", level: 93 },
-        { name: "Django", level: 90 },
-        { name: "PostgreSQL", level: 87 },
-        { name: "API Design", level: 89 },
-      ],
-      contributions: [
-        "Architected scalable backend infrastructure",
-        "Developed RESTful APIs consumed by frontend applications",
-        "Implemented database optimizations improving query performance",
-        "Collaborated with frontend developers to define API contracts",
-        "Integrated caching mechanisms to enhance application speed",
-        "Ensured security best practices in all backend services",
-        "Wrote unit and integration tests to maintain code quality",
-        "Implemented secure authentication system",
-        "Reduced API response time by 50%",
-      ],
-    },
-    AdoyoClifford: {
-      position: "DevOps Engineer",
-      email: "adoyoclifford@example.com",
-      linkedin: "https://linkedin.com/in/adoyo-clifford",
-      expertise: ["Docker", "Kubernetes", "AWS"],
-      yearsAtCompany: 1,
-      skills: [
-        { name: "Docker", level: 91 },
-        { name: "Kubernetes", level: 88 },
-        { name: "AWS", level: 86 },
-        { name: "CI/CD", level: 90 },
-      ],
-      contributions: [
-        "Set up automated deployment pipelines",
-        "Managed cloud infrastructure on AWS",
-        "Implemented containerization using Docker and Kubernetes",
-        "Monitored system performance and optimized resource usage",
-        "Established infrastructure as code practices using Terraform",
-        "Improved deployment frequency and reduced lead time for changes",
-        "Enhanced system reliability with automated scaling solutions",
-        "Reduced infrastructure costs by 30%",
-        "Implemented monitoring and alerting systems",
-      ],
-    },
-  };
+  const [sectionRef, isInView] = useInView();
 
-  const calculateYearsAndDaysSince = (dateString) => {
-    if (!dateString) return { years: 0, days: 0, label: "0 days" };
-
-    const start = new Date(dateString);
-    const now = new Date();
-
-    let years = now.getFullYear() - start.getFullYear();
-    const anniversaryThisYear = new Date(
-      now.getFullYear(),
-      start.getMonth(),
-      start.getDate(),
-    );
-
-    if (now < anniversaryThisYear) years -= 1;
-
-    const lastAnniversaryYear =
-      now < anniversaryThisYear ? now.getFullYear() - 1 : now.getFullYear();
-    const lastAnniversary = new Date(
-      lastAnniversaryYear,
-      start.getMonth(),
-      start.getDate(),
-    );
-
-    const msInDay = 1000 * 60 * 60 * 24;
-    const days = Math.max(0, Math.floor((now - lastAnniversary) / msInDay));
-
-    const labelParts = [];
-    if (years > 0) labelParts.push(`${years} yr${years === 1 ? "" : "s"}`);
-    labelParts.push(`${days} day${days === 1 ? "" : "s"}`);
-
-    return { years, days, label: labelParts.join(" ") };
-  };
-
-  const getYearsOnGithubLabel = (member) => {
-    if (!member) return "0 days";
-    if (member.createdAt)
-      return calculateYearsAndDaysSince(member.createdAt).label;
-    if (member.yearsOnGithub?.label) return member.yearsOnGithub.label;
-    return "0 days";
-  };
-
+  // fetch GitHub data and merge with local team data
   useEffect(() => {
-    const fetchGitHubProfiles = async () => {
+    let cancelled = false;
+    const fetchProfiles = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
-        const profilesData = await Promise.all(
-          githubUsernames.map(async (username) => {
+        const results = await Promise.all(
+          teamMembers.map(async (local) => {
+            const username = local.username;
+            // Prepare a base profile from local data
+            const base = {
+              username,
+              name: local.name,
+              position: local.position,
+              email: local.email,
+              linkedin: local.linkedin,
+              website: local.website,
+              expertise: local.expertise || [],
+              yearsAtCompany: local.yearsAtCompany || 0,
+              skills: local.skills || [],
+              contributions: local.contributions || [],
+              avatarFallback: local.avatarFallback || "",
+              location: local.location || "",
+              bio: local.bio || local.position || "",
+            };
+
+            // Try to get GitHub public info - if fails, keep local base
             try {
-              const response = await fetch(
-                `https://api.github.com/users/${username}`,
-              );
-              if (!response.ok) {
-                console.error(
-                  `Failed to fetch ${username}: ${response.status} ${response.statusText}`,
-                );
-                throw new Error(`Failed to fetch ${username}`);
+              const res = await fetch(`https://api.github.com/users/${username}`);
+              if (!res.ok) {
+                // if rate-limited or not found, return base
+                return { ...base };
               }
-              const data = await response.json();
+              const data = await res.json();
 
-              const reposResponse = await fetch(data.repos_url);
-              const repos = reposResponse.ok ? await reposResponse.json() : [];
-              const topRepos = repos
-                .sort((a, b) => b.stargazers_count - a.stargazers_count)
-                .slice(0, 2);
+              // fetch repos (top 2)
+              let topRepos = [];
+              try {
+                const reposRes = await fetch(data.repos_url + "?per_page=50");
+                if (reposRes.ok) {
+                  const repos = await reposRes.json();
+                  topRepos = (repos || [])
+                    .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0))
+                    .slice(0, 2)
+                    .map((r) => ({ name: r.name, url: r.html_url, stars: r.stargazers_count || 0 }));
+                }
+              } catch (e) {
+                // ignore repo errors
+              }
 
-              const profileData = {
-                username: data.login,
-                name: data.name || data.login,
-                bio:
-                  data.bio || memberDetails[username]?.position || "Developer",
-                imageUrl: data.avatar_url,
+              const merged = {
+                ...base,
+                login: data.login,
+                imageUrl: data.avatar_url || base.avatarFallback,
                 github: data.html_url,
                 followers: data.followers,
                 following: data.following,
                 publicRepos: data.public_repos,
                 createdAt: data.created_at,
                 yearsOnGithub: calculateYearsAndDaysSince(data.created_at),
-                location: data.location || "Kenya",
                 topRepos,
-                ...memberDetails[username],
+                location: data.location || base.location,
+                bio: data.bio || base.bio,
               };
 
-              return profileData;
-            } catch (error) {
-              console.error(`Error fetching ${username}:`, error);
-              throw error;
+              return merged;
+            } catch (err) {
+              // network or other error - return base
+              return { ...base };
             }
           }),
         );
-        setProfiles(profilesData);
-        if (profilesData.length > 0) setActiveMember(profilesData[0]);
+
+        if (cancelled) return;
+        setProfiles(results);
+        setActiveMember((prev) => prev || results[0] || null);
       } catch (err) {
-        setError(err.message);
-        console.error("Error fetching GitHub profiles:", err);
+        if (cancelled) return;
+        console.error("Error loading team profiles", err);
+        setError("Failed to load team profiles.");
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
-    if (githubUsernames.length > 0) fetchGitHubProfiles();
+    fetchProfiles();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const selectMember = (profile, openOnMobile = false) => {
@@ -236,11 +150,24 @@ function Team() {
     if (openOnMobile) setIsMobileOpen(true);
   };
 
+  // Player controls
+  const handlePlayerReady = (instance) => {
+    // store instance (the Player component exposes imperative API via ref)
+    playerRef.current = instance;
+    // if autoplay: ensure it's playing
+    try {
+      playerRef.current?.play?.();
+      setIsPlaying(true);
+    } catch (e) {
+      // ignore
+    }
+  };
+
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-gray-700 border-t-blue-400 rounded-full animate-spin mx-auto"></div>
+          <div className="w-12 h-12 border-4 border-gray-700 border-t-cyan-400 rounded-full animate-spin mx-auto" />
           <p className="mt-4 text-gray-400">Loading team members...</p>
         </div>
       </div>
@@ -249,7 +176,7 @@ function Team() {
   if (error)
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <div className="text-center p-8 bg-gray-900 rounded-xl shadow-lg max-w-md">
+        <div className="p-8 bg-gray-900 rounded-xl shadow-lg">
           <div className="text-red-500 mb-4">⚠️</div>
           <h3 className="text-xl font-semibold mb-2">Error</h3>
           <p className="text-gray-300 mb-6">{error}</p>
@@ -262,44 +189,114 @@ function Team() {
         </div>
       </div>
     );
-
+    
   return (
-    <div className="h-screen relative text-white overflow-hidden">
-      {/* ensure background is underneath */}
-
+    <div ref={sectionRef} className="h-screen relative text-white overflow-y-auto no-scrollbar py-12">
       <style>{`
-        .line-clamp-6 { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
         .thin-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
         .thin-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 6px; }
+        .line-clamp-6 { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
       `}</style>
 
-      {/* content above background (z-10) and allow children to shrink (min-h-0) */}
-      <div className="h-full flex flex-col container mx-auto px-4 py-4 relative z-10 min-h-0">
-        {/* Header */}
-        <div className="relative mt-6 mb-6 h-20 sm:h-28 flex items-center justify-center shrink-0">
-          <h2 className="absolute inset-0 flex items-center justify-center text-center text-6xl sm:text-7xl md:text-8xl font-extrabold text-white/8 uppercase tracking-widest pointer-events-none select-none">
-            Experts
-          </h2>
-          <h3 className="text-gray-400 relative z-10 text-2xl sm:text-3xl tracking-widest px-3 py-1 rounded-3xl">
-            Our Team
-          </h3>
+      <div className="h-auto overlay-y-auto flex flex-col container mx-auto px-4 py-6 relative z-10 min-h-0">
+        {/* Header (Lottie + intro) */}
+        <div className="w-full h-auto max-w-6xl mx-auto mb-8 flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            {/* Left text */}
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-3">
+                <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-semibold border border-cyan-400/20">
+                  Meet the team
+                </span>
+                <div className="text-sm text-white/60">Engineers & creators</div>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                Team — People who build and ship
+              </h1>
+
+              <p className="text-gray-300 max-w-2xl">
+                We’re a small, cross-functional team of engineers, designers and devops who ship production-ready software.
+                Click any profile to learn more about their work and impact.
+              </p>
+
+              <div className="flex items-center gap-3 mt-3">
+                <button
+                  onClick={() => {
+                    // focus first profile when clicked
+                    const first = document.querySelector('[data-team-item]');
+                    first?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+                    first?.focus?.();
+                  }}
+                  className="px-4 py-2 rounded-md bg-cyan-400 hover:bg-cyan-500 text-black font-semibold shadow"
+                >
+                  View team
+                </button>
+
+                <button
+                  onClick={() => goToContact()}
+                  className="px-4 py-2 rounded-md border border-white/10 text-white/90 hover:bg-white/5"
+                >
+                  Contact us
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Lottie Player */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-[360px] rounded-2xl shadow-lg">
+                <Player
+                  autoplay
+                  loop
+                  keepLastFrame={false}
+                  src={liveChatAnimation}
+                  ref={playerRef}
+                  onEvent={(e) => {
+                    /* optional: debug or handle events, e.g. 'load' */
+                  }}
+                  style={{ width: "150%", height: 360 }}
+                  className="rounded-lg"
+                />
+
+                {/* <div className="mt-3 flex items-center justify-between">
+                  <div className="text-xs text-gray-400">Live interaction demo</div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? "Pause animation" : "Play animation"}
+                      className="p-2 rounded-full bg-white/5 hover:bg-white/8"
+                    >
+                      {isPlaying ? <Pause className="w-4 h-4 text-cyan-300" /> : <Play className="w-4 h-4 text-cyan-300" />}
+                    </button>
+                    <button
+                      onClick={stopPlayer}
+                      aria-label="Stop animation"
+                      className="p-2 rounded-full bg-white/5 hover:bg-white/8"
+                    >
+                      <X className="w-4 h-4 text-gray-300" />
+                    </button>
+                  </div>
+                </div> */}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Desktop layout (hidden on small screens). container uses min-h-0 so children with overflow-auto can work */}
-        <div className="hidden lg:flex flex-1 gap-6 max-w-6xl mx-auto w-full max-h-[calc(80vh-12rem)] min-h-0">
-          {/* Sidebar */}
+        {/* Desktop layout */}
+        <div className="hidden lg:flex flex-1 gap-6 max-w-6xl py-20 mx-auto w-full max-h-[calc(80vh-12rem)] min-h-0">
           <aside className="w-1/4">
             <div className="sticky top-4 h-[calc(100vh-10rem)] overflow-auto thin-scrollbar space-y-4 p-2">
-              <h3 className="text-lg font-semibold text-blue-300 mb-2">Team Members</h3>
+              <h3 className="text-lg font-semibold text-cyan-300 mb-2">Team Members</h3>
               <div className="space-y-3">
                 {profiles.map((profile) => (
                   <button
+                    data-team-item
                     key={profile.username}
                     onClick={() => selectMember(profile)}
-                    className={`w-full flex items-center gap-3 p-2 rounded-xl border ${activeMember?.username === profile.username ? 'border-cyan-400 bg-gray-900' : 'border-gray-700 bg-gray-900/40'} hover:border-blue-400 transition-all text-left`}
+                    className={`w-full flex items-center gap-3 p-2 rounded-xl border ${activeMember?.username === profile.username ? 'border-cyan-400 bg-gray-900' : 'border-gray-700 bg-gray-900/40'} hover:border-cyan-300 transition-all text-left`}
                   >
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700 flex-shrink-0">
-                      <img src={profile.imageUrl} alt={profile.name} className="w-full h-full object-cover" />
+                      <img src={profile.imageUrl || profile.avatarFallback} alt={profile.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-sm truncate">{profile.name}</h4>
@@ -318,7 +315,7 @@ function Team() {
                 <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-700 shrink-0">
                   <div className="flex-shrink-0">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-800 shadow-md">
-                      <img src={activeMember.imageUrl} alt={activeMember.login} className="w-full h-full object-cover" />
+                      <img src={activeMember.imageUrl || activeMember.avatarFallback} alt={activeMember.login || activeMember.username} className="w-full h-full object-cover" />
                     </div>
                   </div>
 
@@ -326,23 +323,23 @@ function Team() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
                         <h2 className="text-2xl font-bold truncate">{activeMember.name}</h2>
-                        <p className="text-sm text-blue-300 mt-1 truncate">{activeMember.bio}</p>
+                        <p className="text-sm text-cyan-300 mt-1 truncate">{activeMember.position || activeMember.bio}</p>
                       </div>
 
                       <div className="flex items-center gap-2">
                         {activeMember.github && (
                           <a href={activeMember.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
-                            <Github className="w-5 h-5 text-blue-300" />
+                            <Github className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
                         {activeMember.linkedin && (
                           <a href={activeMember.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
-                            <Linkedin className="w-5 h-5 text-blue-300" />
+                            <Linkedin className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
                         {activeMember.email && (
                           <a href={`mailto:${activeMember.email}`} className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
-                            <Mail className="w-5 h-5 text-blue-300" />
+                            <Mail className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
                       </div>
@@ -355,13 +352,13 @@ function Team() {
                           <span>{activeMember.location}</span>
                         </div>
                       )}
-                      {activeMember.yearsAtCompany && (
+                      {activeMember.yearsAtCompany !== undefined && (
                         <div className="flex items-center gap-2">
                           <Calendar1 className="w-4 h-4" />
-                          <span>{activeMember.yearsAtCompany} yr{activeMember.yearsAtCompany>1?'s':''}</span>
+                          <span>{activeMember.yearsAtCompany} yr{activeMember.yearsAtCompany > 1 ? 's' : ''}</span>
                         </div>
                       )}
-                      {activeMember.publicRepos && (
+                      {activeMember.publicRepos !== undefined && (
                         <div className="flex items-center gap-2">
                           <Code2 className="w-4 h-4" />
                           <span>{activeMember.publicRepos} repos</span>
@@ -376,18 +373,18 @@ function Team() {
                     <div className="lg:col-span-2 space-y-4">
                       {activeMember.bio && (
                         <div>
-                          <h3 className="text-lg font-semibold text-blue-300 mb-1">About</h3>
+                          <h3 className="text-lg font-semibold text-cyan-300 mb-1">About</h3>
                           <p className="text-gray-300 text-sm leading-relaxed line-clamp-6">{activeMember.bio}</p>
                         </div>
                       )}
 
                       {(activeMember.contributions || []).length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold text-blue-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h3>
+                          <h3 className="text-lg font-semibold text-cyan-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h3>
                           <ul className="space-y-2 text-sm text-gray-300">
                             {activeMember.contributions.map((c, i) => (
                               <li key={i} className="flex items-start gap-3">
-                                <div className="w-2 h-2 rounded-full bg-gray-400 mt-2 flex-shrink-0"></div>
+                                <div className="w-2 h-2 rounded-full bg-gray-400 mt-2 flex-shrink-0" />
                                 <span>{c}</span>
                               </li>
                             ))}
@@ -398,7 +395,7 @@ function Team() {
 
                     <aside className="space-y-3">
                       <div className="bg-gray-800 rounded-xl p-3">
-                        <h4 className="text-sm font-semibold text-blue-300 mb-2">GitHub Stats</h4>
+                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">GitHub Stats</h4>
                         <div className="grid grid-cols-2 gap-2 text-xs">
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
                             <p className="text-lg font-bold">{activeMember.followers || 0}</p>
@@ -409,7 +406,7 @@ function Team() {
                             <p className="text-xs text-gray-400">Repos</p>
                           </div>
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
-                            <p className="text-sm font-semibold">{getYearsOnGithubLabel(activeMember)}</p>
+                            <p className="text-sm font-semibold">{activeMember.yearsOnGithub?.label || "—"}</p>
                             <p className="text-xs text-gray-400">On GitHub</p>
                           </div>
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
@@ -421,9 +418,9 @@ function Team() {
 
                       {activeMember.skills && (
                         <div className="bg-gray-800 rounded-xl p-3">
-                          <h4 className="text-sm font-semibold text-blue-300 mb-2">Top Skills</h4>
+                          <h4 className="text-sm font-semibold text-cyan-300 mb-2">Top Skills</h4>
                           <div className="flex flex-wrap gap-1 text-xs">
-                            {activeMember.skills.slice(0, 4).map((s, i) => (
+                            {activeMember.skills.slice(0, 6).map((s, i) => (
                               <span key={i} className="px-2 py-0.5 bg-white/5 rounded text-gray-200">{s.name}</span>
                             ))}
                           </div>
@@ -434,16 +431,13 @@ function Team() {
                 </div>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-400">
-                No active member selected.
-              </div>
+              <div className="h-full flex items-center justify-center text-gray-400">No active member selected.</div>
             )}
           </main>
         </div>
 
-        {/* Mobile list + mobile panel (shows on small screens). ensure it can scroll */}
+        {/* Mobile */}
         <div className="lg:hidden flex-1 overflow-auto min-h-0">
-          {/* show empty state if no profiles */}
           {profiles.length === 0 ? (
             <div className="text-center py-8 text-gray-400">No team members found.</div>
           ) : (
@@ -455,7 +449,7 @@ function Team() {
                   className={`w-full flex items-center gap-3 p-3 rounded-xl border ${activeMember?.username === profile.username ? 'border-cyan-400 bg-gray-900' : 'border-gray-700 bg-gray-900/40'} hover:border-cyan-300 transition-all`}
                 >
                   <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700">
-                    <img src={profile.imageUrl} alt={profile.name} className="w-full h-full object-cover" />
+                    <img src={profile.imageUrl || profile.avatarFallback} alt={profile.name} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-sm truncate">{profile.name}</h4>
@@ -485,12 +479,12 @@ function Team() {
                   <div className="flex items-center gap-2">
                     {activeMember.github && (
                       <a href={activeMember.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-md hover:bg-gray-700" title="GitHub">
-                        <Github className="w-5 h-5 text-blue-300" />
+                        <Github className="w-5 h-5 text-cyan-300" />
                       </a>
                     )}
                     {activeMember.linkedin && (
                       <a href={activeMember.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-md hover:bg-gray-700" title="LinkedIn">
-                        <Linkedin className="w-5 h-5 text-blue-300" />
+                        <Linkedin className="w-5 h-5 text-cyan-300" />
                       </a>
                     )}
                   </div>
@@ -499,14 +493,14 @@ function Team() {
                 <div className="p-4 space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-800">
-                      <img src={activeMember.imageUrl} alt={activeMember.name} className="w-full h-full object-cover" />
+                      <img src={activeMember.imageUrl || activeMember.avatarFallback} alt={activeMember.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0">
                       <h2 className="text-xl font-bold truncate">{activeMember.name}</h2>
-                      <p className="text-sm text-blue-300 truncate">{activeMember.bio}</p>
+                      <p className="text-sm text-cyan-300 truncate">{activeMember.position}</p>
                       <div className="mt-2 text-xs text-gray-400 flex gap-3 flex-wrap">
                         {activeMember.location && <span className="flex items-center gap-1"><MapPinCheck className="w-3 h-3" />{activeMember.location}</span>}
-                        {activeMember.yearsAtCompany && <span className="flex items-center gap-1"><Calendar1 className="w-3 h-3" />{activeMember.yearsAtCompany} yr</span>}
+                        {activeMember.yearsAtCompany !== undefined && <span className="flex items-center gap-1"><Calendar1 className="w-3 h-3" />{activeMember.yearsAtCompany} yr</span>}
                         {activeMember.publicRepos !== undefined && <span className="flex items-center gap-1"><Code2 className="w-3 h-3" />{activeMember.publicRepos} repos</span>}
                       </div>
                     </div>
@@ -514,14 +508,14 @@ function Team() {
 
                   {activeMember.bio && (
                     <div>
-                      <h4 className="text-sm font-semibold text-blue-300 mb-1">About</h4>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-1">About</h4>
                       <p className="text-gray-300 text-sm leading-relaxed">{activeMember.bio}</p>
                     </div>
                   )}
 
                   {(activeMember.contributions || []).length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-blue-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h4>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h4>
                       <ul className="list-inside list-disc text-sm text-gray-300 space-y-2">
                         {activeMember.contributions.map((c, i) => (
                           <li key={i}>{c}</li>
@@ -532,7 +526,7 @@ function Team() {
 
                   {activeMember.skills && (
                     <div>
-                      <h4 className="text-sm font-semibold text-blue-300 mb-2">Top Skills</h4>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-2">Top Skills</h4>
                       <div className="flex flex-wrap gap-2">
                         {activeMember.skills.slice(0, 8).map((s, i) => (
                           <span key={i} className="px-2 py-1 bg-white/5 rounded text-xs">{s.name}</span>
@@ -540,14 +534,19 @@ function Team() {
                       </div>
                     </div>
                   )}
+
+                  <div className="mt-4 text-sm text-gray-400">
+                    <div>Contact:</div>
+                    {activeMember.email && <div className="mt-1"><a href={`mailto:${activeMember.email}`} className="underline">{activeMember.email}</a></div>}
+                    {activeMember.website && <div className="mt-1"><a href={activeMember.website} className="underline" target="_blank" rel="noreferrer">{activeMember.website}</a></div>}
+                  </div>
                 </div>
               </div>
             </div>
           )}
         </div>
+
       </div>
     </div>
   );
 }
-
-export default Team;

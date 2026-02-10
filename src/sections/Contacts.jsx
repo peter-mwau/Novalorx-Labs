@@ -1,5 +1,5 @@
 // src/sections/Contacts.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Mail,
   Phone,
@@ -7,13 +7,20 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Clock2Icon,
+  Clock,
+  Play,
+  Pause,
+  X,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import { Player } from "@lottiefiles/react-lottie-player";
+import liveChatAnimation from "../lottie/chatbot.json";
 
 function Contacts() {
   const [time, setTime] = useState(new Date());
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const playerRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -68,8 +75,33 @@ function Contacts() {
     setForm({ name: "", email: "", message: "" });
   };
 
+  // Lottie controls
+  const togglePlay = () => {
+    const inst = playerRef.current;
+    if (!inst) return;
+    if (isPlaying) {
+      inst.pause();
+      setIsPlaying(false);
+    } else {
+      inst.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const stopAnimation = () => {
+    const inst = playerRef.current;
+    if (!inst) return;
+    inst.stop();
+    setIsPlaying(false);
+  };
+
   return (
     <section className="relative min-h-screen text-white overflow-hidden">
+      <style>{`
+        .thin-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+        .thin-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 6px; }
+        .line-clamp-6 { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
+      `}</style>
 
       {/* Floating Social Icons (hidden on small screens) */}
       <div className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-20 flex-col gap-4">
@@ -99,33 +131,98 @@ function Contacts() {
                        transition-all duration-300"
             aria-label={`social-left-${i}`}
           >
-            <Icon size={20} />
+            {i === 2 ? <FaWhatsapp size={18} /> : <Icon size={18} />}
           </a>
         ))}
       </div>
 
       {/* Page content container — header + main area that fills viewport */}
-      <div className="container mx-auto px-4 md:px-6 relative z-10 max-h-[calc(90vh-4rem)] flex flex-col">
-        {/* Header (fixed-ish height) */}
-        <div className="relative mt-8 mb-16 h-28 sm:h-32 flex items-center justify-center">
-          {/* Background text */}
-          <h2
-            className="absolute inset-0 flex items-center justify-center text-center text-7xl sm:text-8xl md:text-9xl font-extrabold text-white/10 uppercase tracking-widest
-                        pointer-events-none select-none"
-          >
-            Our Contact
-          </h2>
+      <div className="container mx-auto px-4 md:px-6 relative z-10 overflow-y-auto no-scrollbar max-h-[calc(90vh-4rem)] flex flex-col">
+        {/* Header (Lottie + text) */}
+        <div className="w-full max-w-6xl mx-auto pt-20 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            {/* Left: text */}
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-3">
+                <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-semibold border border-cyan-400/20">
+                  Contact
+                </span>
+                <div className="text-sm text-white/60">Say hello</div>
+              </div>
 
-          {/* Foreground text */}
-          <h3 className="text-gray-400 relative z-10 text-3xl md:text-4xl tracking-widest backdrop-blur-sm rounded-3xl">
-            Get in Touch
-          </h3>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+                Get in touch — let’s build something
+              </h1>
+
+              <p className="text-gray-300 max-w-2xl">
+                We respond quickly. Use the form, request a quote, or reach out
+                on WhatsApp for faster help. We're based in Nairobi (EAT).
+              </p>
+
+              <div className="flex items-center gap-3 mt-3">
+                <button
+                  onClick={() => {
+                    const el = document.querySelector("form");
+                    if (el && typeof el.scrollIntoView === "function") {
+                      el.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }
+                    const input = el?.querySelector("input");
+                    if (input && typeof input.focus === "function") {
+                      input.focus();
+                    }
+                  }}
+                  className="px-4 py-2 rounded-md bg-cyan-400 hover:bg-cyan-500 text-black font-semibold shadow"
+                >
+                  Message us
+                </button>
+
+                <button
+                  onClick={() => window.open("/request-quote", "_self")}
+                  className="px-4 py-2 rounded-md border border-white/10 text-white/90 hover:bg-white/5"
+                >
+                  Request quote
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Lottie */}
+            <div className="flex justify-center md:justify-end">
+              <div className="w-full max-w-[360px] rounded-2xl p-4 bg-gradient-to-br from-black/60 to-black/30 border border-white/6 shadow-lg">
+                <Player
+                  ref={playerRef}
+                  autoplay
+                  loop
+                  src={liveChatAnimation}
+                  style={{ height: "260px", width: "100%" }}
+                />
+
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="text-xs text-gray-400">Live interaction demo</div>
+                  {/* <div className="flex items-center gap-2">
+                    <button
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? "Pause animation" : "Play animation"}
+                      className="p-2 rounded-full bg-white/5 hover:bg-white/8"
+                    >
+                      {isPlaying ? <Pause className="w-4 h-4 text-cyan-300" /> : <Play className="w-4 h-4 text-cyan-300" />}
+                    </button>
+                    <button
+                      onClick={stopAnimation}
+                      aria-label="Stop animation"
+                      className="p-2 rounded-full bg-white/5 hover:bg-white/8"
+                    >
+                      <X className="w-4 h-4 text-gray-300" />
+                    </button>
+                  </div> */}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Main area — ONLY scrollable on small screens; fixed (no scroll) on md+ */}
         <div
-          className="flex-1 w-full flex flex-col lg:flex-row gap-6 items-stretch
-                        overflow-auto md:overflow-hidden"
+          className="flex-1 w-full flex flex-col lg:flex-row gap-6 items-stretch py-20"
         >
           {/* Left column: compact rings + contact info (1/3 width on lg) */}
           <div className="lg:w-1/3 flex flex-col gap-4 p-2">
@@ -165,7 +262,7 @@ function Contacts() {
                           ))}
                         </g>
                       </svg>
-                      <div className="absolute inset-0 flex items-center justify-center text-blue-300 font-semibold text-sm">
+                      <div className="absolute inset-0 flex items-center justify-center text-cyan-300 font-semibold text-sm">
                         {String(ring.value).slice(-2)}
                       </div>
                     </div>
@@ -179,27 +276,27 @@ function Contacts() {
 
             {/* Contact Info box */}
             <div className="bg-gray-900/70 backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-gray-700 mt-2 flex-1">
-              <h3 className="text-lg font-semibold text-blue-300 mb-3">
+              <h3 className="text-lg font-semibold text-cyan-300 mb-3">
                 Contact Information
               </h3>
 
               <div className="space-y-3 text-sm text-gray-300">
                 <div className="flex items-center gap-3">
-                  <Mail className="text-blue-300" />
+                  <Mail className="text-cyan-300" />
                   <span>hello@nyota.tech</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="text-blue-300" />
+                  <Phone className="text-cyan-300" />
                   <span>+254 700 123 456</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="text-blue-300" />
+                  <MapPin className="text-cyan-300" />
                   <span>Nairobi, Kenya</span>
                 </div>
 
                 <div className="pt-4 border-t border-gray-800 mt-4 text-xs text-gray-400">
                   <p className="mb-2 flex items-start gap-2">
-                    <Clock2Icon className="mt-1 text-blue-300" />{" "}
+                    <Clock className="mt-1 text-cyan-300" />{" "}
                     <span>Office Hours: Mon–Fri, 9:00–17:00 (EAT)</span>
                   </p>
                   <p className="mt-2">
@@ -215,7 +312,7 @@ function Contacts() {
           <div className="lg:col-span-2 lg:w-2/3 p-2 flex flex-col">
             <div className="bg-gray-900/70 backdrop-blur-xl border border-gray-700 rounded-2xl p-4 md:p-6 h-full flex flex-col">
               <div className="mb-2">
-                <h3 className="text-2xl font-semibold text-blue-300 mb-3">
+                <h3 className="text-2xl font-semibold text-cyan-300 mb-3">
                   Send a Message
                 </h3>
 
@@ -234,7 +331,7 @@ function Contacts() {
                       placeholder="Your Name"
                       value={form.name}
                       onChange={handleChange}
-                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-blue-300 outline-none text-sm"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-cyan-300 outline-none text-sm"
                     />
                   </div>
 
@@ -248,7 +345,7 @@ function Contacts() {
                       placeholder="Your Email"
                       value={form.email}
                       onChange={handleChange}
-                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-blue-300 outline-none text-sm"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-cyan-300 outline-none text-sm"
                     />
                   </div>
 
@@ -263,7 +360,7 @@ function Contacts() {
                       placeholder="Your Message"
                       value={form.message}
                       onChange={handleChange}
-                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-blue-300 outline-none text-sm resize-vertical"
+                      className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 focus:border-cyan-300 outline-none text-sm resize-vertical"
                     />
                   </div>
 
@@ -273,7 +370,7 @@ function Contacts() {
                       Prefer email?{" "}
                       <a
                         href="mailto:hello@nyota.tech"
-                        className="text-blue-300 underline"
+                        className="text-cyan-300 underline"
                       >
                         hello@nyota.tech
                       </a>
@@ -282,7 +379,7 @@ function Contacts() {
                     <div className="flex items-center gap-3 ml-auto">
                       <button
                         type="submit"
-                        className="bg-blue-300 text-black font-semibold px-4 md:px-6 py-2 rounded-lg hover:bg-blue-200 transition text-sm"
+                        className="bg-cyan-300 text-black font-semibold px-4 md:px-6 py-2 rounded-lg hover:bg-cyan-200 transition text-sm"
                       >
                         Send Message
                       </button>
@@ -303,10 +400,10 @@ function Contacts() {
 
               {/* Professional CTA for Quotation */}
               <div className="mt-6 pt-6 border-t border-gray-700/50">
-                <div className="bg-gradient-to-r from-blue-300/10 to-cyan-400/10 rounded-xl p-4 md:p-6 border border-blue-300/20">
+                <div className="bg-gradient-to-r from-cyan-300/10 to-cyan-400/10 rounded-xl p-4 md:p-6 border border-cyan-300/20">
                   <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                     <div className="flex-1">
-                      <h4 className="text-lg font-semibold text-blue-300 mb-2">
+                      <h4 className="text-lg font-semibold text-cyan-300 mb-2">
                         Need a Custom Project Quote?
                       </h4>
                       <p className="text-sm text-gray-300">
@@ -321,9 +418,9 @@ function Contacts() {
                       data-tally-overlay="1"
                       data-tally-emoji-text="👋"
                       data-tally-emoji-animation="tada"
-                      className="group flex-shrink-0 bg-blue-300 hover:bg-blue-400 text-black font-semibold 
+                      className="group flex-shrink-0 bg-cyan-300 hover:bg-cyan-400 text-black font-semibold 
                                px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105
-                               shadow-lg hover:shadow-blue-300/50 flex items-center gap-2"
+                               shadow-lg hover:shadow-cyan-300/50 flex items-center gap-2"
                     >
                       <span>Request Quote</span>
                       <svg
@@ -349,7 +446,7 @@ function Contacts() {
                 Prefer email?{" "}
                 <a
                   href="mailto:hello@nyota.tech"
-                  className="text-blue-300 underline"
+                  className="text-cyan-300 underline"
                 >
                   hello@nyota.tech
                 </a>

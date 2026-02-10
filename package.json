@@ -11,9 +11,12 @@
   },
   "dependencies": {
     "@fontsource/space-grotesk": "^5.2.10",
+    "@lottiefiles/dotlottie-react": "^0.17.14",
+    "@lottiefiles/react-lottie-player": "^3.6.0",
     "@tailwindcss/vite": "^4.1.18",
     "dotenv": "^17.2.3",
     "framer-motion": "^12.28.1",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
