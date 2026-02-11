@@ -13,7 +13,7 @@ import {
   BlocksIcon,
   Check,
   CheckCircle,
-  SidebarOpenIcon,
+  CheckCircle2Icon,
 } from "lucide-react";
 import { BiRightArrowCircle } from "react-icons/bi";
 
@@ -48,8 +48,6 @@ const services = (servicesData.services || []).map((s) => {
     useCases: s.use_cases || [],
     deliveryModel: s.delivery_model || [],
     icon: iconMap[s.id] || Code2,
-
-    // NEW fields (optional in your data)
     businessOutcomes: s.business_outcomes || s.outcomes || [], // what business impact to expect
     deliverables: s.deliverables || s.what_you_get || [],
     timeline: s.timeline || s.estimated_delivery || "", // e.g., "2–4 weeks"
@@ -65,56 +63,11 @@ const services = (servicesData.services || []).map((s) => {
 });
 
 // Duplicate for continuous carousel loop
-const loopedServices = [...services, ...services];
+const loopedServices = [...services, ...services]; 
 
-// Additional small offerings not in main services.json
-const additionalServices = [
-  {
-    id: "graphic-design",
-    title: "Graphic Design",
-    subtitle: "Branding, marketing creatives, and visual systems",
-    blurb: "Logos, brand systems, marketing assets, pitch decks and UI illustrations to make your product stand out.",
-  },
-  {
-    id: "consulting",
-    title: "Consultation",
-    subtitle: "Product strategy & technical advisory",
-    blurb: "Product discovery, technical due diligence, architecture reviews, and CTO-as-a-service.",
-  },
-  {
-    id: "analytics",
-    title: "Product Analytics",
-    subtitle: "Dashboards, tracking & data strategy",
-    blurb: "Event tracking, dashboards, and ML-ready data pipelines to measure and optimise product metrics.",
-  },
-  {
-    id: "training",
-    title: "Training & Support",
-    subtitle: "Developer training & team onboarding",
-    blurb: "Workshops for internal teams, upskilling sessions, and handover documentation for maintainability.",
-  },
-];
-
-const defaultPackages = [
-  {
-    name: "Starter",
-    price: "From enquiry",
-    summary: "Rapid prototype or small feature set. Best for idea validation.",
-    features: ["Discovery & scope", "Clickable prototype", "Basic architecture"],
-  },
-  {
-    name: "Growth",
-    price: "Custom quote",
-    summary: "Production-ready product with monitoring and support.",
-    features: ["Full implementation", "CI / CD", "30 days support"],
-  },
-  {
-    name: "Enterprise",
-    price: "Custom quote",
-    summary: "Scaled architecture, SRE, security & SLA commitments.",
-    features: ["Dedicated team", "SLA & runbook", "Compliance support"],
-  },
-];
+// Use additional data moved into services.js
+const additionalServices = servicesData.additionalServices || [];
+const defaultPackages = servicesData.defaultPackages || [];
 
 const Services = ({ onNavigate }) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -593,7 +546,7 @@ const Services = ({ onNavigate }) => {
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 max-w-7xl mx-auto max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 w-full max-w-7xl mx-auto max-h-[90vh] overflow-y-auto no-scrollbar">
         <div className="relative h-screen flex flex-col items-center justify-center text-center">
 
           {/* --- Intro: placed just above the Carousel --- */}
@@ -641,24 +594,24 @@ const Services = ({ onNavigate }) => {
               </div>
 
               <div className="mt-26 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-300">
-                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md">
-                  <div className="text-cyan-300 mt-1"><Check className="w-5 h-5" /></div>
+                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
+                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
                   <div>
                     <div className="font-semibold text-white">Outcome-focused</div>
                     <div className="text-xs text-gray-400">KPIs & measurable impact</div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md">
-                  <div className="text-cyan-300 mt-1"><Check className="w-5 h-5" /></div>
+                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
+                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
                   <div>
                     <div className="font-semibold text-white">Security-first</div>
                     <div className="text-xs text-gray-400">OWASP-aware & deployment safeguards</div>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md">
-                  <div className="text-cyan-300 mt-1"><Check className="w-5 h-5" /></div>
+                <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
+                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
                   <div>
                     <div className="font-semibold text-white">Transparent process</div>
                     <div className="text-xs text-gray-400">Weekly demos & milestone tracking</div>
@@ -670,7 +623,7 @@ const Services = ({ onNavigate }) => {
         </div>
 
         {/* Carousel */}
-        <div className="relative h-screen w-screen flex items-center">
+        <div className="relative h-screen w-full flex items-center">
 
           <h2 className="absolute transform top-1/8 text-3xl sm:text-4xl font-bold text-white">
             Our Services — Designed for startups and enterprises
@@ -734,7 +687,6 @@ const Services = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Additional Services */}
         {/* Additional Services — modernized */}
         <motion.section
           initial={{ opacity: 0, y: 12 }}
@@ -759,7 +711,7 @@ const Services = ({ onNavigate }) => {
                   key={s.id}
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.24, ease: "easeOut" }}
-                  className="relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-white/5 to-white/3 border border-white/6 shadow-lg hover:shadow-2xl backdrop-blur-sm"
+                  className="relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-white/5 to-white/3 border border-white/6 shadow-lg shadow-black/30 backdrop-blur-md"
                   role="region"
                   aria-labelledby={`extras-${s.id}-title`}
                 >
@@ -844,7 +796,7 @@ const Services = ({ onNavigate }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-300/8 to-cyan-400/8 border border-blue-300/30 rounded-2xl p-8 md:p-12 overflow-hidden"
+            className="relative bg-gradient-to-br from-blue-300/8 to-cyan-400/8 border border-blue-300/30 rounded-2xl p-8 md:p-12 overflow-hidden shadow-lg shadow-black/30"
             style={{ transform: "translateZ(0)" }}
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-300/10 rounded-full blur-3xl" />

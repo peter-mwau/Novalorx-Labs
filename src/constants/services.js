@@ -1,4 +1,3 @@
-// src/data/services.js
 export const company = "Nyota Digital Solutions";
 
 export const services = [
@@ -7,8 +6,6 @@ export const services = [
     name: "Web2 Applications",
     description:
       "We design and build fast, secure, and scalable web applications tailored to your business needs.",
-
-    // What we do (offerings)
     offerings: [
       "Business & personal websites",
       "Progressive Web Apps (PWAs)",
@@ -16,8 +13,6 @@ export const services = [
       "Admin dashboards & portals",
       "API development & integrations",
     ],
-
-    // What the client receives (deliverables)
     deliverables: [
       "Responsive UI design (mobile-first)",
       "Full-stack web application (frontend + backend)",
@@ -28,8 +23,6 @@ export const services = [
       "Testing + bug-fix cycle before launch",
       "Training + handover documentation",
     ],
-
-    // Business value (outcomes)
     business_outcomes: [
       "Launch your platform faster with a clear MVP roadmap",
       "Automate manual processes and reduce operational overhead",
@@ -37,22 +30,14 @@ export const services = [
       "Increase conversions through optimized UX + performance",
       "Enable future scaling with modular architecture",
     ],
-
-    // Timeline estimate
     timeline: "2–6 weeks (depending on scope)",
-
-    // Pricing estimate
     starting_from: "From $1,200 (MVP websites) / $3,500+ (web platforms)",
-
-    // Ideal client fit
     best_for: [
       "SMEs digitizing operations",
       "Startups building MVPs",
       "NGOs and schools building portals",
       "Businesses needing dashboards & automation",
     ],
-
-    // Proof points (mini case studies)
     proof_points: [
       {
         title: "Business Management Dashboard",
@@ -65,8 +50,6 @@ export const services = [
         metric: "Enabled 24/7 online sales operations",
       },
     ],
-
-    // Process steps
     process_steps: [
       "Discovery & scoping call (requirements + goals)",
       "Wireframes + UI design approval",
@@ -75,12 +58,8 @@ export const services = [
       "Deployment + monitoring setup",
       "Post-launch support & maintenance plan",
     ],
-
-    // Support model
     post_launch_support:
       "30-day bug fix warranty included. Optional monthly maintenance plan for updates, hosting, and improvements.",
-
-    // Integrations / platforms
     platforms: [
       "Stripe",
       "PayPal",
@@ -90,8 +69,6 @@ export const services = [
       "Twilio SMS",
       "SendGrid Email",
     ],
-
-    // Risk controls
     risk_controls: [
       "Weekly progress demos and sprint check-ins",
       "Automated testing + QA checklist",
@@ -100,14 +77,8 @@ export const services = [
       "Deployment rollback strategy",
       "Backup and database recovery plan",
     ],
-
-    // Engagement model
     engagement: ["Fixed price project", "Time & materials (T&M)", "Monthly retainer"],
-
-    // Communication expectations
     communication: ["Weekly demo call", "Daily progress updates via WhatsApp/Slack", "Trello/Jira task board"],
-
-    // Packages
     packages: [
       {
         name: "Starter (Landing / Website)",
@@ -145,17 +116,13 @@ export const services = [
         ],
       },
     ],
-
-    // Tech stack
     tech_stack: {
       frontend: ["React", "Next.js", "Vue", "Tailwind CSS"],
       backend: ["Node.js", "Django", "Laravel"],
       database: ["PostgreSQL", "MySQL", "MongoDB"],
       tools: ["Vite", "Webpack", "Postman"],
     },
-
     tags: ["web development", "web apps", "ecommerce", "frontend", "backend"],
-
     use_cases: [
       "Online stores",
       "Company websites",
@@ -163,7 +130,6 @@ export const services = [
       "NGO dashboards",
       "Custom business systems",
     ],
-
     delivery_model: [
       "Custom development",
       "Maintenance & support",
@@ -176,7 +142,6 @@ export const services = [
     name: "Web3 & Blockchain DApps",
     description:
       "We build decentralized applications and blockchain systems that are secure, transparent, and scalable.",
-
     offerings: [
       "Smart contract development",
       "Decentralized applications (DApps)",
@@ -184,7 +149,6 @@ export const services = [
       "Token creation & tokenomics design",
       "Wallet integrations & blockchain APIs",
     ],
-
     deliverables: [
       "Smart contract development + testing suite",
       "DApp frontend + wallet integration",
@@ -194,7 +158,6 @@ export const services = [
       "Tokenomics + contract architecture documentation",
       "Admin tools for monitoring transactions",
     ],
-
     business_outcomes: [
       "Launch trustless systems with transparent transaction history",
       "Reduce fraud and improve auditability through blockchain",
@@ -202,18 +165,14 @@ export const services = [
       "Enable decentralized identity and verification flows",
       "Build scalable DeFi or marketplace infrastructure",
     ],
-
     timeline: "3–8 weeks (depending on complexity)",
-
     starting_from: "From $4,000 (basic DApp) / $8,000+ (full platform)",
-
     best_for: [
       "Startups launching Web3 products",
       "Fintech innovation teams",
       "NFT creators and digital marketplaces",
       "Communities building DAOs",
     ],
-
     proof_points: [
       {
         title: "NFT Marketplace Prototype",
@@ -226,7 +185,6 @@ export const services = [
         metric: "Secure vesting + release schedule automation",
       },
     ],
-
     process_steps: [
       "Discovery (token model + user flow planning)",
       "Smart contract architecture design",
@@ -235,10 +193,8 @@ export const services = [
       "Deployment + verification on chain explorers",
       "Security review + optional audit support",
     ],
-
     post_launch_support:
       "Includes post-launch contract monitoring support. Optional maintenance for upgrades, UI improvements, and governance tooling.",
-
     platforms: [
       "MetaMask",
       "WalletConnect",
@@ -248,7 +204,6 @@ export const services = [
       "The Graph",
       "Chainlink Oracles",
     ],
-
     risk_controls: [
       "Test-driven smart contract development",
       "Reentrancy and exploit protection review",
@@ -257,11 +212,8 @@ export const services = [
       "Multi-sig setup support for admin control",
       "Optional external audit preparation",
     ],
-
     engagement: ["Fixed price DApp build", "Consulting & architecture support", "Dedicated Web3 team"],
-
     communication: ["Weekly demo calls", "Transparent GitHub repo access", "Project board tracking"],
-
     packages: [
       {
         name: "Starter (Smart Contract + Token)",
@@ -298,7 +250,6 @@ export const services = [
         ],
       },
     ],
-
     tech_stack: {
       blockchain: ["Ethereum", "Polygon", "Solana", "BNB Chain"],
       smart_contracts: ["Solidity", "Rust"],
@@ -306,9 +257,7 @@ export const services = [
       backend: ["Node.js", "Hardhat", "Foundry"],
       storage: ["IPFS", "Filecoin", "Arweave"],
     },
-
     tags: ["web3", "blockchain", "smart contracts", "dapps", "crypto", "NFT"],
-
     use_cases: [
       "DeFi platforms",
       "NFT marketplaces",
@@ -316,7 +265,6 @@ export const services = [
       "Token-based systems",
       "DAO platforms",
     ],
-
     delivery_model: [
       "Smart contract audits",
       "End-to-end DApp builds",
@@ -329,7 +277,6 @@ export const services = [
     name: "Android Applications",
     description:
       "We develop high-performance Android apps with modern design, offline support, and seamless backend integration.",
-
     offerings: [
       "Native Android apps",
       "Business & productivity apps",
@@ -337,7 +284,6 @@ export const services = [
       "API integrations",
       "App deployment & Play Store publishing",
     ],
-
     deliverables: [
       "Android app (Kotlin/Java) with clean architecture",
       "Modern UI design (Material Design / Jetpack Compose)",
@@ -348,7 +294,6 @@ export const services = [
       "Play Store deployment support",
       "QA testing + device compatibility checks",
     ],
-
     business_outcomes: [
       "Improve customer engagement with mobile-first experiences",
       "Enable offline workflows for field teams",
@@ -356,18 +301,14 @@ export const services = [
       "Increase retention through push notifications",
       "Expand reach through Play Store distribution",
     ],
-
     timeline: "3–7 weeks",
-
     starting_from: "From $2,500 (MVP) / $5,000+ (full production app)",
-
     best_for: [
       "SMEs needing mobile access for customers",
       "Logistics and delivery businesses",
       "Schools and NGOs building community apps",
       "Fintech and payment solutions",
     ],
-
     proof_points: [
       {
         title: "Offline Delivery App",
@@ -380,7 +321,6 @@ export const services = [
         metric: "Improved response time by 40%",
       },
     ],
-
     process_steps: [
       "Requirements gathering + UI planning",
       "Wireframes and user flow approval",
@@ -389,12 +329,9 @@ export const services = [
       "Testing on multiple devices",
       "Deployment + Play Store publishing support",
     ],
-
     post_launch_support:
       "Includes 30-day bug fix warranty. Maintenance plans available for version upgrades, feature improvements, and Play Store compliance.",
-
     platforms: ["Firebase", "Google Maps", "M-Pesa API", "Stripe", "OneSignal", "Twilio"],
-
     risk_controls: [
       "Crash monitoring + analytics setup",
       "Performance profiling and optimization",
@@ -402,11 +339,8 @@ export const services = [
       "Secure token storage best practices",
       "Automated testing for critical features",
     ],
-
     engagement: ["Fixed-price app build", "Dedicated Android developer", "Monthly support retainer"],
-
     communication: ["Weekly progress demo", "Test builds shared via APK/TestFlight-style rollout", "Issue tracking via Trello"],
-
     packages: [
       {
         name: "Starter (MVP App)",
@@ -442,16 +376,13 @@ export const services = [
         ],
       },
     ],
-
     tech_stack: {
       languages: ["Kotlin", "Java"],
       frameworks: ["Android SDK", "Jetpack Compose"],
       backend: ["Firebase", "Node.js", "Django"],
       databases: ["Room", "SQLite", "Firestore"],
     },
-
     tags: ["android", "mobile apps", "kotlin", "java", "mobile development"],
-
     use_cases: [
       "Customer mobile apps",
       "Internal business tools",
@@ -459,7 +390,6 @@ export const services = [
       "Fintech apps",
       "Logistics & delivery apps",
     ],
-
     delivery_model: [
       "Custom app development",
       "App maintenance",
@@ -472,7 +402,6 @@ export const services = [
     name: "AI & Machine Learning Applications",
     description:
       "We build intelligent systems using machine learning and AI to automate, predict, and enhance business operations.",
-
     offerings: [
       "Machine learning models",
       "AI-powered web & mobile apps",
@@ -480,7 +409,6 @@ export const services = [
       "Computer vision systems",
       "Chatbots & virtual assistants",
     ],
-
     deliverables: [
       "Custom AI model development + training pipeline",
       "Data cleaning + preprocessing workflow",
@@ -490,7 +418,6 @@ export const services = [
       "Dashboard or interface to monitor predictions",
       "Documentation + handover for retraining",
     ],
-
     business_outcomes: [
       "Automate repetitive work and reduce human workload",
       "Detect fraud, anomalies, or risks early",
@@ -498,18 +425,14 @@ export const services = [
       "Generate business insights through predictive analytics",
       "Improve decision-making using real-time intelligence",
     ],
-
     timeline: "2–8 weeks (depending on data availability)",
-
     starting_from: "From $3,000 (prototype) / $7,000+ (production ML system)",
-
     best_for: [
       "Companies with large datasets needing automation",
       "Fintech & fraud prevention systems",
       "Customer support teams needing chatbots",
       "Organizations needing document processing",
     ],
-
     proof_points: [
       {
         title: "Customer Support Chatbot",
@@ -522,7 +445,6 @@ export const services = [
         metric: "Processed 1,000+ documents/day automatically",
       },
     ],
-
     process_steps: [
       "Data audit and feasibility review",
       "Prototype model training and baseline evaluation",
@@ -531,12 +453,9 @@ export const services = [
       "Monitoring drift and retraining plan",
       "Production rollout + support",
     ],
-
     post_launch_support:
       "Includes model monitoring and performance review. Optional retraining plan and continuous improvement support.",
-
     platforms: ["OpenAI API", "Google Vision", "AWS SageMaker", "HuggingFace", "LangChain"],
-
     risk_controls: [
       "Dataset bias review and validation",
       "Model accuracy reporting and benchmarking",
@@ -544,11 +463,8 @@ export const services = [
       "Deployment with rollback versioning",
       "Monitoring model drift over time",
     ],
-
     engagement: ["Prototype + MVP delivery", "AI integration consulting", "Monthly AI improvement retainer"],
-
     communication: ["Weekly progress review", "Shared model evaluation reports", "Milestone-based delivery"],
-
     packages: [
       {
         name: "Starter (AI Prototype)",
@@ -584,16 +500,13 @@ export const services = [
         ],
       },
     ],
-
     tech_stack: {
       languages: ["Python"],
       frameworks: ["TensorFlow", "PyTorch", "Scikit-learn"],
       data_tools: ["Pandas", "NumPy", "OpenCV"],
       deployment: ["FastAPI", "Flask", "Docker"],
     },
-
     tags: ["AI", "machine learning", "data science", "automation", "intelligent systems"],
-
     use_cases: [
       "Fraud detection",
       "Recommendation systems",
@@ -601,7 +514,6 @@ export const services = [
       "Customer support bots",
       "Predictive analytics",
     ],
-
     delivery_model: [
       "Model development",
       "AI integration",
@@ -614,7 +526,6 @@ export const services = [
     name: "Cloud, DevOps & AWS Services",
     description:
       "We help businesses deploy, scale, and automate their systems using modern cloud infrastructure and DevOps practices.",
-
     offerings: [
       "Cloud hosting & migration",
       "Docker containerization",
@@ -622,7 +533,6 @@ export const services = [
       "Server automation",
       "System monitoring & optimization",
     ],
-
     deliverables: [
       "Cloud infrastructure setup (AWS/GCP/Azure)",
       "Docker containerization + deployment pipeline",
@@ -632,7 +542,6 @@ export const services = [
       "Backup + disaster recovery setup",
       "Infrastructure documentation and handover",
     ],
-
     business_outcomes: [
       "Reduce downtime and improve system reliability",
       "Deploy faster using automated CI/CD pipelines",
@@ -640,18 +549,14 @@ export const services = [
       "Lower hosting costs with scaling optimization",
       "Enable growth-ready infrastructure for high traffic",
     ],
-
     timeline: "1–4 weeks (depending on complexity)",
-
     starting_from: "From $1,500 (setup) / $3,000+ (migration + automation)",
-
     best_for: [
       "Startups scaling traffic",
       "Businesses migrating to cloud hosting",
       "Teams needing DevOps automation",
       "Organizations requiring monitoring and uptime",
     ],
-
     proof_points: [
       {
         title: "Cloud Migration + Scaling Setup",
@@ -664,7 +569,6 @@ export const services = [
         metric: "Enabled daily safe deployments",
       },
     ],
-
     process_steps: [
       "Infrastructure audit and assessment",
       "Cloud architecture planning",
@@ -673,10 +577,8 @@ export const services = [
       "Monitoring + alerts configuration",
       "Handover documentation + training",
     ],
-
     post_launch_support:
       "Ongoing infrastructure support available with monitoring, cost optimization, and scaling improvements.",
-
     platforms: [
       "AWS EC2",
       "AWS S3",
@@ -686,7 +588,6 @@ export const services = [
       "Azure App Services",
       "DigitalOcean",
     ],
-
     risk_controls: [
       "Infrastructure as Code (Terraform/CloudFormation)",
       "Backup and disaster recovery plans",
@@ -695,11 +596,8 @@ export const services = [
       "Deployment rollback configuration",
       "Cost monitoring + budget alerts",
     ],
-
     engagement: ["Cloud setup project", "Monthly DevOps retainer", "Dedicated DevOps engineer"],
-
     communication: ["Weekly review + performance report", "Incident response support options", "Documentation and training"],
-
     packages: [
       {
         name: "Starter (Cloud Setup)",
@@ -735,7 +633,6 @@ export const services = [
         ],
       },
     ],
-
     tech_stack: {
       cloud_providers: ["AWS", "Google Cloud", "Azure"],
       containers: ["Docker", "Kubernetes"],
@@ -743,9 +640,7 @@ export const services = [
       infrastructure: ["Terraform", "CloudFormation", "Ansible"],
       monitoring: ["Prometheus", "Grafana", "CloudWatch"],
     },
-
     tags: ["cloud", "devops", "aws", "automation", "infrastructure"],
-
     use_cases: [
       "High-traffic web apps",
       "Microservices systems",
@@ -753,7 +648,6 @@ export const services = [
       "Disaster recovery systems",
       "Scalable startups",
     ],
-
     delivery_model: [
       "Cloud setup",
       "Ongoing infrastructure management",
@@ -773,5 +667,55 @@ export const global_tags = [
   "startup solutions",
 ];
 
-// default export for convenience
-export default { company, services, global_tags };
+// Additional small offerings not in main services.json (moved from Services.jsx)
+export const additionalServices = [
+  {
+    id: "graphic-design",
+    title: "Graphic Design",
+    subtitle: "Branding, marketing creatives, and visual systems",
+    blurb: "Logos, brand systems, marketing assets, pitch decks and UI illustrations to make your product stand out.",
+  },
+  {
+    id: "consulting",
+    title: "Consultation",
+    subtitle: "Product strategy & technical advisory",
+    blurb: "Product discovery, technical due diligence, architecture reviews, and CTO-as-a-service.",
+  },
+  {
+    id: "analytics",
+    title: "Product Analytics",
+    subtitle: "Dashboards, tracking & data strategy",
+    blurb: "Event tracking, dashboards, and ML-ready data pipelines to measure and optimise product metrics.",
+  },
+  {
+    id: "training",
+    title: "Training & Support",
+    subtitle: "Developer training & team onboarding",
+    blurb: "Workshops for internal teams, upskilling sessions, and handover documentation for maintainability.",
+  },
+];
+
+// Default packages moved here too
+export const defaultPackages = [
+  {
+    name: "Starter",
+    price: "From enquiry",
+    summary: "Rapid prototype or small feature set. Best for idea validation.",
+    features: ["Discovery & scope", "Clickable prototype", "Basic architecture"],
+  },
+  {
+    name: "Growth",
+    price: "Custom quote",
+    summary: "Production-ready product with monitoring and support.",
+    features: ["Full implementation", "CI / CD", "30 days support"],
+  },
+  {
+    name: "Enterprise",
+    price: "Custom quote",
+    summary: "Scaled architecture, SRE, security & SLA commitments.",
+    features: ["Dedicated team", "SLA & runbook", "Compliance support"],
+  },
+];
+
+// default export for convenience (keeps backward compatibility with existing imports)
+export default { company, services, global_tags, additionalServices, defaultPackages };

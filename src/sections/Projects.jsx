@@ -121,7 +121,7 @@ function MiniIDE({
 
   return (
     <div
-      className="max-w-lg w-full rounded-lg border border-white/8 bg-gradient-to-br from-black/60 to-black/40 p-3 shadow-2xl"
+      className="max-w-lg w-full rounded-lg border border-white/8 bg-gradient-to-br from-black/60 to-black/40 p-3 shadow-lg shadow-black/30"
       aria-hidden="false"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -479,7 +479,7 @@ resource "aws_s3_bucket" "public_assets" {
                   }}
                 >
                   <div
-                    className="group relative overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:border-white/40"
+                    className="group relative overflow-hidden rounded-2xl backdrop-blur-xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 cursor-pointer transition-all duration-500 hover:scale-[1.02] hover:border-white/40 shadow-lg shadow-black/30"
                     style={{
                       height: "100%",
                       display: "flex",

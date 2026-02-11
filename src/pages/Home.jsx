@@ -14,6 +14,10 @@ function Home() {
   const transitionMs = 700;
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  // 🔊 background audio ref
+  const bgAudioRef = useRef(null);
+  const audioStartedRef = useRef(false);
+
   // scroll / swipe control refs
   const isAnimating = useRef(false); // locks while a transition is in progress
   const wheelAccum = useRef(0);
@@ -21,6 +25,7 @@ function Home() {
   const touchStartY = useRef(null);
   const sectionOrder = ["hero", "about", "services", "projects", "team", "contacts"];
 
+  // detect reduced motion preference
   useEffect(() => {
     const mq =
       typeof window !== "undefined" &&
@@ -33,6 +38,37 @@ function Home() {
     return () => {
       if (mq.removeEventListener) mq.removeEventListener("change", handler);
       else mq.removeListener(handler);
+    };
+  }, []);
+
+  // 🔊 Background audio autoplay on first user interaction
+  useEffect(() => {
+    const tryPlayAudio = async () => {
+      if (audioStartedRef.current) return;
+
+      const audio = bgAudioRef.current;
+      if (!audio) return;
+
+      try {
+        audio.volume = 0.15; // adjust volume here
+        audio.loop = true;
+
+        await audio.play();
+        audioStartedRef.current = true;
+      } catch (err) {
+        // autoplay blocked until user interacts (normal browser behavior)
+      }
+    };
+
+    // Try immediately (may fail if browser blocks autoplay)
+    tryPlayAudio();
+
+    // Then retry after first user interaction
+    const events = ["click", "touchstart", "keydown", "wheel"];
+    events.forEach((ev) => window.addEventListener(ev, tryPlayAudio, { passive: true }));
+
+    return () => {
+      events.forEach((ev) => window.removeEventListener(ev, tryPlayAudio));
     };
   }, []);
 
@@ -54,7 +90,10 @@ function Home() {
       try {
         const style = window.getComputedStyle(cur);
         const overflowY = style.overflowY;
-        if ((overflowY === "auto" || overflowY === "scroll") && cur.scrollHeight > cur.clientHeight) {
+        if (
+          (overflowY === "auto" || overflowY === "scroll") &&
+          cur.scrollHeight > cur.clientHeight
+        ) {
           return cur;
         }
       } catch (err) {
@@ -216,14 +255,18 @@ function Home() {
       if (cleared) return;
       cleared = true;
       setPrevSection(null);
-      try { el.removeEventListener("transitionend", onTransitionEnd); } catch {}
+      try {
+        el.removeEventListener("transitionend", onTransitionEnd);
+      } catch {}
     }, transitionMs + 200);
 
     el.addEventListener("transitionend", onTransitionEnd);
 
     return () => {
       clearTimeout(fallback);
-      try { el.removeEventListener("transitionend", onTransitionEnd); } catch {}
+      try {
+        el.removeEventListener("transitionend", onTransitionEnd);
+      } catch {}
     };
   }, [activeSection, prefersReducedMotion, transitionMs]);
 
@@ -238,7 +281,8 @@ function Home() {
 
   return (
     <div className="relative h-screen w-full overflow-hidden home-scroll-root">
-      {/* No background here — background is provided by BackgroundLayer (portal) */}
+      {/* 🔊 Background Sound */}
+      <audio ref={bgAudioRef} src="/sounds/sacred.mp3" preload="auto" />
 
       {/* Navbar */}
       {activeSection !== "hero" && (

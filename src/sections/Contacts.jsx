@@ -187,7 +187,7 @@ function Contacts() {
 
             {/* Right: Lottie */}
             <div className="flex justify-center md:justify-end">
-              <div className="w-full max-w-[360px] rounded-2xl p-4 bg-gradient-to-br from-black/60 to-black/30 border border-white/6 shadow-lg">
+              <div className="w-full max-w-[360px] rounded-2xl p-4 bg-gradient-to-br from-black/60 to-black/30 border border-white/10 shadow-lg shadow-black/30">
                 <Player
                   ref={playerRef}
                   autoplay
@@ -197,7 +197,7 @@ function Contacts() {
                 />
 
                 <div className="mt-3 flex items-center justify-between">
-                  <div className="text-xs text-gray-400">Live interaction demo</div>
+                  <div className="text-xs text-gray-400">Live interaction bot</div>
                   {/* <div className="flex items-center gap-2">
                     <button
                       onClick={togglePlay}
@@ -295,11 +295,11 @@ function Contacts() {
                 </div>
 
                 <div className="pt-4 border-t border-gray-800 mt-4 text-xs text-gray-400">
-                  <p className="mb-2 flex items-start gap-2">
+                  <p className="mb-2 flex items-center gap-2">
                     <Clock className="mt-1 text-cyan-300" />{" "}
                     <span>Office Hours: Mon–Fri, 9:00–17:00 (EAT)</span>
                   </p>
-                  <p className="mt-2">
+                  <p className="mt-4">
                     We typically reply within 1–2 business days. For urgent
                     matters use the phone/WhatsApp number above.
                   </p>
