@@ -6,6 +6,7 @@ const Hero = ({ onNavigate }) => {
   const [navOpen, setNavOpen] = useState(false);
 
   const items = [
+    { label: "ABOUT", section: "about" },
     { label: "SERVICES", section: "services" },
     { label: "PROJECTS", section: "projects" },
     { label: "TEAM", section: "team" },
@@ -49,7 +50,7 @@ const Hero = ({ onNavigate }) => {
 
         {/* Desktop navbar — avoid backdrop-filter for perf; use translucent BG */}
         <nav
-          className="hidden md:block absolute bottom-12 py-4"
+          className="hidden md:block absolute bottom-12 py-4 shadow-lg shadow-black/30"
           style={{
             backgroundColor: "rgba(0,0,0,0.16)",
             borderRadius: 8,
