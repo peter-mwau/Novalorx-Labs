@@ -69,7 +69,7 @@ function MobileMenu({ menuItems, activeSection, onNavigate }) {
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-12 w-56 backdrop-blur-lg bg-black/80 border border-white/20 rounded-lg shadow-lg shadow-black/30 p-3">
+        <div className="absolute right-0 mt-12 w-56 backdrop-blur-md bg-black/70 border border-white/20 rounded-lg shadow-lg shadow-black/30 p-3">
           {/* top center SVG */}
           <div className="flex justify-center mb-2">
             {/* adjust w-12 h-12 for size */}
