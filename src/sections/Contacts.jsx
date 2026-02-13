@@ -164,7 +164,10 @@ function Contacts() {
                   onClick={() => {
                     const el = document.querySelector("form");
                     if (el && typeof el.scrollIntoView === "function") {
-                      el.scrollIntoView({ behavior: "smooth", block: "center" });
+                      el.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
                     }
                     const input = el?.querySelector("input");
                     if (input && typeof input.focus === "function") {
@@ -197,7 +200,9 @@ function Contacts() {
                 />
 
                 <div className="mt-3 flex items-center justify-between">
-                  <div className="text-xs text-gray-400">Live interaction bot</div>
+                  <div className="text-xs text-gray-400">
+                    Live interaction bot
+                  </div>
                   {/* <div className="flex items-center gap-2">
                     <button
                       onClick={togglePlay}
@@ -221,9 +226,7 @@ function Contacts() {
         </div>
 
         {/* Main area — ONLY scrollable on small screens; fixed (no scroll) on md+ */}
-        <div
-          className="flex-1 w-full flex flex-col lg:flex-row gap-6 items-stretch py-20"
-        >
+        <div className="flex-1 w-full flex flex-col lg:flex-row gap-6 items-stretch py-20">
           {/* Left column: compact rings + contact info (1/3 width on lg) */}
           <div className="lg:w-1/3 flex flex-col gap-4 p-2">
             {/* Compact time rings row (wrap if needed) */}
@@ -416,10 +419,11 @@ function Contacts() {
                       data-tally-open="gDGZ5K"
                       data-tally-layout="modal"
                       data-tally-overlay="1"
-                      data-tally-emoji-text="👋"
+                      data-tally-width="800"
+                      // data-tally-emoji-text=""
                       data-tally-emoji-animation="tada"
                       className="group flex-shrink-0 bg-cyan-300 hover:bg-cyan-400 text-black font-semibold 
-                               px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105
+                               px-3 py-3 rounded-full transition-all duration-300 transform hover:scale-105
                                shadow-lg hover:shadow-cyan-300/50 flex items-center gap-2"
                     >
                       <span>Request Quote</span>
