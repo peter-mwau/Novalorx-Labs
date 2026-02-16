@@ -6,7 +6,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: 'https://novalorxlabs.netlify.app/',
+  base: 'https://novalorxlabs.com/',
   plugins: [react(), tailwindcss(),
   VitePWA({
     registerType: 'autoUpdate', workbox: {
