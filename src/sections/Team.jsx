@@ -18,18 +18,26 @@ import { useInView } from "../hooks/useInView";
 import { teamMembers } from "../constants/teams";
 import liveChatAnimation from "../lottie/developer.json";
 
-
 function calculateYearsAndDaysSince(dateString) {
   if (!dateString) return { years: 0, days: 0, label: "0 days" };
   const start = new Date(dateString);
   const now = new Date();
 
   let years = now.getFullYear() - start.getFullYear();
-  const anniversaryThisYear = new Date(now.getFullYear(), start.getMonth(), start.getDate());
+  const anniversaryThisYear = new Date(
+    now.getFullYear(),
+    start.getMonth(),
+    start.getDate(),
+  );
   if (now < anniversaryThisYear) years -= 1;
 
-  const lastAnniversaryYear = now < anniversaryThisYear ? now.getFullYear() - 1 : now.getFullYear();
-  const lastAnniversary = new Date(lastAnniversaryYear, start.getMonth(), start.getDate());
+  const lastAnniversaryYear =
+    now < anniversaryThisYear ? now.getFullYear() - 1 : now.getFullYear();
+  const lastAnniversary = new Date(
+    lastAnniversaryYear,
+    start.getMonth(),
+    start.getDate(),
+  );
 
   const msInDay = 1000 * 60 * 60 * 24;
   const days = Math.max(0, Math.floor((now - lastAnniversary) / msInDay));
@@ -81,7 +89,9 @@ export default function Team() {
 
             // Try to get GitHub public info - if fails, keep local base
             try {
-              const res = await fetch(`https://api.github.com/users/${username}`);
+              const res = await fetch(
+                `https://api.github.com/users/${username}`,
+              );
               if (!res.ok) {
                 // if rate-limited or not found, return base
                 return { ...base };
@@ -95,9 +105,16 @@ export default function Team() {
                 if (reposRes.ok) {
                   const repos = await reposRes.json();
                   topRepos = (repos || [])
-                    .sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0))
+                    .sort(
+                      (a, b) =>
+                        (b.stargazers_count || 0) - (a.stargazers_count || 0),
+                    )
                     .slice(0, 2)
-                    .map((r) => ({ name: r.name, url: r.html_url, stars: r.stargazers_count || 0 }));
+                    .map((r) => ({
+                      name: r.name,
+                      url: r.html_url,
+                      stars: r.stargazers_count || 0,
+                    }));
                 }
               } catch (e) {
                 // ignore repo errors
@@ -189,9 +206,12 @@ export default function Team() {
         </div>
       </div>
     );
-    
+
   return (
-    <div ref={sectionRef} className="h-screen relative text-white overflow-y-auto no-scrollbar py-12">
+    <div
+      ref={sectionRef}
+      className="h-screen relative text-white overflow-y-auto no-scrollbar py-12"
+    >
       <style>{`
         .thin-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
         .thin-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.06); border-radius: 6px; }
@@ -208,7 +228,9 @@ export default function Team() {
                 <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-semibold border border-cyan-400/20">
                   Meet the team
                 </span>
-                <div className="text-sm text-white/60">Engineers & creators</div>
+                <div className="text-sm text-white/60">
+                  Engineers & creators
+                </div>
               </div>
 
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
@@ -216,16 +238,20 @@ export default function Team() {
               </h1>
 
               <p className="text-gray-300 max-w-2xl">
-                We’re a small, cross-functional team of engineers, designers and devops who ship production-ready software.
-                Click any profile to learn more about their work and impact.
+                We&apos;re a small, cross-functional team of engineers,
+                designers and devops who ship production-ready software. Click
+                any profile to learn more about their work and impact.
               </p>
 
               <div className="flex items-center gap-3 mt-3">
                 <button
                   onClick={() => {
                     // focus first profile when clicked
-                    const first = document.querySelector('[data-team-item]');
-                    first?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+                    const first = document.querySelector("[data-team-item]");
+                    first?.scrollIntoView?.({
+                      behavior: "smooth",
+                      block: "center",
+                    });
                     first?.focus?.();
                   }}
                   className="px-4 py-2 rounded-md bg-cyan-400 hover:bg-cyan-500 text-black font-semibold shadow"
@@ -286,21 +312,31 @@ export default function Team() {
         <div className="hidden lg:flex flex-1 gap-6 max-w-6xl py-20 mx-auto w-full max-h-[calc(80vh-12rem)] min-h-0">
           <aside className="w-1/4">
             <div className="sticky top-4 h-[calc(100vh-10rem)] overflow-auto thin-scrollbar space-y-4 p-2">
-              <h3 className="text-lg font-semibold text-cyan-300 mb-2">Team Members</h3>
+              <h3 className="text-lg font-semibold text-cyan-300 mb-2">
+                Team Members
+              </h3>
               <div className="space-y-3">
                 {profiles.map((profile) => (
                   <button
                     data-team-item
                     key={profile.username}
                     onClick={() => selectMember(profile)}
-                    className={`w-full flex items-center gap-3 p-2 rounded-xl border ${activeMember?.username === profile.username ? 'border-cyan-400 bg-gray-900' : 'border-gray-700 bg-gray-900/40'} hover:border-cyan-300 transition-all text-left`}
+                    className={`w-full flex items-center gap-3 p-2 rounded-xl border ${activeMember?.username === profile.username ? "border-cyan-400 bg-gray-900" : "border-gray-700 bg-gray-900/40"} hover:border-cyan-300 transition-all text-left`}
                   >
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700 flex-shrink-0">
-                      <img src={profile.imageUrl || profile.avatarFallback} alt={profile.name} className="w-full h-full object-cover" />
+                      <img
+                        src={profile.imageUrl || profile.avatarFallback}
+                        alt={profile.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-sm truncate">{profile.name}</h4>
-                      <p className="text-xs text-gray-400 truncate">{profile.position}</p>
+                      <h4 className="font-semibold text-sm truncate">
+                        {profile.name}
+                      </h4>
+                      <p className="text-xs text-gray-400 truncate">
+                        {profile.position}
+                      </p>
                     </div>
                   </button>
                 ))}
@@ -315,30 +351,53 @@ export default function Team() {
                 <header className="flex items-center gap-4 px-6 py-4 border-b border-gray-700 shrink-0">
                   <div className="flex-shrink-0">
                     <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-800 shadow-md">
-                      <img src={activeMember.imageUrl || activeMember.avatarFallback} alt={activeMember.login || activeMember.username} className="w-full h-full object-cover" />
+                      <img
+                        src={
+                          activeMember.imageUrl || activeMember.avatarFallback
+                        }
+                        alt={activeMember.login || activeMember.username}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
-                        <h2 className="text-2xl font-bold truncate">{activeMember.name}</h2>
-                        <p className="text-sm text-cyan-300 mt-1 truncate">{activeMember.position || activeMember.bio}</p>
+                        <h2 className="text-2xl font-bold truncate">
+                          {activeMember.name}
+                        </h2>
+                        <p className="text-sm text-cyan-300 mt-1 truncate">
+                          {activeMember.position || activeMember.bio}
+                        </p>
                       </div>
 
                       <div className="flex items-center gap-2">
                         {activeMember.github && (
-                          <a href={activeMember.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
+                          <a
+                            href={activeMember.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                          >
                             <Github className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
                         {activeMember.linkedin && (
-                          <a href={activeMember.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
+                          <a
+                            href={activeMember.linkedin}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                          >
                             <Linkedin className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
                         {activeMember.email && (
-                          <a href={`mailto:${activeMember.email}`} className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700">
+                          <a
+                            href={`mailto:${activeMember.email}`}
+                            className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700"
+                          >
                             <Mail className="w-5 h-5 text-cyan-300" />
                           </a>
                         )}
@@ -355,7 +414,10 @@ export default function Team() {
                       {activeMember.yearsAtCompany !== undefined && (
                         <div className="flex items-center gap-2">
                           <Calendar1 className="w-4 h-4" />
-                          <span>{activeMember.yearsAtCompany} yr{activeMember.yearsAtCompany > 1 ? 's' : ''}</span>
+                          <span>
+                            {activeMember.yearsAtCompany} yr
+                            {activeMember.yearsAtCompany > 1 ? "s" : ""}
+                          </span>
                         </div>
                       )}
                       {activeMember.publicRepos !== undefined && (
@@ -373,14 +435,20 @@ export default function Team() {
                     <div className="lg:col-span-2 space-y-4">
                       {activeMember.bio && (
                         <div>
-                          <h3 className="text-lg font-semibold text-cyan-300 mb-1">About</h3>
-                          <p className="text-gray-300 text-sm leading-relaxed line-clamp-6">{activeMember.bio}</p>
+                          <h3 className="text-lg font-semibold text-cyan-300 mb-1">
+                            About
+                          </h3>
+                          <p className="text-gray-300 text-sm leading-relaxed line-clamp-6">
+                            {activeMember.bio}
+                          </p>
                         </div>
                       )}
 
                       {(activeMember.contributions || []).length > 0 && (
                         <div>
-                          <h3 className="text-lg font-semibold text-cyan-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h3>
+                          <h3 className="text-lg font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                            <Award className="w-4 h-4" /> Key Contributions
+                          </h3>
                           <ul className="space-y-2 text-sm text-gray-300">
                             {activeMember.contributions.map((c, i) => (
                               <li key={i} className="flex items-start gap-3">
@@ -395,22 +463,32 @@ export default function Team() {
 
                     <aside className="space-y-3">
                       <div className="bg-gray-800 rounded-xl p-3">
-                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">GitHub Stats</h4>
+                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">
+                          GitHub Stats
+                        </h4>
                         <div className="grid grid-cols-2 gap-2 text-xs">
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
-                            <p className="text-lg font-bold">{activeMember.followers || 0}</p>
+                            <p className="text-lg font-bold">
+                              {activeMember.followers || 0}
+                            </p>
                             <p className="text-xs text-gray-400">Followers</p>
                           </div>
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
-                            <p className="text-lg font-bold">{activeMember.publicRepos || 0}</p>
+                            <p className="text-lg font-bold">
+                              {activeMember.publicRepos || 0}
+                            </p>
                             <p className="text-xs text-gray-400">Repos</p>
                           </div>
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
-                            <p className="text-sm font-semibold">{activeMember.yearsOnGithub?.label || "—"}</p>
+                            <p className="text-sm font-semibold">
+                              {activeMember.yearsOnGithub?.label || "—"}
+                            </p>
                             <p className="text-xs text-gray-400">On GitHub</p>
                           </div>
                           <div className="text-center p-2 bg-gray-900 rounded-md border border-gray-700">
-                            <p className="text-sm font-semibold">{activeMember.following || 0}</p>
+                            <p className="text-sm font-semibold">
+                              {activeMember.following || 0}
+                            </p>
                             <p className="text-xs text-gray-400">Following</p>
                           </div>
                         </div>
@@ -418,10 +496,17 @@ export default function Team() {
 
                       {activeMember.skills && (
                         <div className="bg-gray-800 rounded-xl p-3">
-                          <h4 className="text-sm font-semibold text-cyan-300 mb-2">Top Skills</h4>
+                          <h4 className="text-sm font-semibold text-cyan-300 mb-2">
+                            Top Skills
+                          </h4>
                           <div className="flex flex-wrap gap-1 text-xs">
                             {activeMember.skills.slice(0, 6).map((s, i) => (
-                              <span key={i} className="px-2 py-0.5 bg-white/5 rounded text-gray-200">{s.name}</span>
+                              <span
+                                key={i}
+                                className="px-2 py-0.5 bg-white/5 rounded text-gray-200"
+                              >
+                                {s.name}
+                              </span>
                             ))}
                           </div>
                         </div>
@@ -431,7 +516,9 @@ export default function Team() {
                 </div>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center text-gray-400">No active member selected.</div>
+              <div className="h-full flex items-center justify-center text-gray-400">
+                No active member selected.
+              </div>
             )}
           </main>
         </div>
@@ -439,23 +526,35 @@ export default function Team() {
         {/* Mobile */}
         <div className="lg:hidden flex-1 overflow-auto min-h-0">
           {profiles.length === 0 ? (
-            <div className="text-center py-8 text-gray-400">No team members found.</div>
+            <div className="text-center py-8 text-gray-400">
+              No team members found.
+            </div>
           ) : (
             <div className="space-y-3">
               {profiles.map((profile) => (
                 <button
                   key={profile.username}
                   onClick={() => selectMember(profile, true)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl border ${activeMember?.username === profile.username ? 'border-cyan-400 bg-gray-900' : 'border-gray-700 bg-gray-900/40'} hover:border-cyan-300 transition-all`}
+                  className={`w-full flex items-center gap-3 p-3 rounded-xl border ${activeMember?.username === profile.username ? "border-cyan-400 bg-gray-900" : "border-gray-700 bg-gray-900/40"} hover:border-cyan-300 transition-all`}
                 >
                   <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-700">
-                    <img src={profile.imageUrl || profile.avatarFallback} alt={profile.name} className="w-full h-full object-cover" />
+                    <img
+                      src={profile.imageUrl || profile.avatarFallback}
+                      alt={profile.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-sm truncate">{profile.name}</h4>
-                    <p className="text-xs text-gray-400 truncate">{profile.position}</p>
+                    <h4 className="font-semibold text-sm truncate">
+                      {profile.name}
+                    </h4>
+                    <p className="text-xs text-gray-400 truncate">
+                      {profile.position}
+                    </p>
                   </div>
-                  {activeMember?.username === profile.username && <ChevronRight className="w-5 h-5 text-cyan-400" />}
+                  {activeMember?.username === profile.username && (
+                    <ChevronRight className="w-5 h-5 text-cyan-400" />
+                  )}
                 </button>
               ))}
             </div>
@@ -474,16 +573,30 @@ export default function Team() {
                     >
                       <X className="w-5 h-5 text-gray-300" />
                     </button>
-                    <h3 className="text-lg font-semibold text-white">Member Details</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      Member Details
+                    </h3>
                   </div>
                   <div className="flex items-center gap-2">
                     {activeMember.github && (
-                      <a href={activeMember.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-md hover:bg-gray-700" title="GitHub">
+                      <a
+                        href={activeMember.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="p-2 bg-gray-800 rounded-md hover:bg-gray-700"
+                        title="GitHub"
+                      >
                         <Github className="w-5 h-5 text-cyan-300" />
                       </a>
                     )}
                     {activeMember.linkedin && (
-                      <a href={activeMember.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-gray-800 rounded-md hover:bg-gray-700" title="LinkedIn">
+                      <a
+                        href={activeMember.linkedin}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="p-2 bg-gray-800 rounded-md hover:bg-gray-700"
+                        title="LinkedIn"
+                      >
                         <Linkedin className="w-5 h-5 text-cyan-300" />
                       </a>
                     )}
@@ -493,29 +606,60 @@ export default function Team() {
                 <div className="p-4 space-y-4">
                   <div className="flex items-center gap-4">
                     <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-gray-800">
-                      <img src={activeMember.imageUrl || activeMember.avatarFallback} alt={activeMember.name} className="w-full h-full object-cover" />
+                      <img
+                        src={
+                          activeMember.imageUrl || activeMember.avatarFallback
+                        }
+                        alt={activeMember.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div className="min-w-0">
-                      <h2 className="text-xl font-bold truncate">{activeMember.name}</h2>
-                      <p className="text-sm text-cyan-300 truncate">{activeMember.position}</p>
+                      <h2 className="text-xl font-bold truncate">
+                        {activeMember.name}
+                      </h2>
+                      <p className="text-sm text-cyan-300 truncate">
+                        {activeMember.position}
+                      </p>
                       <div className="mt-2 text-xs text-gray-400 flex gap-3 flex-wrap">
-                        {activeMember.location && <span className="flex items-center gap-1"><MapPinCheck className="w-3 h-3" />{activeMember.location}</span>}
-                        {activeMember.yearsAtCompany !== undefined && <span className="flex items-center gap-1"><Calendar1 className="w-3 h-3" />{activeMember.yearsAtCompany} yr</span>}
-                        {activeMember.publicRepos !== undefined && <span className="flex items-center gap-1"><Code2 className="w-3 h-3" />{activeMember.publicRepos} repos</span>}
+                        {activeMember.location && (
+                          <span className="flex items-center gap-1">
+                            <MapPinCheck className="w-3 h-3" />
+                            {activeMember.location}
+                          </span>
+                        )}
+                        {activeMember.yearsAtCompany !== undefined && (
+                          <span className="flex items-center gap-1">
+                            <Calendar1 className="w-3 h-3" />
+                            {activeMember.yearsAtCompany} yr
+                          </span>
+                        )}
+                        {activeMember.publicRepos !== undefined && (
+                          <span className="flex items-center gap-1">
+                            <Code2 className="w-3 h-3" />
+                            {activeMember.publicRepos} repos
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   {activeMember.bio && (
                     <div>
-                      <h4 className="text-sm font-semibold text-cyan-300 mb-1">About</h4>
-                      <p className="text-gray-300 text-sm leading-relaxed">{activeMember.bio}</p>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-1">
+                        About
+                      </h4>
+                      <p className="text-gray-300 text-sm leading-relaxed">
+                        {activeMember.bio}
+                      </p>
                     </div>
                   )}
 
                   {(activeMember.contributions || []).length > 0 && (
                     <div>
-                      <h4 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2"><Award className="w-4 h-4" /> Key Contributions</h4>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-2 flex items-center gap-2">
+                        <Award className="w-4 h-4" /> Key Contributions
+                      </h4>
                       <ul className="list-inside list-disc text-sm text-gray-300 space-y-2">
                         {activeMember.contributions.map((c, i) => (
                           <li key={i}>{c}</li>
@@ -526,10 +670,17 @@ export default function Team() {
 
                   {activeMember.skills && (
                     <div>
-                      <h4 className="text-sm font-semibold text-cyan-300 mb-2">Top Skills</h4>
+                      <h4 className="text-sm font-semibold text-cyan-300 mb-2">
+                        Top Skills
+                      </h4>
                       <div className="flex flex-wrap gap-2">
                         {activeMember.skills.slice(0, 8).map((s, i) => (
-                          <span key={i} className="px-2 py-1 bg-white/5 rounded text-xs">{s.name}</span>
+                          <span
+                            key={i}
+                            className="px-2 py-1 bg-white/5 rounded text-xs"
+                          >
+                            {s.name}
+                          </span>
                         ))}
                       </div>
                     </div>
@@ -537,15 +688,34 @@ export default function Team() {
 
                   <div className="mt-4 text-sm text-gray-400">
                     <div>Contact:</div>
-                    {activeMember.email && <div className="mt-1"><a href={`mailto:${activeMember.email}`} className="underline">{activeMember.email}</a></div>}
-                    {activeMember.website && <div className="mt-1"><a href={activeMember.website} className="underline" target="_blank" rel="noreferrer">{activeMember.website}</a></div>}
+                    {activeMember.email && (
+                      <div className="mt-1">
+                        <a
+                          href={`mailto:${activeMember.email}`}
+                          className="underline"
+                        >
+                          {activeMember.email}
+                        </a>
+                      </div>
+                    )}
+                    {activeMember.website && (
+                      <div className="mt-1">
+                        <a
+                          href={activeMember.website}
+                          className="underline"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {activeMember.website}
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

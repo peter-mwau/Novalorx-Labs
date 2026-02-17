@@ -30,11 +30,14 @@ function MiniIDE({
   // Respect user pref for reduced motion
   const [reducedMotion, setReducedMotion] = useState(false);
   useEffect(() => {
-    const m = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    const m =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => setReducedMotion(!!(m && m.matches));
     onChange();
     m && m.addEventListener && m.addEventListener("change", onChange);
-    return () => m && m.removeEventListener && m.removeEventListener("change", onChange);
+    return () =>
+      m && m.removeEventListener && m.removeEventListener("change", onChange);
   }, []);
 
   useEffect(() => {
@@ -68,11 +71,14 @@ function MiniIDE({
         setIsDeleting(true);
       }, pauseBetweenSnippets);
     } else if (isDeleting && charIndex >= 0) {
-      timeoutId = setTimeout(() => {
-        if (!mounted.current) return;
-        setDisplay(currentSnippet.slice(0, charIndex));
-        setCharIndex((c) => c - 1);
-      }, Math.round(typingSpeed * 0.6));
+      timeoutId = setTimeout(
+        () => {
+          if (!mounted.current) return;
+          setDisplay(currentSnippet.slice(0, charIndex));
+          setCharIndex((c) => c - 1);
+        },
+        Math.round(typingSpeed * 0.6),
+      );
     } else if (isDeleting && charIndex < 0) {
       timeoutId = setTimeout(() => {
         if (!mounted.current) return;
@@ -83,7 +89,15 @@ function MiniIDE({
     }
 
     return () => clearTimeout(timeoutId);
-  }, [charIndex, isDeleting, snippetIndex, snippets, typingSpeed, pauseBetweenSnippets, reducedMotion]);
+  }, [
+    charIndex,
+    isDeleting,
+    snippetIndex,
+    snippets,
+    typingSpeed,
+    pauseBetweenSnippets,
+    reducedMotion,
+  ]);
 
   const onMouseEnter = () => {
     if (!pauseOnHover) return;
@@ -106,13 +120,19 @@ function MiniIDE({
 
     // comments
     html = html.replace(/(\/\/.*?$)/gm, '<span class="ide-comment">$1</span>');
-    html = html.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="ide-comment">$1</span>');
+    html = html.replace(
+      /(\/\*[\s\S]*?\*\/)/g,
+      '<span class="ide-comment">$1</span>',
+    );
     // strings
-    html = html.replace(/("[^"]*"|'[^']*'|`[^`]*`)/g, '<span class="ide-string">$1</span>');
+    html = html.replace(
+      /("[^"]*"|'[^']*'|`[^`]*`)/g,
+      '<span class="ide-string">$1</span>',
+    );
     // keywords (small set)
     html = html.replace(
       /\b(const|let|var|function|return|if|else|async|await|class|new|export|import|from|try|catch)\b/g,
-      '<span class="ide-keyword">$1</span>'
+      '<span class="ide-keyword">$1</span>',
     );
     // numbers
     html = html.replace(/\b([0-9]+)\b/g, '<span class="ide-number">$1</span>');
@@ -161,25 +181,49 @@ function MiniIDE({
 
       <div className="mt-3 text-xs text-white/60 flex items-center justify-between">
         <div>Auto play • Demo</div>
-        <div className="text-xs">Speed: <span className="text-white/80">fast</span></div>
+        <div className="text-xs">
+          Speed: <span className="text-white/80">fast</span>
+        </div>
       </div>
 
       <style jsx>{`
-        .ide-comment { color: #6ee7b7; opacity: 0.95; } /* mint */
-        .ide-string { color: #fb7185; } /* pink */
-        .ide-keyword { color: #60a5fa; font-weight: 600; } /* blue */
-        .ide-number { color: #f97316; } /* orange */
+        .ide-comment {
+          color: #6ee7b7;
+          opacity: 0.95;
+        } /* mint */
+        .ide-string {
+          color: #fb7185;
+        } /* pink */
+        .ide-keyword {
+          color: #60a5fa;
+          font-weight: 600;
+        } /* blue */
+        .ide-number {
+          color: #f97316;
+        } /* orange */
         .ide-cursor {
           display: inline-block;
           margin-left: 2px;
           animation: ide-blink 1s steps(2) infinite;
           color: #34d3ff;
-          text-shadow: 0 0 8px rgba(52, 211, 255, 0.9), 0 0 22px rgba(59, 130, 246, 0.6);
+          text-shadow:
+            0 0 8px rgba(52, 211, 255, 0.9),
+            0 0 22px rgba(59, 130, 246, 0.6);
         }
-        @keyframes ide-blink { 50% { opacity: 0 } 100% { opacity: 1 } }
+        @keyframes ide-blink {
+          50% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
 
         @media (prefers-reduced-motion: reduce) {
-          .ide-cursor { animation: none; opacity: 1; }
+          .ide-cursor {
+            animation: none;
+            opacity: 1;
+          }
         }
       `}</style>
     </div>
@@ -384,21 +428,23 @@ resource "aws_s3_bucket" "public_assets" {
   return (
     <div
       ref={sectionRef}
-      className={`w-full max-h-[90vh] overflow-y-auto overflow-x-hidden scroll-smooth no-scrollbar flex flex-col justify-start relative transition-opacity duration-700 bg-gradient-to-b from-gray-900/10 to-black/20 ${isInView ? "opacity-100" : "opacity-0"
-        }`}
+      className={`w-full max-h-[90vh] overflow-y-auto overflow-x-hidden scroll-smooth no-scrollbar flex flex-col justify-start relative transition-opacity duration-700 bg-gradient-to-b from-gray-900/10 to-black/20 ${
+        isInView ? "opacity-100" : "opacity-0"
+      }`}
     >
       <div className="relative flex flex-col items-center justify-center w-full">
         <div className="w-full h-auto max-w-7xl py-45 flex flex-col gap-16 flex justify-center">
-
           {/* Header: left text + right mini IDE (responsive) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center w-[90%] justify-center mx-auto">
             {/* Left: title, subtext, CTAs */}
             <div className="space-y-4 flex flex-col justify-center">
               <div className="flex items-center gap-3">
                 <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-semibold border border-cyan-400/20">
                   Selected projects
                 </span>
-                <div className="text-sm text-white/60">Case studies & demos</div>
+                <div className="text-sm text-white/60">
+                  Case studies & demos
+                </div>
               </div>
 
               <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight text-white/90">
@@ -406,13 +452,19 @@ resource "aws_s3_bucket" "public_assets" {
               </h1>
 
               <p className="mt-4 text-gray-300 max-w-2xl mx-auto">
-                We build, ship and iterate — from Web3 dApps to AI systems and modern web platforms.
-                Click any project to explore screenshots, tech stack, challenges and live demos.
+                We build, ship and iterate — from Web3 dApps to AI systems and
+                modern web platforms. Click any project to explore screenshots,
+                tech stack, challenges and live demos.
               </p>
 
               <div className="flex gap-3 mt-4">
                 <button
-                  onClick={() => window.scrollTo({ top: window.scrollY + 500, behavior: "smooth" })}
+                  onClick={() =>
+                    window.scrollTo({
+                      top: window.scrollY + 500,
+                      behavior: "smooth",
+                    })
+                  }
                   className="px-5 py-3 rounded-lg bg-cyan-500 hover:bg-cyan-600 text-black font-semibold shadow"
                 >
                   Explore projects
@@ -430,7 +482,11 @@ resource "aws_s3_bucket" "public_assets" {
             {/* Right: Mini IDE */}
             <div className="flex justify-end md:justify-start">
               <div className="w-full md:w-[520px] lg:w-[640px]">
-                <MiniIDE snippets={codeSnippets} typingSpeed={100} pauseBetweenSnippets={1200} />
+                <MiniIDE
+                  snippets={codeSnippets}
+                  typingSpeed={100}
+                  pauseBetweenSnippets={1200}
+                />
               </div>
             </div>
           </div>
@@ -438,11 +494,16 @@ resource "aws_s3_bucket" "public_assets" {
 
         <div className="w-full h-auto flex flex-col items-center justify-center px-4 md:px-8">
           <div className="mt-12 mb-12 text-center text-white/80">
-            <h3 id="extras-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            <h3
+              id="extras-heading"
+              className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+            >
               Case Studies & Demos — Deep dives into our work
             </h3>
-            <p className="text-gray-400 mt-3 max-w-2xl mx-auto">
-              Explore detailed case studies and live demos of our projects, showcasing our process, challenges and impact. Click any project card to dive in.
+            <p className="text-gray-300 mt-3 max-w-2xl mx-auto">
+              Explore detailed case studies and live demos of our projects,
+              showcasing our process, challenges and impact. Click any project
+              card to dive in.
             </p>
           </div>
 
@@ -496,7 +557,9 @@ resource "aws_s3_bucket" "public_assets" {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                       <div className="absolute top-4 left-4 px-3 py-1 rounded-full backdrop-blur-md bg-white/10 border border-white/20">
-                        <span className="text-xs font-medium text-white">{p.category}</span>
+                        <span className="text-xs font-medium text-white">
+                          {p.category}
+                        </span>
                       </div>
                     </div>
 
@@ -507,12 +570,13 @@ resource "aws_s3_bucket" "public_assets" {
                             {p.title}
                           </h3>
                           <span
-                            className={`text-xs px-2 py-1 rounded-full ${p.status === "Live"
-                              ? "bg-green-500/20 text-green-300"
-                              : p.status === "Completed"
-                                ? "bg-blue-500/20 text-blue-300"
-                                : "bg-yellow-500/20 text-yellow-300"
-                              }`}
+                            className={`text-xs px-2 py-1 rounded-full ${
+                              p.status === "Live"
+                                ? "bg-green-500/20 text-green-300"
+                                : p.status === "Completed"
+                                  ? "bg-blue-500/20 text-blue-300"
+                                  : "bg-yellow-500/20 text-yellow-300"
+                            }`}
                           >
                             {p.status}
                           </span>
@@ -570,8 +634,11 @@ resource "aws_s3_bucket" "public_assets" {
                   <button
                     key={i}
                     onClick={() => centerIndex(i)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all ${currentIndex === i ? "bg-cyan-300 scale-110" : "bg-white/30"
-                      }`}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      currentIndex === i
+                        ? "bg-cyan-300 scale-110"
+                        : "bg-white/30"
+                    }`}
                     aria-label={`Go to project ${i + 1}`}
                   />
                 ))}
@@ -599,19 +666,24 @@ resource "aws_s3_bucket" "public_assets" {
                       Ready to ship your next product?
                     </h4>
                     <p className="text-gray-300 mt-3 max-w-2xl">
-                      Tell us about your idea and we’ll scope an achievable plan — prototypes, milestones, pricing and timeline.
-                      We handle product, design, and engineering so you can focus on growth.
+                      Tell us about your idea and we’ll scope an achievable plan
+                      — prototypes, milestones, pricing and timeline. We handle
+                      product, design, and engineering so you can focus on
+                      growth.
                     </p>
 
                     <ul className="mt-4 flex flex-wrap gap-3 text-sm text-gray-300">
                       <li className="flex items-center gap-2">
-                        <span className="inline-block w-2 h-2 rounded-full bg-cyan-300" /> Fast replies (within 24 hours)
+                        <span className="inline-block w-2 h-2 rounded-full bg-cyan-300" />{" "}
+                        Fast replies (within 24 hours)
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="inline-block w-2 h-2 rounded-full bg-emerald-300" /> Free scoping call
+                        <span className="inline-block w-2 h-2 rounded-full bg-emerald-300" />{" "}
+                        Free scoping call
                       </li>
                       <li className="flex items-center gap-2">
-                        <span className="inline-block w-2 h-2 rounded-full bg-yellow-300" /> Fixed-price or retainers
+                        <span className="inline-block w-2 h-2 rounded-full bg-yellow-300" />{" "}
+                        Fixed-price or retainers
                       </li>
                     </ul>
                   </div>
@@ -633,7 +705,15 @@ resource "aws_s3_bucket" "public_assets" {
                     </button>
 
                     <div className="mt-2 text-xs text-gray-400 text-center md:text-right">
-                      Or email us at <button onClick={() => (window.location = "mailto:hello@yourdomain.com")} className="underline">hello@yourdomain.com</button>
+                      Or email us at{" "}
+                      <button
+                        onClick={() =>
+                          (window.location = "mailto:hello@yourdomain.com")
+                        }
+                        className="underline"
+                      >
+                        hello@yourdomain.com
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -711,9 +791,10 @@ resource "aws_s3_bucket" "public_assets" {
                         <button
                           key={index}
                           onClick={() => setShotIdx(index)}
-                          className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${shotIdx === index
-                            ? "ring-2 ring-blue-400 scale-105"
-                            : "opacity-70 hover:opacity-100 hover:scale-105"
+                          className={`relative h-20 rounded-xl overflow-hidden transition-all duration-300 ${
+                            shotIdx === index
+                              ? "ring-2 ring-blue-400 scale-105"
+                              : "opacity-70 hover:opacity-100 hover:scale-105"
                           }`}
                         >
                           <img
@@ -759,11 +840,12 @@ resource "aws_s3_bucket" "public_assets" {
                           {active.category}
                         </span>
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-medium ${active.status === "Live"
-                            ? "bg-green-500/20 text-green-300"
-                            : active.status === "Completed"
-                              ? "bg-blue-500/20 text-blue-300"
-                              : "bg-yellow-500/20 text-yellow-300"
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            active.status === "Live"
+                              ? "bg-green-500/20 text-green-300"
+                              : active.status === "Completed"
+                                ? "bg-blue-500/20 text-blue-300"
+                                : "bg-yellow-500/20 text-yellow-300"
                           }`}
                         >
                           {active.status}
@@ -903,8 +985,14 @@ resource "aws_s3_bucket" "public_assets" {
       {/* Animations + small CSS */}
       <style jsx>{`
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .animate-fadeIn {
@@ -912,14 +1000,31 @@ resource "aws_s3_bucket" "public_assets" {
         }
 
         /* Hide native scrollbar but keep touch support */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
 
         /* small neon blink for header brand (subtle) */
         @keyframes neonBlink {
-          0% { text-shadow: 0 0 6px rgba(34,211,238,0.7), 0 0 18px rgba(59,130,246,0.55); }
-          50% { text-shadow: 0 0 14px rgba(34,211,238,0.95), 0 0 32px rgba(59,130,246,0.75); }
-          100% { text-shadow: 0 0 6px rgba(34,211,238,0.7), 0 0 18px rgba(59,130,246,0.55); }
+          0% {
+            text-shadow:
+              0 0 6px rgba(34, 211, 238, 0.7),
+              0 0 18px rgba(59, 130, 246, 0.55);
+          }
+          50% {
+            text-shadow:
+              0 0 14px rgba(34, 211, 238, 0.95),
+              0 0 32px rgba(59, 130, 246, 0.75);
+          }
+          100% {
+            text-shadow:
+              0 0 6px rgba(34, 211, 238, 0.7),
+              0 0 18px rgba(59, 130, 246, 0.55);
+          }
         }
       `}</style>
     </div>

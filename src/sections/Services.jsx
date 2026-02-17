@@ -63,7 +63,7 @@ const services = (servicesData.services || []).map((s) => {
 });
 
 // Duplicate for continuous carousel loop
-const loopedServices = [...services, ...services]; 
+const loopedServices = [...services, ...services];
 
 // Use additional data moved into services.js
 const additionalServices = servicesData.additionalServices || [];
@@ -77,7 +77,11 @@ const Services = ({ onNavigate }) => {
   const pausedRef = useRef(false);
 
   const getImageUrl = (service) => {
-    if (service.image && typeof service.image === "string" && service.image !== "") {
+    if (
+      service.image &&
+      typeof service.image === "string" &&
+      service.image !== ""
+    ) {
       return service.image;
     }
     const keyword = encodeURIComponent(service.imageKeyword || service.title);
@@ -168,7 +172,9 @@ const Services = ({ onNavigate }) => {
         window.Tally.loadEmbeds();
         return;
       }
-      const existingScript = document.querySelector('script[src="https://tally.so/widgets/embed.js"]');
+      const existingScript = document.querySelector(
+        'script[src="https://tally.so/widgets/embed.js"]',
+      );
       if (existingScript) {
         existingScript.addEventListener("load", () => {
           window.Tally?.loadEmbeds();
@@ -263,7 +269,6 @@ const Services = ({ onNavigate }) => {
         }
       `}</style>
 
-
       {/* Floating Sidebar Button */}
       <div className="fixed -right-10 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-36">
         <h2
@@ -288,9 +293,7 @@ const Services = ({ onNavigate }) => {
           >
             NORVALOX
           </span>
-
           NORVALOX
-
           {/* Cyberpunk underglow line */}
           <span
             className="
@@ -312,9 +315,7 @@ const Services = ({ onNavigate }) => {
         >
           <BiRightArrowCircle className="w-9 h-9" />
         </button>
-
       </div>
-
 
       {/* Sidebar Panel */}
       <motion.div
@@ -332,23 +333,33 @@ const Services = ({ onNavigate }) => {
         aria-hidden={!showSidebar}
       >
         <div className="flex items-center justify-between mb-8">
-          <h3 className="text-gray-100 text-2xl font-bold text-center">Service Details</h3>
-          <button onClick={() => setShowSidebar(false)} aria-label="Close details">
+          <h3 className="text-gray-100 text-2xl font-bold text-center">
+            Service Details
+          </h3>
+          <button
+            onClick={() => setShowSidebar(false)}
+            aria-label="Close details"
+          >
             <X className="w-5 h-5 text-gray-300" />
           </button>
         </div>
 
         {!selectedService && (
           <div className="text-sm text-gray-400 mb-4">
-            Open any service card to view its offerings, deliverables, outcomes, timeline, and more.
+            Open any service card to view its offerings, deliverables, outcomes,
+            timeline, and more.
           </div>
         )}
 
         {selectedService && (
           <>
             <div className="mb-4">
-              <h4 className="text-lg font-semibold text-white mt-1">{selectedService.title}</h4>
-              <p className="text-sm text-gray-300 mt-2">{selectedService.description}</p>
+              <h4 className="text-lg font-semibold text-white mt-1">
+                {selectedService.title}
+              </h4>
+              <p className="text-sm text-gray-300 mt-2">
+                {selectedService.description}
+              </p>
             </div>
 
             {/* quick meta row */}
@@ -363,16 +374,20 @@ const Services = ({ onNavigate }) => {
                   <strong>Typical timeline:</strong> {selectedService.timeline}
                 </div>
               )}
-              {selectedService.bestFor && selectedService.bestFor.length > 0 && (
-                <div className="text-sm text-gray-300">
-                  <strong>Best for:</strong> {selectedService.bestFor.join(", ")}
-                </div>
-              )}
+              {selectedService.bestFor &&
+                selectedService.bestFor.length > 0 && (
+                  <div className="text-sm text-gray-300">
+                    <strong>Best for:</strong>{" "}
+                    {selectedService.bestFor.join(", ")}
+                  </div>
+                )}
             </div>
 
             {/* Deliverables */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Deliverables</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Deliverables
+              </h5>
               <ul className="list-inside space-y-2 text-sm text-gray-200">
                 {selectedService.deliverables.length > 0 ? (
                   selectedService.deliverables.map((d, i) => (
@@ -382,52 +397,78 @@ const Services = ({ onNavigate }) => {
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-400">Deliverables will be defined during scoping.</li>
+                  <li className="text-gray-400">
+                    Deliverables will be defined during scoping.
+                  </li>
                 )}
               </ul>
             </div>
 
             {/* Business outcomes */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Business outcomes</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Business outcomes
+              </h5>
               <ul className="list-inside space-y-2 text-sm text-gray-200">
                 {selectedService.businessOutcomes.length > 0 ? (
                   selectedService.businessOutcomes.map((b, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1 text-emerald-300"><CheckCircle className="w-4 h-4" /></span>
+                      <span className="mt-1 text-emerald-300">
+                        <CheckCircle className="w-4 h-4" />
+                      </span>
                       <span>{b}</span>
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-400">We’ll define measurable outcomes in the discovery phase.</li>
+                  <li className="text-gray-400">
+                    We’ll define measurable outcomes in the discovery phase.
+                  </li>
                 )}
               </ul>
             </div>
 
             {/* Proof / case points */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Proof points</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Proof points
+              </h5>
               <div className="text-sm text-gray-200 space-y-2">
                 {selectedService.proofPoints.length > 0 ? (
                   selectedService.proofPoints.map((p, i) => (
                     <div key={i} className="bg-gray-800/40 p-3 rounded-md">
-                      <div className="text-xs text-gray-300 font-semibold">{p.title || `Case study ${i + 1}`}</div>
-                      {p.summary && <div className="text-sm text-gray-200 mt-1">{p.summary}</div>}
-                      {p.metric && <div className="text-xs text-gray-400 mt-1">Result: {p.metric}</div>}
+                      <div className="text-xs text-gray-300 font-semibold">
+                        {p.title || `Case study ${i + 1}`}
+                      </div>
+                      {p.summary && (
+                        <div className="text-sm text-gray-200 mt-1">
+                          {p.summary}
+                        </div>
+                      )}
+                      {p.metric && (
+                        <div className="text-xs text-gray-400 mt-1">
+                          Result: {p.metric}
+                        </div>
+                      )}
                     </div>
                   ))
                 ) : (
-                  <div className="text-gray-400">No public case studies listed for this offering.</div>
+                  <div className="text-gray-400">
+                    No public case studies listed for this offering.
+                  </div>
                 )}
               </div>
             </div>
 
             {/* Process steps */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Our approach</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Our approach
+              </h5>
               <ol className="list-decimal list-inside space-y-2 text-sm text-gray-200">
                 {selectedService.processSteps.length > 0 ? (
-                  selectedService.processSteps.map((ps, i) => <li key={i}>{ps}</li>)
+                  selectedService.processSteps.map((ps, i) => (
+                    <li key={i}>{ps}</li>
+                  ))
                 ) : (
                   <>
                     <li>Discovery call to align on goals and constraints</li>
@@ -441,33 +482,46 @@ const Services = ({ onNavigate }) => {
 
             {/* Tech stack & platforms */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Tech & platforms</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Tech & platforms
+              </h5>
               <div className="flex flex-wrap gap-2">
                 {selectedService.techStack.length > 0 ? (
                   selectedService.techStack.map((t, i) => (
-                    <span key={i} className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-cyan-300">
+                    <span
+                      key={i}
+                      className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-cyan-300"
+                    >
                       {t}
                     </span>
                   ))
                 ) : (
-                  <div className="text-gray-400">Tech stack discussed in scoping.</div>
+                  <div className="text-gray-400">
+                    Tech stack discussed in scoping.
+                  </div>
                 )}
               </div>
 
-              {selectedService.platforms && selectedService.platforms.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {selectedService.platforms.map((p, i) => (
-                    <span key={i} className="text-xs px-2 py-1 rounded-full bg-cyan-800/60 border border-gray-600 text-gray-200">
-                      {p}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {selectedService.platforms &&
+                selectedService.platforms.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {selectedService.platforms.map((p, i) => (
+                      <span
+                        key={i}
+                        className="text-xs px-2 py-1 rounded-full bg-cyan-800/60 border border-gray-600 text-gray-200"
+                      >
+                        {p}
+                      </span>
+                    ))}
+                  </div>
+                )}
             </div>
 
             {/* Risk controls */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Risk reduction</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Risk reduction
+              </h5>
               <ul className="text-sm text-gray-200 space-y-2">
                 {selectedService.riskControls.length > 0 ? (
                   selectedService.riskControls.map((r, i) => (
@@ -477,43 +531,66 @@ const Services = ({ onNavigate }) => {
                     </li>
                   ))
                 ) : (
-                  <li className="text-gray-400">We include testing, code reviews, and deployment safeguards as standard.</li>
+                  <li className="text-gray-400">
+                    We include testing, code reviews, and deployment safeguards
+                    as standard.
+                  </li>
                 )}
               </ul>
             </div>
 
             {/* Packages (optional) */}
-            {selectedService.packages && selectedService.packages.length > 0 && (
-              <div className="mb-8">
-                <h5 className="text-sm font-semibold text-cyan-300 mb-2">Packages</h5>
-                <div className="space-y-3">
-                  {selectedService.packages.map((pkg, i) => (
-                    <div key={i} className="p-3 rounded-md bg-gray-800/40 border border-gray-700">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="text-sm text-gray-200 font-semibold pb-4">{pkg.name}</div>
-                          {pkg.summary && <div className="text-xs text-gray-400 pb-4">{pkg.summary}</div>}
+            {selectedService.packages &&
+              selectedService.packages.length > 0 && (
+                <div className="mb-8">
+                  <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                    Packages
+                  </h5>
+                  <div className="space-y-3">
+                    {selectedService.packages.map((pkg, i) => (
+                      <div
+                        key={i}
+                        className="p-3 rounded-md bg-gray-800/40 border border-gray-700"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="text-sm text-gray-200 font-semibold pb-4">
+                              {pkg.name}
+                            </div>
+                            {pkg.summary && (
+                              <div className="text-xs text-gray-400 pb-4">
+                                {pkg.summary}
+                              </div>
+                            )}
+                          </div>
+                          {pkg.price && (
+                            <div className="text-sm text-emerald-200 font-bold">
+                              {pkg.price}
+                            </div>
+                          )}
                         </div>
-                        {pkg.price && <div className="text-sm text-emerald-200 font-bold">{pkg.price}</div>}
+                        {pkg.features && (
+                          <ul className="text-sm text-gray-200 mt-2 list-inside">
+                            {pkg.features.map((f, k) => (
+                              <li key={k}>• {f}</li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
-                      {pkg.features && (
-                        <ul className="text-sm text-gray-200 mt-2 list-inside">
-                          {pkg.features.map((f, k) => (
-                            <li key={k}>• {f}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             {/* Post-launch support */}
             <div className="mb-8">
-              <h5 className="text-sm font-semibold text-cyan-300 mb-2">Support & Maintenance</h5>
+              <h5 className="text-sm font-semibold text-cyan-300 mb-2">
+                Support & Maintenance
+              </h5>
               <div className="text-sm text-gray-200">
-                {selectedService.support ? selectedService.support : "We offer 30 days post-launch support and customizable maintenance plans."}
+                {selectedService.support
+                  ? selectedService.support
+                  : "We offer 30 days post-launch support and customizable maintenance plans."}
               </div>
             </div>
 
@@ -548,7 +625,6 @@ const Services = ({ onNavigate }) => {
       {/* Content */}
       <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 w-full max-w-7xl mx-auto max-h-[90vh] overflow-y-auto no-scrollbar">
         <div className="relative h-screen flex flex-col items-center justify-center text-center">
-
           {/* --- Intro: placed just above the Carousel --- */}
           <motion.section
             initial={{ opacity: 0, y: 18 }}
@@ -573,8 +649,10 @@ const Services = ({ onNavigate }) => {
               </h1>
 
               <p className="mt-4 text-gray-300 max-w-2xl mx-auto">
-                We partner with startups and enterprises to design, build and operate products that users love and businesses rely on.
-                Our teams combine product strategy, design and engineering to deliver clear outcomes and predictable delivery.
+                We partner with startups and enterprises to design, build and
+                operate products that users love and businesses rely on. Our
+                teams combine product strategy, design and engineering to
+                deliver clear outcomes and predictable delivery.
               </p>
 
               <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -595,26 +673,44 @@ const Services = ({ onNavigate }) => {
 
               <div className="mt-26 grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-300">
                 <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
-                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
+                  <div className="text-cyan-300 mt-1">
+                    <CheckCircle2Icon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <div className="font-semibold text-white">Outcome-focused</div>
-                    <div className="text-xs text-gray-400">KPIs & measurable impact</div>
+                    <div className="font-semibold text-white">
+                      Outcome-focused
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      KPIs & measurable impact
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
-                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
+                  <div className="text-cyan-300 mt-1">
+                    <CheckCircle2Icon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <div className="font-semibold text-white">Security-first</div>
-                    <div className="text-xs text-gray-400">OWASP-aware & deployment safeguards</div>
+                    <div className="font-semibold text-white">
+                      Security-first
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      OWASP-aware & deployment safeguards
+                    </div>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3 backdrop-blur-md bg-gray-800/40 p-3 rounded-md shadow-lg shadow-black/30">
-                  <div className="text-cyan-300 mt-1"><CheckCircle2Icon className="w-5 h-5" /></div>
+                  <div className="text-cyan-300 mt-1">
+                    <CheckCircle2Icon className="w-5 h-5" />
+                  </div>
                   <div>
-                    <div className="font-semibold text-white">Transparent process</div>
-                    <div className="text-xs text-gray-400">Weekly demos & milestone tracking</div>
+                    <div className="font-semibold text-white">
+                      Transparent process
+                    </div>
+                    <div className="text-xs text-gray-400">
+                      Weekly demos & milestone tracking
+                    </div>
                   </div>
                 </div>
               </div>
@@ -623,18 +719,20 @@ const Services = ({ onNavigate }) => {
         </div>
 
         {/* Carousel */}
-        <div className="relative h-screen w-full flex items-center">
-
-          <h2 className="absolute transform top-1/8 text-3xl sm:text-4xl font-bold text-white">
-            Our Services — Designed for startups and enterprises
-          </h2>
-          <p className="absolute transform pt-8 top-1/6 text-gray-300 max-w-xlg text-left">
-            Below is a carousel of our core services. Click any card to see details, outcomes, timelines and more.
-          </p>
+        <div className="relative h-screen w-full flex flex-col md:flex-row md:items-center">
+          <div className="relative z-10 px-4 md:px-0 md:absolute md:left-0 md:right-0 md:transform md:top-1/8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white text-left">
+              Our Services — Designed for startups and enterprises
+            </h2>
+            <p className="mt-3 text-gray-300 max-w-2xl text-left">
+              Below is a carousel of our core services. Click any card to see
+              details, outcomes, timelines and more.
+            </p>
+          </div>
 
           <div
             ref={scrollRef}
-            className="flex gap-8 overflow-x-scroll no-scrollbar touch-none select-none"
+            className="flex gap-8 overflow-x-scroll no-scrollbar touch-none select-none mt-6 md:mt-0"
             aria-label="Services carousel"
             style={{
               willChange: "scroll-position, transform",
@@ -674,11 +772,16 @@ const Services = ({ onNavigate }) => {
                     <div className="w-12 h-12 mt-4 mb-6 flex items-center justify-center rounded-md bg-cyan-300/10">
                       <Icon className="w-7 h-7 text-cyan-300" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                    <p className="text-gray-300 text-sm line-clamp-3">{service.description}</p>
+                    <h3 className="text-xl font-semibold mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-gray-300 text-sm line-clamp-3">
+                      {service.description}
+                    </p>
 
                     <p className="text-sm text-cyan-300 mt-8 hover:text-cyan-300 flex items-center gap-2">
-                      Learn More <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" />
+                      Learn More{" "}
+                      <ArrowRightFromLineIcon className="w-4 h-4 inline ml-1" />
                     </p>
                   </div>
                 </article>
@@ -697,11 +800,15 @@ const Services = ({ onNavigate }) => {
         >
           <div className="max-w-7xl mx-auto px-4">
             <div className="mb-8 text-center">
-              <h3 id="extras-heading" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+              <h3
+                id="extras-heading"
+                className="text-3xl sm:text-4xl font-extrabold tracking-tight"
+              >
                 Extras — Additional & Complimentary Services
               </h3>
-              <p className="text-gray-400 mt-3 max-w-2xl mx-auto">
-                Complementary services that accelerate adoption, reduce time-to-value and increase product-market fit.
+              <p className="text-gray-200 mt-3 max-w-2xl mx-auto">
+                Complementary services that accelerate adoption, reduce
+                time-to-value and increase product-market fit.
               </p>
             </div>
 
@@ -719,15 +826,30 @@ const Services = ({ onNavigate }) => {
                   <div>
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/10 text-cyan-300 mb-4">
                       {/* icon / emoji — replace with real icons if desired */}
-                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M3 12h18M12 3v18" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      <svg
+                        className="w-6 h-6"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          d="M3 12h18M12 3v18"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
 
-                    <h4 id={`extras-${s.id}-title`} className="font-semibold text-lg text-white">
+                    <h4
+                      id={`extras-${s.id}-title`}
+                      className="font-semibold text-lg text-white"
+                    >
                       {s.title}
                     </h4>
-                    <div className="text-xs text-gray-400 mt-1">{s.subtitle}</div>
+                    <div className="text-xs text-gray-400 mt-1">
+                      {s.subtitle}
+                    </div>
 
                     <p className="text-sm text-gray-300 mt-4 leading-relaxed">
                       {s.blurb}
@@ -746,8 +868,18 @@ const Services = ({ onNavigate }) => {
                       <span className="h-2 w-px bg-white/6 mx-2" />
 
                       <div className="inline-flex items-center gap-2">
-                        <svg className="w-4 h-4 text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path d="M12 6v6l4 2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <svg
+                          className="w-4 h-4 text-cyan-300"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M12 6v6l4 2"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                         <span>Est. 1–2 weeks</span>
                       </div>
@@ -755,8 +887,12 @@ const Services = ({ onNavigate }) => {
 
                     {/* tags / ideal-for */}
                     <div className="flex flex-wrap gap-2 mb-4">
-                      <span className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-cyan-300">Consult</span>
-                      <span className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-gray-300">Design</span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-cyan-300">
+                        Consult
+                      </span>
+                      <span className="text-xs px-2 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-gray-300">
+                        Design
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -783,11 +919,13 @@ const Services = ({ onNavigate }) => {
 
             {/* Optional: small trust line or micro-case row below cards */}
             <div className="mt-10 text-center text-sm text-gray-400">
-              <span>Trusted by teams building digital products • Free initial consultation • 24h response time</span>
+              <span>
+                Trusted by teams building digital products • Free initial
+                consultation • 24h response time
+              </span>
             </div>
           </div>
         </motion.section>
-
 
         {/* CTA Section */}
         <div className="max-w-4xl mx-auto flex items-center justify-center">
@@ -807,13 +945,15 @@ const Services = ({ onNavigate }) => {
                 Ready to Transform Your Ideas Into Reality?
               </h3>
               <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-                Whether you need Web Development, Mobile Apps, AI/ML Solutions, or Cloud Infrastructure - we're here to help.
+                Whether you need Web Development, Mobile Apps, AI/ML Solutions,
+                or Cloud Infrastructure - we're here to help.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <button
                   onClick={() => {
-                    if (typeof onNavigate === "function") onNavigate("contacts");
+                    if (typeof onNavigate === "function")
+                      onNavigate("contacts");
                   }}
                   className="px-8 py-4 bg-transparent border-2 border-cyan-300/50 hover:border-cyan-300 text-cyan-300 font-semibold rounded-full transition-all duration-300 hover:bg-cyan-300/10"
                 >
@@ -822,7 +962,8 @@ const Services = ({ onNavigate }) => {
               </div>
 
               <p className="text-sm text-gray-400 mt-6">
-                Quick response within 24 hours • Free consultation • Flexible engagement models
+                Quick response within 24 hours • Free consultation • Flexible
+                engagement models
               </p>
             </div>
           </motion.div>
@@ -832,7 +973,11 @@ const Services = ({ onNavigate }) => {
       {/* Modal */}
       <AnimatePresence>
         {showModal && selectedService && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center max-h-[90vh]" role="dialog" aria-modal="true">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center max-h-[90vh]"
+            role="dialog"
+            aria-modal="true"
+          >
             <div
               className="absolute inset-0 bg-black/60"
               onClick={() => {
@@ -866,43 +1011,69 @@ const Services = ({ onNavigate }) => {
               <div className="p-6 md:p-8 relative flex-1 overflow-y-auto no-scrollbar">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="text-2xl font-bold mb-2">{selectedService.title}</h3>
-                    <p className="text-gray-300 mb-4">{selectedService.description}</p>
+                    <h3 className="text-2xl font-bold mb-2">
+                      {selectedService.title}
+                    </h3>
+                    <p className="text-gray-300 mb-4">
+                      {selectedService.description}
+                    </p>
                   </div>
-                  <button onClick={() => { closeModal(); setShowSidebar(false); }} aria-label="Close modal" className="ml-4">
+                  <button
+                    onClick={() => {
+                      closeModal();
+                      setShowSidebar(false);
+                    }}
+                    aria-label="Close modal"
+                    className="ml-4"
+                  >
                     <X className="w-6 h-6 text-gray-300" />
                   </button>
                 </div>
 
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="text-sm text-cyan-400 mb-4">Relevant Tech Stack</h4>
+                    <h4 className="text-sm text-cyan-400 mb-4">
+                      Relevant Tech Stack
+                    </h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedService.techStack.length > 0 ? (
                         selectedService.techStack.map((t, i) => (
-                          <span key={i} className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300">
+                          <span
+                            key={i}
+                            className="text-xs px-3 py-1 rounded-full bg-gray-800/60 border border-gray-700 text-blue-300"
+                          >
                             {t}
                           </span>
                         ))
                       ) : (
-                        <div className="text-gray-400">Tech stack will be scoped with you.</div>
+                        <div className="text-gray-400">
+                          Tech stack will be scoped with you.
+                        </div>
                       )}
                     </div>
 
                     <div className="mt-8">
-                      <h4 className="text-sm text-cyan-400 mb-4">Deliverables</h4>
+                      <h4 className="text-sm text-cyan-400 mb-4">
+                        Deliverables
+                      </h4>
                       <ul className="list-inside space-y-2 text-sm text-gray-200">
                         {selectedService.deliverables.length > 0 ? (
-                          selectedService.deliverables.map((d, i) => <li key={i}>• {d}</li>)
+                          selectedService.deliverables.map((d, i) => (
+                            <li key={i}>• {d}</li>
+                          ))
                         ) : (
-                          <li className="text-gray-400">Deliverables defined after scoping.</li>
+                          <li className="text-gray-400">
+                            Deliverables defined after scoping.
+                          </li>
                         )}
                       </ul>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-sm text-cyan-400 mb-4">Outcomes & Timeline</h4>
+                    <h4 className="text-sm text-cyan-400 mb-4">
+                      Outcomes & Timeline
+                    </h4>
                     <div className="text-sm text-gray-200">
                       {selectedService.businessOutcomes.length > 0 ? (
                         <ul className="list-inside space-y-2 mb-3">
@@ -911,36 +1082,48 @@ const Services = ({ onNavigate }) => {
                           ))}
                         </ul>
                       ) : (
-                        <div className="text-gray-400 mb-2">Outcomes defined in discovery.</div>
+                        <div className="text-gray-400 mb-2">
+                          Outcomes defined in discovery.
+                        </div>
                       )}
 
                       <div className="text-gray-300">
-                        <strong>Typical timeline:</strong> {selectedService.timeline || "TBD"}
+                        <strong>Typical timeline:</strong>{" "}
+                        {selectedService.timeline || "TBD"}
                       </div>
-                      {selectedService.startingFrom && <div className="text-gray-300"><strong>Starting from:</strong> {selectedService.startingFrom}</div>}
+                      {selectedService.startingFrom && (
+                        <div className="text-gray-300">
+                          <strong>Starting from:</strong>{" "}
+                          {selectedService.startingFrom}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mt-8">
                       <h4 className="text-sm text-cyan-400 mb-4">Support</h4>
-                      <div className="text-sm text-gray-200">{selectedService.support || "30 days bug-fix warranty + optional maintenance plans."}</div>
+                      <div className="text-sm text-gray-200">
+                        {selectedService.support ||
+                          "30 days bug-fix warranty + optional maintenance plans."}
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* modal CTAs */}
                 <div className="mt-10 mb-6 flex gap-3">
-                  {selectedService.proofPoints && selectedService.proofPoints.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        // optional: navigate to a case study page if you have one
-                        if (onNavigate) onNavigate("case-studies");
-                      }}
-                      className="px-4 py-2 rounded-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium"
-                    >
-                      View case study
-                    </button>
-                  )}
+                  {selectedService.proofPoints &&
+                    selectedService.proofPoints.length > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          // optional: navigate to a case study page if you have one
+                          if (onNavigate) onNavigate("case-studies");
+                        }}
+                        className="px-4 py-2 rounded-full bg-cyan-400 hover:bg-cyan-500 text-black font-medium"
+                      >
+                        View case study
+                      </button>
+                    )}
 
                   <button
                     type="button"
