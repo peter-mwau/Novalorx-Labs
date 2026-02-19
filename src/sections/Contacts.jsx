@@ -278,37 +278,86 @@ function Contacts() {
             </div>
 
             {/* Contact Info box */}
-            <div className="bg-gray-900/70 backdrop-blur-xl rounded-2xl p-4 md:p-6 border border-gray-700 mt-2 flex-1">
-              <h3 className="text-lg font-semibold text-cyan-300 mb-3">
+            <div className="bg-gray-900/60 backdrop-blur-2xl rounded-2xl p-5 md:p-7 border border-gray-700/60 shadow-lg shadow-cyan-500/10 mt-2 flex-1">
+              <h3 className="text-lg md:text-xl font-semibold text-cyan-300 mb-5 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
                 Contact Information
               </h3>
 
-              <div className="space-y-3 text-sm text-gray-300">
-                <div className="flex items-center gap-3">
-                  <Mail className="text-cyan-300" />
-                  <span>hello@nyota.tech</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Phone className="text-cyan-300" />
-                  <span>+254 700 123 456</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <MapPin className="text-cyan-300" />
-                  <span>Nairobi, Kenya</span>
+              <div className="space-y-5 text-sm text-gray-300">
+                {/* Email */}
+                <div className="flex items-start gap-4 group">
+                  <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 group-hover:border-cyan-400/50 transition">
+                    <Mail className="text-cyan-300 w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-gray-500">
+                      Email
+                    </p>
+                    <p className="text-gray-200 font-medium">info@novalorxlabs.com</p>
+                  </div>
                 </div>
 
-                <div className="pt-4 border-t border-gray-800 mt-4 text-xs text-gray-400">
-                  <p className="mb-2 flex items-center gap-2">
-                    <Clock className="mt-1 text-cyan-300" />{" "}
-                    <span>Office Hours: Mon–Fri, 9:00–17:00 (EAT)</span>
+                {/* Phone */}
+                <div className="flex items-start gap-4 group">
+                  <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 group-hover:border-cyan-400/50 transition">
+                    <Phone className="text-cyan-300 w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs uppercase tracking-widest text-gray-500">
+                      Phone / WhatsApp
+                    </p>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-gray-200 font-medium">
+                      <span className="hover:text-cyan-300 transition cursor-pointer">
+                        +254 798 806663
+                      </span>
+                      <span className="hover:text-cyan-300 transition cursor-pointer">
+                        +254 722 134440
+                      </span>
+                      <span className="hover:text-cyan-300 transition cursor-pointer">
+                        +254 708 184957
+                      </span>
+                      <span className="hover:text-cyan-300 transition cursor-pointer">
+                        +254 712 134108
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Location */}
+                <div className="flex items-start gap-4 group">
+                  <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 group-hover:border-cyan-400/50 transition">
+                    <MapPin className="text-cyan-300 w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-gray-500">
+                      Location
+                    </p>
+                    <p className="text-gray-200 font-medium">Nairobi, Kenya</p>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="border-t border-gray-800/70 pt-5 text-xs text-gray-400 space-y-3">
+                  <p className="flex items-center gap-2">
+                    <Clock className="text-cyan-300 w-4 h-4" />
+                    <span className="text-gray-300">
+                      Office Hours: Mon–Fri, 9:00–17:00 (EAT)
+                    </span>
                   </p>
-                  <p className="mt-4">
-                    We typically reply within 1–2 business days. For urgent
-                    matters use the phone/WhatsApp number above.
+
+                  <p className="leading-relaxed">
+                    We typically reply within{" "}
+                    <span className="text-cyan-300 font-semibold">
+                      1–2 business days
+                    </span>
+                    . For urgent matters, please use the phone/WhatsApp numbers above.
                   </p>
                 </div>
               </div>
             </div>
+
           </div>
 
           {/* Right column: form — takes remaining width and becomes vertically scrollable on small screens if needed */}
@@ -372,10 +421,10 @@ function Contacts() {
                     <div className="text-sm text-gray-400 hidden md:block">
                       Prefer email?{" "}
                       <a
-                        href="mailto:hello@nyota.tech"
+                        href="mailto:info@novalorxlabs.com"
                         className="text-cyan-300 underline"
                       >
-                        hello@nyota.tech
+                        info@novalorxlabs.com
                       </a>
                     </div>
 
@@ -449,10 +498,10 @@ function Contacts() {
               <div className="mt-auto text-xs text-gray-400 md:hidden pt-4">
                 Prefer email?{" "}
                 <a
-                  href="mailto:hello@nyota.tech"
+                  href="mailto:info@novalorxlabs.com"
                   className="text-cyan-300 underline"
                 >
-                  hello@nyota.tech
+                  info@novalorxlabs.com
                 </a>
               </div>
             </div>
