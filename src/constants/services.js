@@ -166,7 +166,7 @@ export const services = [
       "Build scalable DeFi or marketplace infrastructure",
     ],
     timeline: "3–8 weeks (depending on complexity)",
-    starting_from: "From $4,000 (basic DApp) / $8,000+ (full platform)",
+    starting_from: "From $2,000 (basic DApp) / $5,000+ (full platform)",
     best_for: [
       "Startups launching Web3 products",
       "Fintech innovation teams",
@@ -218,7 +218,7 @@ export const services = [
       {
         name: "Starter (Smart Contract + Token)",
         summary: "For teams needing a token or contract foundation.",
-        price: "$4,000+",
+        price: "$2,000+",
         features: [
           "ERC20 / NFT smart contract",
           "Unit tests + deployment script",
@@ -229,7 +229,7 @@ export const services = [
       {
         name: "Growth (DApp MVP)",
         summary: "For startups launching a full DApp prototype.",
-        price: "$8,000+",
+        price: "$5,000+",
         features: [
           "Smart contracts + frontend",
           "Wallet integration",
