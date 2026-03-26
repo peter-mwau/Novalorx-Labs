@@ -306,4 +306,42 @@ export const sampleProjects = [
       "Implemented asynchronous requests to handle URL unshortening efficiently",
     ],
   },
+  {
+    id: 7,
+    title: "AutoPulse",
+    category: "Web 2",
+    short: "AutoPulse is a React + Vite automotive platform UI with pages for inventory, financing, trade-in, and contact workflows.",
+    description:
+      "AutoPulse is a React + Vite automotive platform UI that provides a seamless user experience for browsing inventory, applying for financing, managing trade-ins, and contacting dealerships. The platform features a modern design with intuitive navigation, allowing users to easily explore vehicle options, submit financing applications, and connect with dealership representatives.",
+    longDescription:
+      "AutoPulse is a comprehensive automotive platform UI built with React and Vite. It offers users an engaging interface to browse vehicle inventory, apply for financing, manage trade-ins, and contact dealerships. The platform is designed to provide a seamless user experience with features such as advanced search filters, interactive vehicle details pages, secure financing application forms, and a streamlined contact workflow. AutoPulse aims to enhance the car-buying journey by providing all necessary tools and information in one convenient location.",
+    screenshots: [
+      "/autopulse1.png",
+      "/autopulse2.png",
+      "/autopulse3.png",
+    ],
+    details: [
+      "Inventory Browsing - Advanced search filters and interactive vehicle details",
+      "Financing Application - Secure forms with real-time validation",
+      "Trade-In Management - Streamlined process for submitting trade-in information",
+      "Contact Workflow - Easy communication with dealership representatives",
+      "Responsive Design - Optimized for desktop and mobile devices",
+    ],
+    tech: ["React", "Vite", "Tailwind CSS"],
+    timeline: "2 weeks",
+    team: "1 Developer",
+    status: "Completed",
+    link: "https://autopulsecars.netlify.app",
+    github: "https://github.com/peter-mwau/AutoPulse.git",
+    challenges: [
+      "Designing an intuitive UI for complex automotive workflows",
+      "Implementing real-time form validation for financing applications",
+      "Ensuring responsive design across various devices",
+    ],
+    solutions: [
+      "Utilized Tailwind CSS for rapid UI development and consistent styling",
+      "Implemented custom validation logic with React hooks for real-time feedback",
+      "Conducted thorough testing and optimization for mobile responsiveness",
+    ],
+  }
 ];
