@@ -46,7 +46,7 @@ export const sampleProjects = [
     timeline: "3 months",
     team: "Solo Project",
     status: "Beta",
-    link: "https://example.com",
+    link: "https://openheartchain.netlify.app/",
     github: "https://github.com/peter-mwau/openHeart-chain.git",
     challenges: [
       "Designing a secure multisig approval system that balances decentralization with practical governance",
