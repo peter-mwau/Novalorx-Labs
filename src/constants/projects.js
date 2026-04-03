@@ -343,5 +343,46 @@ export const sampleProjects = [
       "Implemented custom validation logic with React hooks for real-time feedback",
       "Conducted thorough testing and optimization for mobile responsiveness",
     ],
+  },
+  {
+    id: 8,
+    title: "The Bazaar - Online Marketplace",
+    category: "Web 3",
+    short: "The Bazaar is a decentralized online marketplace built with React and Solidity.",
+    description:
+      "The Bazaar is a decentralized online marketplace that allows users to buy and sell goods using blockchain technology. Built with React for the frontend and Solidity for the smart contracts, The Bazaar provides a secure and transparent platform for peer-to-peer transactions.",
+    longDescription:
+      "The Bazaar is a decentralized online marketplace that leverages blockchain technology to facilitate secure and transparent peer-to-peer transactions. Users can browse listings, create their own listings, and complete purchases using cryptocurrency. The platform utilizes smart contracts to ensure trustless transactions, while the React frontend provides an intuitive user experience. The Bazaar aims to revolutionize e-commerce by eliminating intermediaries and empowering users to trade directly with one another.",
+    screenshots: [
+      "/bazaar1.png",
+      "/bazaar2.png",
+      "/bazaar3.png",
+      "/bazaar4.png",
+      "/bazaar5.png",
+      "/bazaar6.png",
+    ],
+    details: [
+      "Decentralized Marketplace - Peer-to-peer buying and selling",
+      "Blockchain Integration - Secure transactions with smart contracts",
+      "User-Friendly Interface - Intuitive design for seamless navigation",
+      "Cryptocurrency Payments - Support for multiple cryptocurrencies",
+      "Transparent Listings - Immutable records of transactions and listings",
+    ],
+    tech: ["React + Vite", "Solidity", "Ethers.js", "IPFS", "Chainlink"],
+    timeline: "1 month",
+    team: "1 Developer",
+    status: "Beta",
+    link: "https://the-bazaar-nft.netlify.app/",
+    github: "https://github.com/peter-mwau/The_Bazaar.git",
+    challenges: [
+      "Designing a secure and user-friendly decentralized marketplace",
+      "Implementing smart contracts for trustless transactions",
+      "Ensuring seamless integration between the React frontend and Solidity backend",
+    ],
+    solutions: [
+      "Utilized best practices in smart contract development to ensure security and reliability",
+      "Implemented a clean and intuitive UI with React to enhance user experience",
+      "Conducted thorough testing and optimization to ensure smooth interaction between frontend and backend components",
+    ],
   }
 ];
