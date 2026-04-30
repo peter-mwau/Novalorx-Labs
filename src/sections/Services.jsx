@@ -563,11 +563,12 @@ const Services = ({ onNavigate }) => {
                               </div>
                             )}
                           </div>
-                          {pkg.price && (
-                            <div className="text-sm text-emerald-200 font-bold">
-                              {pkg.price}
-                            </div>
-                          )}
+                          <button
+                            onClick={() => onNavigate?.("contacts")}
+                            className="px-3 py-1 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-xs font-medium transition-colors"
+                          >
+                            Request quote
+                          </button>
                         </div>
                         {pkg.features && (
                           <ul className="text-sm text-gray-200 mt-2 list-inside">
