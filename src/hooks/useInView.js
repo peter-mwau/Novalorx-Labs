@@ -16,13 +16,14 @@ export const useInView = (options = {}) => {
             ...options,
         });
 
-        if (ref.current) {
-            observer.observe(ref.current);
+        const current = ref.current;
+        if (current) {
+            observer.observe(current);
         }
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
+            if (current) {
+                observer.unobserve(current);
             }
         };
     }, [options]);

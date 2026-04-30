@@ -49,6 +49,7 @@ function MiniIDE({
   useEffect(() => {
     if (!snippets || snippets.length === 0) return;
     if (reducedMotion) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplay(snippets[0].slice(0, Math.min(200, snippets[0].length)));
       return;
     }
@@ -228,7 +229,7 @@ function MiniIDE({
 function Projects({ onNavigate }) {
   const [activeProject, setActiveProject] = useState(null);
   const [shotIdx, setShotIdx] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [_isTransitioning, setIsTransitioning] = useState(false);
 
   const projectsPerPage = 3;
   const [page, setPage] = useState(1);

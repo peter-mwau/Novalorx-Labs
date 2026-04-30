@@ -2,7 +2,8 @@
 import React, { useRef, useEffect } from "react";
 // planetAssets removed (planets & supernovas stripped)
 
-const THREE_CDN = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
+const THREE_CDN =
+  "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js";
 
 const DEFAULT_PRIMARY = 0x6fb3ff;
 const DEFAULT_SECONDARY = 0x95a9ff;
@@ -11,10 +12,11 @@ const DEFAULT_BG = 0x090c13;
 function loadScriptOnce(src) {
   return new Promise((resolve, reject) => {
     const existing = Array.from(document.getElementsByTagName("script")).find(
-      (s) => s.src && s.src.indexOf(src) !== -1
+      (s) => s.src && s.src.indexOf(src) !== -1,
     );
     if (existing) {
-      if (existing.getAttribute("data-loaded") === "true") return resolve(existing);
+      if (existing.getAttribute("data-loaded") === "true")
+        return resolve(existing);
       existing.addEventListener("load", () => resolve(existing));
       existing.addEventListener("error", (e) => reject(e));
       return;
@@ -53,7 +55,12 @@ function extractPaletteFromTexture(tex) {
 
     const samples = samplePts.map(([x, y]) => {
       const d = ctx.getImageData(x, y, 1, 1).data;
-      return { r: d[0], g: d[1], b: d[2], lum: 0.2126 * d[0] + 0.7152 * d[1] + 0.0722 * d[2] };
+      return {
+        r: d[0],
+        g: d[1],
+        b: d[2],
+        lum: 0.2126 * d[0] + 0.7152 * d[1] + 0.0722 * d[2],
+      };
     });
 
     const center = samples[0];
@@ -77,7 +84,7 @@ function extractPaletteFromTexture(tex) {
       accent: toThreeColor(brightest),
       dark: toThreeColor(darkest),
     };
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -119,8 +126,13 @@ export default function WebThreeRareBG(props) {
       const height = container.clientHeight || window.innerHeight;
 
       // Renderer
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, pixelRatio));
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: false,
+      });
+      renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio || 1, pixelRatio),
+      );
       renderer.setSize(width, height);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.outputEncoding = THREE.sRGBEncoding;
@@ -172,7 +184,14 @@ export default function WebThreeRareBG(props) {
         cvs.width = size;
         cvs.height = size;
         const ctx = cvs.getContext("2d");
-        const grd = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+        const grd = ctx.createRadialGradient(
+          size / 2,
+          size / 2,
+          0,
+          size / 2,
+          size / 2,
+          size / 2,
+        );
         grd.addColorStop(0, "rgba(255,255,255,1)");
         grd.addColorStop(0.2, "rgba(255,255,255,0.8)");
         grd.addColorStop(0.45, "rgba(255,255,255,0.25)");
@@ -199,10 +218,10 @@ export default function WebThreeRareBG(props) {
             (err) => {
               console.warn("Failed to load bg texture:", err);
               resolve(null);
-            }
+            },
           );
         });
-      } catch (e) {
+      } catch {
         bgTexture = null;
       }
 
@@ -211,7 +230,9 @@ export default function WebThreeRareBG(props) {
       if (bgTexture) {
         derived = extractPaletteFromTexture(bgTexture);
         if (derived) {
-          derived.primary = derived.primary.clone().lerp(new THREE.Color(0x3b4ff2), 0.12);
+          derived.primary = derived.primary
+            .clone()
+            .lerp(new THREE.Color(0x3b4ff2), 0.12);
         }
       }
 
@@ -255,9 +276,9 @@ export default function WebThreeRareBG(props) {
             uBgTex: { value: bgTexture },
           },
           vertexShader:
-            'precision highp float; attribute vec3 position; attribute vec2 uv; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix; varying vec2 vUv; void main(){ vUv = uv; vec4 pos = vec4(position,1.0); gl_Position = projectionMatrix * modelViewMatrix * pos; }',
+            "precision highp float; attribute vec3 position; attribute vec2 uv; uniform mat4 modelViewMatrix; uniform mat4 projectionMatrix; varying vec2 vUv; void main(){ vUv = uv; vec4 pos = vec4(position,1.0); gl_Position = projectionMatrix * modelViewMatrix * pos; }",
           fragmentShader:
-            'precision highp float; varying vec2 vUv; uniform float uTime; uniform vec3 uColor; uniform sampler2D uBgTex; float rand(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);} float noise(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); float a=rand(i); float b=rand(i+vec2(1.0,0.0)); float c=rand(i+vec2(0.0,1.0)); float d=rand(i+vec2(1.0,1.0)); vec2 u=f*f*(3.0-2.0*f); return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y; } void main(){ vec2 uv = vUv * vec2(4.0,1.0) - vec2(2.0,0.0); float n = noise(uv * 6.0 + uTime * 0.02); float band = smoothstep(0.55, 0.82, 0.5 + 0.35 * sin(uv.y * 6.2831) + n * 0.25); vec3 bgc = texture2D(uBgTex, vUv * 0.5 + 0.5).rgb; vec3 col = mix(bgc * 0.28, uColor * 1.25, band); float alpha = band * 0.6; gl_FragColor = vec4(col, alpha); }',
+            "precision highp float; varying vec2 vUv; uniform float uTime; uniform vec3 uColor; uniform sampler2D uBgTex; float rand(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);} float noise(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); float a=rand(i); float b=rand(i+vec2(1.0,0.0)); float c=rand(i+vec2(0.0,1.0)); float d=rand(i+vec2(1.0,1.0)); vec2 u=f*f*(3.0-2.0*f); return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y; } void main(){ vec2 uv = vUv * vec2(4.0,1.0) - vec2(2.0,0.0); float n = noise(uv * 6.0 + uTime * 0.02); float band = smoothstep(0.55, 0.82, 0.5 + 0.35 * sin(uv.y * 6.2831) + n * 0.25); vec3 bgc = texture2D(uBgTex, vUv * 0.5 + 0.5).rgb; vec3 col = mix(bgc * 0.28, uColor * 1.25, band); float alpha = band * 0.6; gl_FragColor = vec4(col, alpha); }",
           transparent: true,
           depthWrite: false,
           blending: THREE.AdditiveBlending,
@@ -286,7 +307,10 @@ export default function WebThreeRareBG(props) {
         backSeeds[i] = Math.random();
       }
       const backGeom = new THREE.BufferGeometry();
-      backGeom.setAttribute("position", new THREE.BufferAttribute(backPositions, 3));
+      backGeom.setAttribute(
+        "position",
+        new THREE.BufferAttribute(backPositions, 3),
+      );
       backGeom.setAttribute("aSeed", new THREE.BufferAttribute(backSeeds, 1));
       const backMat = new THREE.PointsMaterial({
         size: 1.2,
@@ -307,13 +331,16 @@ export default function WebThreeRareBG(props) {
       for (let i = 0; i < starCount; i++) {
         const r = 50 + Math.random() * 120;
         const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2) - 1);
+        const phi = Math.acos(Math.random() * 2 - 1);
         starPositions[i * 3 + 0] = Math.sin(phi) * Math.cos(theta) * r;
         starPositions[i * 3 + 1] = Math.cos(phi) * r * 0.6;
         starPositions[i * 3 + 2] = Math.sin(phi) * Math.sin(theta) * r;
         starSeed[i] = Math.random();
       }
-      starGeom.setAttribute("position", new THREE.BufferAttribute(starPositions, 3));
+      starGeom.setAttribute(
+        "position",
+        new THREE.BufferAttribute(starPositions, 3),
+      );
       starGeom.setAttribute("aSeed", new THREE.BufferAttribute(starSeed, 1));
 
       const starVS = `
@@ -406,7 +433,9 @@ export default function WebThreeRareBG(props) {
         float fbm(vec2 p){ float v = 0.0; float a = 0.5; for(int i=0;i<5;i++){ v += a * noise(p); p *= 2.0; a *= 0.5; } return v; }
       `;
 
-      const nebulaFragment = nebulaFragmentHeader + `
+      const nebulaFragment =
+        nebulaFragmentHeader +
+        `
         void main(){
           vec2 uv = vUv * vec2(1.5,1.0) - 0.5;
           float t = uTime * 0.05;
@@ -437,7 +466,7 @@ export default function WebThreeRareBG(props) {
         });
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.set((i - 1) * 12.0, -6 + i * 4.0, -60 - i * 20);
-        mesh.rotation.y = 0.20 * (i - 1);
+        mesh.rotation.y = 0.2 * (i - 1);
         scene.add(mesh);
         nebulaPlanes.push(mesh);
       }
@@ -537,7 +566,12 @@ export default function WebThreeRareBG(props) {
       crystal.scale.setScalar(1.0);
       scene.add(crystal);
 
-      const wireMat = new THREE.MeshBasicMaterial({ color: pal.accent.clone(), wireframe: true, opacity: 0.10, transparent: true });
+      const wireMat = new THREE.MeshBasicMaterial({
+        color: pal.accent.clone(),
+        wireframe: true,
+        opacity: 0.1,
+        transparent: true,
+      });
       const wire = new THREE.Mesh(icoGeo.clone(), wireMat);
       wire.scale.setScalar(1.012);
       scene.add(wire);
@@ -612,7 +646,14 @@ export default function WebThreeRareBG(props) {
         const angle = -Math.PI / 6 + (Math.random() - 0.5) * 0.8;
         const vx = Math.cos(angle) * speed * edge;
         const vy = Math.sin(angle) * speed * 0.6;
-        const mesh = new THREE.Mesh(starMeshGeom, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 1.0 }));
+        const mesh = new THREE.Mesh(
+          starMeshGeom,
+          new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 1.0,
+          }),
+        );
         mesh.position.set(x, y, z);
 
         const trailCount = 8;
@@ -623,12 +664,28 @@ export default function WebThreeRareBG(props) {
           trailPositions[i * 3 + 2] = z;
         }
         const trailGeo = new THREE.BufferGeometry();
-        trailGeo.setAttribute("position", new THREE.BufferAttribute(trailPositions, 3));
-        const trailMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.75, blending: THREE.AdditiveBlending });
+        trailGeo.setAttribute(
+          "position",
+          new THREE.BufferAttribute(trailPositions, 3),
+        );
+        const trailMat = new THREE.LineBasicMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0.75,
+          blending: THREE.AdditiveBlending,
+        });
         const trail = new THREE.Line(trailGeo, trailMat);
         scene.add(mesh);
         scene.add(trail);
-        shootingStars.push({ mesh, trail, vx, vy, life: 0, maxLife: 60 + Math.random() * 90, trailCount });
+        shootingStars.push({
+          mesh,
+          trail,
+          vx,
+          vy,
+          life: 0,
+          maxLife: 60 + Math.random() * 90,
+          trailCount,
+        });
       }
 
       // Interaction: mouse -> update shader uniforms
@@ -639,31 +696,36 @@ export default function WebThreeRareBG(props) {
         const y = 1.0 - (e.clientY - rect.top) / rect.height;
         mouse.x = THREE.MathUtils.clamp(x, 0, 1);
         mouse.y = THREE.MathUtils.clamp(y, 0, 1);
-        if (crystalMaterial && crystalMaterial.uniforms) crystalMaterial.uniforms.uMouse.value.set(mouse.x, mouse.y);
-        if (ptsMaterial && ptsMaterial.uniforms) ptsMaterial.uniforms.uMouse.value.set(mouse.x, mouse.y);
+        if (crystalMaterial && crystalMaterial.uniforms)
+          crystalMaterial.uniforms.uMouse.value.set(mouse.x, mouse.y);
+        if (ptsMaterial && ptsMaterial.uniforms)
+          ptsMaterial.uniforms.uMouse.value.set(mouse.x, mouse.y);
       };
       if (interactive) window.addEventListener("mousemove", onMove);
 
       // parse crystalSpeed (allow number or object)
-      const speedCfg = typeof crystalSpeed === "number"
-        ? { spin: crystalSpeed, wobble: crystalSpeed, wobbleAmp: 0.035 }
-        : { spin: 0.0025, wobble: 0.05, wobbleAmp: 0.035, ...crystalSpeed };
+      const speedCfg =
+        typeof crystalSpeed === "number"
+          ? { spin: crystalSpeed, wobble: crystalSpeed, wobbleAmp: 0.035 }
+          : { spin: 0.0025, wobble: 0.05, wobbleAmp: 0.035, ...crystalSpeed };
 
       // animation loop
       let t0 = performance.now() / 1000;
-      let lastFrame = t0;
       const animate = () => {
         const t = performance.now() / 1000 - t0;
         if (starMat && starMat.uniforms) starMat.uniforms.uTime.value = t;
-        if (ptsMaterial && ptsMaterial.uniforms) ptsMaterial.uniforms.uTime.value = t;
-        if (crystalMaterial && crystalMaterial.uniforms) crystalMaterial.uniforms.uTime.value = t;
+        if (ptsMaterial && ptsMaterial.uniforms)
+          ptsMaterial.uniforms.uTime.value = t;
+        if (crystalMaterial && crystalMaterial.uniforms)
+          crystalMaterial.uniforms.uTime.value = t;
         nebulaPlanes.forEach((n, i) => {
-          if (n.material && n.material.uniforms) n.material.uniforms.uTime.value = t * (0.6 + i * 0.2);
+          if (n.material && n.material.uniforms)
+            n.material.uniforms.uTime.value = t * (0.6 + i * 0.2);
         });
 
         // use configured spin & wobble; wobbleAmp controls amplitude
         crystal.rotation.y += speedCfg.spin;
-        crystal.rotation.x = Math.sin(t * speedCfg.wobble) * (speedCfg.wobbleAmp);
+        crystal.rotation.x = Math.sin(t * speedCfg.wobble) * speedCfg.wobbleAmp;
         wire.rotation.copy(crystal.rotation);
 
         // (planets loop removed)
@@ -693,17 +755,32 @@ export default function WebThreeRareBG(props) {
           if (s.life > s.maxLife) {
             scene.remove(s.mesh);
             scene.remove(s.trail);
-            try { s.mesh.geometry.dispose(); } catch (e) {}
-            try { s.mesh.material.dispose(); } catch (e) {}
-            try { s.trail.geometry.dispose(); } catch (e) {}
-            try { s.trail.material.dispose(); } catch (e) {}
+            try {
+              s.mesh.geometry.dispose();
+            } catch {
+              /* ignore */
+            }
+            try {
+              s.mesh.material.dispose();
+            } catch {
+              /* ignore */
+            }
+            try {
+              s.trail.geometry.dispose();
+            } catch {
+              /* ignore */
+            }
+            try {
+              s.trail.material.dispose();
+            } catch {
+              /* ignore */
+            }
             shootingStars.splice(i, 1);
           }
         }
 
         // (supernovas update removed)
 
-        lastFrame = performance.now() / 1000;
         renderer.render(scene, camera);
         stateRef.current.raf = requestAnimationFrame(animate);
       };
@@ -744,26 +821,64 @@ export default function WebThreeRareBG(props) {
       const s = stateRef.current;
       if (s) {
         if (s.raf) cancelAnimationFrame(s.raf);
-        if (s.overlayDiv && s.overlayDiv.parentNode) s.overlayDiv.parentNode.removeChild(s.overlayDiv);
+        if (s.overlayDiv && s.overlayDiv.parentNode)
+          s.overlayDiv.parentNode.removeChild(s.overlayDiv);
         // onDblClick was removed; only remove mouse/resize if present
         if (s.onMove) window.removeEventListener("mousemove", s.onMove);
         if (s.onResize) window.removeEventListener("resize", s.onResize);
         try {
           // dispose everything in scene
           s.scene.traverse((o) => {
-            if (o.geometry) try { o.geometry.dispose(); } catch (e) {}
+            if (o.geometry)
+              try {
+                o.geometry.dispose();
+              } catch {
+                /* ignore */
+              }
             if (o.material) {
-              if (Array.isArray(o.material)) o.material.forEach((m) => { try { m.dispose(); } catch (e) {} });
-              else try { o.material.dispose(); } catch (e) {}
+              if (Array.isArray(o.material))
+                o.material.forEach((m) => {
+                  try {
+                    m.dispose();
+                  } catch {
+                    /* ignore */
+                  }
+                });
+              else
+                try {
+                  o.material.dispose();
+                } catch {
+                  /* ignore */
+                }
             }
             // textures attached as map on materials get disposed via material.dispose usually,
             // but attempt a safe removal for CanvasTexture or other texture objects:
-            if (o.material && o.material.map) try { o.material.map.dispose(); } catch (e) {}
-            if (o.texture) try { o.texture.dispose(); } catch (e) {}
+            if (o.material && o.material.map)
+              try {
+                o.material.map.dispose();
+              } catch {
+                /* ignore */
+              }
+            if (o.texture)
+              try {
+                o.texture.dispose();
+              } catch {
+                /* ignore */
+              }
           });
-          if (s.renderer && s.renderer.domElement && s.renderer.domElement.parentNode) s.renderer.domElement.parentNode.removeChild(s.renderer.domElement);
-          if (s.renderer) try { s.renderer.dispose(); } catch (e) {}
-        } catch (err) {
+          if (
+            s.renderer &&
+            s.renderer.domElement &&
+            s.renderer.domElement.parentNode
+          )
+            s.renderer.domElement.parentNode.removeChild(s.renderer.domElement);
+          if (s.renderer)
+            try {
+              s.renderer.dispose();
+            } catch {
+              /* ignore */
+            }
+        } catch {
           // swallow cleanup errors
         }
       }
@@ -786,7 +901,10 @@ export default function WebThreeRareBG(props) {
     crystalSpeed,
   ]);
 
-  const bgColor = typeof bg === "number" ? `#${(bg >>> 0).toString(16).padStart(6, "0")}` : String(bg);
+  const bgColor =
+    typeof bg === "number"
+      ? `#${(bg >>> 0).toString(16).padStart(6, "0")}`
+      : String(bg);
 
   const containerStyle = {
     position: "fixed",
@@ -805,5 +923,12 @@ export default function WebThreeRareBG(props) {
     ...style,
   };
 
-  return <div ref={containerRef} className={className} style={containerStyle} aria-hidden={!interactive} />;
+  return (
+    <div
+      ref={containerRef}
+      className={className}
+      style={containerStyle}
+      aria-hidden={!interactive}
+    />
+  );
 }
