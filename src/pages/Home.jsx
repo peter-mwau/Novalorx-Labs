@@ -23,7 +23,14 @@ function Home() {
   const wheelAccum = useRef(0);
   const lastWheelTime = useRef(0);
   const touchStartY = useRef(null);
-  const sectionOrder = ["hero", "about", "services", "projects", "team", "contacts"];
+  const sectionOrder = [
+    "hero",
+    "about",
+    "services",
+    "projects",
+    "team",
+    "contacts",
+  ];
 
   // detect reduced motion preference
   useEffect(() => {
@@ -31,6 +38,7 @@ function Home() {
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)");
     if (!mq) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefersReducedMotion(Boolean(mq.matches));
     const handler = (e) => setPrefersReducedMotion(Boolean(e.matches));
     if (mq.addEventListener) mq.addEventListener("change", handler);
@@ -55,7 +63,7 @@ function Home() {
 
         await audio.play();
         audioStartedRef.current = true;
-      } catch (err) {
+      } catch {
         // autoplay blocked until user interacts (normal browser behavior)
       }
     };
@@ -65,7 +73,9 @@ function Home() {
 
     // Then retry after first user interaction
     const events = ["click", "touchstart", "keydown", "wheel"];
-    events.forEach((ev) => window.addEventListener(ev, tryPlayAudio, { passive: true }));
+    events.forEach((ev) =>
+      window.addEventListener(ev, tryPlayAudio, { passive: true }),
+    );
 
     return () => {
       events.forEach((ev) => window.removeEventListener(ev, tryPlayAudio));
@@ -96,7 +106,7 @@ function Home() {
         ) {
           return cur;
         }
-      } catch (err) {
+      } catch {
         // ignore (SVG, non-HTMLElements)
       }
       cur = cur.parentNode;
@@ -127,7 +137,8 @@ function Home() {
   useEffect(() => {
     if (prefersReducedMotion) return; // respect reduced motion preference
 
-    const rootContainer = document.querySelector(".home-scroll-root") || document.body;
+    const rootContainer =
+      document.querySelector(".home-scroll-root") || document.body;
     const threshold = 60; // accumulate deltaY until threshold
     const cooldown = transitionMs + 150; // lock duration after navigation
 
@@ -179,7 +190,8 @@ function Home() {
   useEffect(() => {
     if (prefersReducedMotion) return;
 
-    const rootContainer = document.querySelector(".home-scroll-root") || document.body;
+    const rootContainer =
+      document.querySelector(".home-scroll-root") || document.body;
     const threshold = 50; // swipe px threshold
     const cooldown = transitionMs + 150;
 
@@ -232,6 +244,7 @@ function Home() {
   // When activeSection changes, wait for the **new** section to finish its opacity transition.
   useEffect(() => {
     if (prefersReducedMotion) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setPrevSection(null);
       return;
     }
@@ -257,7 +270,9 @@ function Home() {
       setPrevSection(null);
       try {
         el.removeEventListener("transitionend", onTransitionEnd);
-      } catch {}
+      } catch {
+        // ignore error
+      }
     }, transitionMs + 200);
 
     el.addEventListener("transitionend", onTransitionEnd);
@@ -266,7 +281,9 @@ function Home() {
       clearTimeout(fallback);
       try {
         el.removeEventListener("transitionend", onTransitionEnd);
-      } catch {}
+      } catch {
+        // ignore error
+      }
     };
   }, [activeSection, prefersReducedMotion, transitionMs]);
 
@@ -287,13 +304,17 @@ function Home() {
       {/* Navbar */}
       {activeSection !== "hero" && (
         <div className="relative z-50">
-          <Navbar activeSection={activeSection} setActiveSection={handleNavigate} />
+          <Navbar
+            activeSection={activeSection}
+            setActiveSection={handleNavigate}
+          />
         </div>
       )}
 
       {/* Sections: opacity-only transitions */}
       <div className="relative z-10 h-screen w-full">
-        {Object.entries(sections).map(([key, { Component }]) => {
+        {Object.entries(sections).map(([key, section]) => {
+          const { Component } = section;
           const isActive = activeSection === key;
           const isPrev = prevSection === key;
           const visible = isActive || isPrev;

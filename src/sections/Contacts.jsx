@@ -76,7 +76,7 @@ function Contacts() {
   };
 
   // Lottie controls
-  const togglePlay = () => {
+  const _togglePlay = () => {
     const inst = playerRef.current;
     if (!inst) return;
     if (isPlaying) {
@@ -88,7 +88,7 @@ function Contacts() {
     }
   };
 
-  const stopAnimation = () => {
+  const _stopAnimation = () => {
     const inst = playerRef.current;
     if (!inst) return;
     inst.stop();
@@ -294,7 +294,9 @@ function Contacts() {
                     <p className="text-xs uppercase tracking-widest text-gray-500">
                       Email
                     </p>
-                    <p className="text-gray-200 font-medium">info@novalorxlabs.com</p>
+                    <p className="text-gray-200 font-medium">
+                      info@novalorxlabs.com
+                    </p>
                   </div>
                 </div>
 
@@ -352,12 +354,12 @@ function Contacts() {
                     <span className="text-cyan-300 font-semibold">
                       1–2 business days
                     </span>
-                    . For urgent matters, please use the phone/WhatsApp numbers above.
+                    . For urgent matters, please use the phone/WhatsApp numbers
+                    above.
                   </p>
                 </div>
               </div>
             </div>
-
           </div>
 
           {/* Right column: form — takes remaining width and becomes vertically scrollable on small screens if needed */}

@@ -57,9 +57,9 @@ export default function Team() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const playerRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [_isPlaying, setIsPlaying] = useState(true);
 
-  const [sectionRef, isInView] = useInView();
+  const [sectionRef] = useInView();
 
   // fetch GitHub data and merge with local team data
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function Team() {
                       stars: r.stargazers_count || 0,
                     }));
                 }
-              } catch (e) {
+              } catch {
                 // ignore repo errors
               }
 
@@ -136,7 +136,7 @@ export default function Team() {
               };
 
               return merged;
-            } catch (err) {
+            } catch {
               // network or other error - return base
               return { ...base };
             }
@@ -146,9 +146,9 @@ export default function Team() {
         if (cancelled) return;
         setProfiles(results);
         setActiveMember((prev) => prev || results[0] || null);
-      } catch (err) {
+      } catch (_err) {
         if (cancelled) return;
-        console.error("Error loading team profiles", err);
+        console.error("Error loading team profiles", _err);
         setError("Failed to load team profiles.");
       } finally {
         if (!cancelled) setLoading(false);
@@ -168,14 +168,14 @@ export default function Team() {
   };
 
   // Player controls
-  const handlePlayerReady = (instance) => {
+  const _handlePlayerReady = (instance) => {
     // store instance (the Player component exposes imperative API via ref)
     playerRef.current = instance;
     // if autoplay: ensure it's playing
     try {
       playerRef.current?.play?.();
       setIsPlaying(true);
-    } catch (e) {
+    } catch {
       // ignore
     }
   };
@@ -260,8 +260,12 @@ export default function Team() {
                 </button>
 
                 <button
-                  onClick={() => goToContact()}
+                  onClick={() => {
+                    // TODO: Implement navigation to contacts section
+                    // This would typically use the onNavigate prop passed from Home
+                  }}
                   className="px-4 py-2 rounded-md border border-white/10 text-white/90 hover:bg-white/5"
+                  disabled
                 >
                   Contact us
                 </button>
@@ -277,7 +281,7 @@ export default function Team() {
                   keepLastFrame={false}
                   src={liveChatAnimation}
                   ref={playerRef}
-                  onEvent={(e) => {
+                  onEvent={() => {
                     /* optional: debug or handle events, e.g. 'load' */
                   }}
                   style={{ width: "150%", height: 360 }}

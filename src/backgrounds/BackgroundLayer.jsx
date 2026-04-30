@@ -1,35 +1,49 @@
 // src/backgrounds/BackgroundLayer.jsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import WebThreeRareBG from "./WebThreeRareBg-dark";
 
 const BackgroundLayer = () => {
+  const [mounted, setMounted] = useState(false);
+  const [container, setContainer] = useState(null);
   const containerRef = useRef(null);
-  const parallaxRef = useRef({ tx: 0, ty: 0, targetX: 0, targetY: 0, offsetX: 0, offsetY: 0 });
+  const parallaxRef = useRef({
+    tx: 0,
+    ty: 0,
+    targetX: 0,
+    targetY: 0,
+    offsetX: 0,
+    offsetY: 0,
+  });
   const rafRef = useRef(null);
   const wrapperRef = useRef(null);
 
-  // create container once
-  if (!containerRef.current && typeof document !== "undefined") {
-    const el = document.createElement("div");
-    el.style.position = "fixed";
-    el.style.inset = "0";
-    el.style.zIndex = "0";
-    el.style.pointerEvents = "none";
-    el.style.backgroundColor = "#0b0f14"; // fallback base color
-    el.style.transform = "translateZ(0)";
-    el.style.willChange = "transform";
-    el.style.backfaceVisibility = "hidden";
-    containerRef.current = el;
-  }
-
   useEffect(() => {
+    // create container once
+    if (!containerRef.current && typeof document !== "undefined") {
+      const el = document.createElement("div");
+      el.style.position = "fixed";
+      el.style.inset = "0";
+      el.style.zIndex = "0";
+      el.style.pointerEvents = "none";
+      el.style.backgroundColor = "#0b0f14"; // fallback base color
+      el.style.transform = "translateZ(0)";
+      el.style.willChange = "transform";
+      el.style.backfaceVisibility = "hidden";
+      containerRef.current = el;
+    }
+
     const container = containerRef.current;
     document.body.prepend(container);
 
+    setContainer(container);
+    setMounted(true);
+
     // cleanup on unmount
     return () => {
-      if (container && container.parentNode) container.parentNode.removeChild(container);
+      if (container && container.parentNode)
+        container.parentNode.removeChild(container);
+      setMounted(false);
     };
   }, []);
 
@@ -43,8 +57,8 @@ const BackgroundLayer = () => {
     const onMove = (ev) => {
       const e = ev.touches?.[0] ?? ev;
       const r = el.getBoundingClientRect();
-      const x = ((e.clientX - r.left) / r.width - 0.5) || 0;
-      const y = ((e.clientY - r.top) / r.height - 0.5) || 0;
+      const x = (e.clientX - r.left) / r.width - 0.5 || 0;
+      const y = (e.clientY - r.top) / r.height - 0.5 || 0;
       parallaxRef.current.targetX = x * 12;
       parallaxRef.current.targetY = y * 8;
     };
@@ -85,7 +99,11 @@ const BackgroundLayer = () => {
     };
   }, []);
 
-  // render the BG inside the pre-created container via portal
+  // render the BG inside the pre-created container via portal (only after container is created)
+  if (!mounted || !container) {
+    return null;
+  }
+
   return createPortal(
     <div
       ref={wrapperRef}
@@ -101,7 +119,7 @@ const BackgroundLayer = () => {
     >
       <WebThreeRareBG />
     </div>,
-    containerRef.current
+    container,
   );
 };
 

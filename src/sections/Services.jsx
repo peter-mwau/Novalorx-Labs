@@ -1,6 +1,6 @@
 // src/sections/Services.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import servicesData from "../constants/services";
 import { coder, cloud, ml, web3, mobile } from "../assets/images";
 import {
@@ -67,7 +67,6 @@ const loopedServices = [...services, ...services];
 
 // Use additional data moved into services.js
 const additionalServices = servicesData.additionalServices || [];
-const defaultPackages = servicesData.defaultPackages || [];
 
 const Services = ({ onNavigate }) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -139,6 +138,12 @@ const Services = ({ onNavigate }) => {
     };
   }, []);
 
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedService(null);
+    pausedRef.current = false;
+  };
+
   // Pause autoplay when modal opens & ESC close
   useEffect(() => {
     const onKey = (e) => {
@@ -157,12 +162,6 @@ const Services = ({ onNavigate }) => {
     setShowSidebar(true);
     setShowModal(true);
     pausedRef.current = true;
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedService(null);
-    pausedRef.current = false;
   };
 
   // Tally embed script loader (kept)
@@ -191,7 +190,7 @@ const Services = ({ onNavigate }) => {
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen overflow-hidden text-white bg-gradient-to-b from-gray-900/10 to-black/20">
+    <section className="relative w-full min-h-screen overflow-hidden text-white bg-linear-to-b from-gray-900/10 to-black/20">
       <style>{`
         .no-scrollbar::-webkit-scrollbar{display:none}
         .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
@@ -276,8 +275,7 @@ const Services = ({ onNavigate }) => {
             relative
             text-3xl sm:text-4xl font-extrabold tracking-widest
             text-cyan-300
-            drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]
-            drop-shadow-[0_0_25px_rgba(59,130,246,0.8)]
+            drop-shadow-[0_0_30px_rgba(34,211,238,1)]
             animate-cyberPulse
           "
         >
@@ -298,8 +296,8 @@ const Services = ({ onNavigate }) => {
           <span
             className="
             absolute left-1/2 -bottom-4 -translate-x-1/2
-            w-24 sm:w-32 h-[3px]
-            bg-gradient-to-r from-transparent via-cyan-400 to-transparent
+            w-24 sm:w-32 h-0.75
+            bg-linear-to-r from-transparent via-cyan-400 to-transparent
             blur-md opacity-90
             shadow-[0_0_25px_rgba(34,211,238,1)]
             animate-cyberLine
@@ -563,11 +561,12 @@ const Services = ({ onNavigate }) => {
                               </div>
                             )}
                           </div>
-                          {pkg.price && (
-                            <div className="text-sm text-emerald-200 font-bold">
-                              {pkg.price}
-                            </div>
-                          )}
+                          <button
+                            onClick={() => onNavigate?.("contacts")}
+                            className="px-3 py-1 rounded-full bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 text-xs font-medium transition-colors"
+                          >
+                            Request quote
+                          </button>
                         </div>
                         {pkg.features && (
                           <ul className="text-sm text-gray-200 mt-2 list-inside">
@@ -745,7 +744,7 @@ const Services = ({ onNavigate }) => {
                 <article
                   key={`${service.id}-${i}`}
                   onClick={() => openModalFor(i)}
-                  className="cursor-pointer flex-shrink-0 w-[420px] md:w-[460px] h-auto bg-[rgba(17,24,39,0.6)] border border-gray-700 rounded-xl overflow-hidden shadow-lg"
+                  className="cursor-pointer shrink-0 w-105 md:w-115 h-auto bg-[rgba(17,24,39,0.6)] border border-gray-700 rounded-xl overflow-hidden shadow-lg"
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
@@ -758,7 +757,7 @@ const Services = ({ onNavigate }) => {
                     <img
                       src={getImageUrl(service)}
                       alt={service.title}
-                      className="w-full h-full object-cover aspect-[16/9]"
+                      className="w-full h-full object-cover aspect-video"
                       loading="lazy"
                       decoding="async"
                       fetchpriority="low"
@@ -818,13 +817,13 @@ const Services = ({ onNavigate }) => {
                   key={s.id}
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.24, ease: "easeOut" }}
-                  className="relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 bg-gradient-to-br from-white/5 to-white/3 border border-white/6 shadow-lg shadow-black/30 backdrop-blur-md"
+                  className="relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 bg-linear-to-br from-white/5 to-white/3 border border-white/6 shadow-lg shadow-black/30 backdrop-blur-md"
                   role="region"
                   aria-labelledby={`extras-${s.id}-title`}
                 >
                   {/* Top */}
                   <div>
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500/20 to-purple-500/10 text-cyan-300 mb-4">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-linear-to-r from-cyan-500/20 to-purple-500/10 text-cyan-300 mb-4">
                       {/* icon / emoji — replace with real icons if desired */}
                       <svg
                         className="w-6 h-6"
@@ -934,7 +933,7 @@ const Services = ({ onNavigate }) => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative bg-gradient-to-br from-blue-300/8 to-cyan-400/8 border border-blue-300/30 rounded-2xl p-8 md:p-12 overflow-hidden shadow-lg shadow-black/30"
+            className="relative bg-linear-to-br from-blue-300/8 to-cyan-400/8 border border-blue-300/30 rounded-2xl p-8 md:p-12 overflow-hidden shadow-lg shadow-black/30"
             style={{ transform: "translateZ(0)" }}
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-300/10 rounded-full blur-3xl" />
