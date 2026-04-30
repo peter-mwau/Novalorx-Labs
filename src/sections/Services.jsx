@@ -1,6 +1,6 @@
 // src/sections/Services.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion as Motion } from "framer-motion";
 import servicesData from "../constants/services";
 import { coder, cloud, ml, web3, mobile } from "../assets/images";
 import {
@@ -316,7 +316,7 @@ const Services = ({ onNavigate }) => {
       </div>
 
       {/* Sidebar Panel */}
-      <motion.div
+      <Motion.div
         initial={{ x: "100%" }}
         animate={{ x: showSidebar ? 0 : "100%" }}
         transition={{ duration: 0.35 }}
@@ -619,13 +619,13 @@ const Services = ({ onNavigate }) => {
             </div>
           </>
         )}
-      </motion.div>
+      </Motion.div>
 
       {/* Content */}
       <div className="relative z-10 py-24 px-4 md:px-8 lg:px-16 w-full max-w-7xl mx-auto max-h-[90vh] overflow-y-auto no-scrollbar">
         <div className="relative h-screen flex flex-col items-center justify-center text-center">
           {/* --- Intro: placed just above the Carousel --- */}
-          <motion.section
+          <Motion.section
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -714,7 +714,7 @@ const Services = ({ onNavigate }) => {
                 </div>
               </div>
             </div>
-          </motion.section>
+          </Motion.section>
         </div>
 
         {/* Carousel */}
@@ -790,7 +790,7 @@ const Services = ({ onNavigate }) => {
         </div>
 
         {/* Additional Services — modernized */}
-        <motion.section
+        <Motion.section
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.25 }}
@@ -813,7 +813,7 @@ const Services = ({ onNavigate }) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
               {additionalServices.map((s) => (
-                <motion.article
+                <Motion.article
                   key={s.id}
                   whileHover={{ y: -8, scale: 1.02 }}
                   transition={{ duration: 0.24, ease: "easeOut" }}
@@ -912,7 +912,7 @@ const Services = ({ onNavigate }) => {
                       </button>
                     </div>
                   </div>
-                </motion.article>
+                </Motion.article>
               ))}
             </div>
 
@@ -924,11 +924,11 @@ const Services = ({ onNavigate }) => {
               </span>
             </div>
           </div>
-        </motion.section>
+        </Motion.section>
 
         {/* CTA Section */}
         <div className="max-w-4xl mx-auto flex items-center justify-center">
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -965,7 +965,7 @@ const Services = ({ onNavigate }) => {
                 engagement models
               </p>
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       </div>
 
@@ -986,7 +986,7 @@ const Services = ({ onNavigate }) => {
               aria-hidden
             />
 
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.98 }}
@@ -1137,7 +1137,7 @@ const Services = ({ onNavigate }) => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
         )}
       </AnimatePresence>
